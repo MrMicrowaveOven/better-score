@@ -8,12 +8,12 @@ import {
 const RoundScoreDisplay = ({roundScore1, roundScore2}) => {
     return (
         <View style={styles.main}>
-            <View style={[styles.scoreList, styles.scoreList1]}>
+            <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
                     return <Text key={index} style={styles.score}>{score}</Text>
                 })}
             </View>
-            <View style={[styles.scoreList, styles.scoreList2]}>
+            <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
                     return <Text key={index} style={styles.score}>{score}</Text>
                 })}
@@ -34,8 +34,13 @@ const styles = StyleSheet.create({
     },
     scoreList: {
         display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
         alignItems: "center",
         height: 380,
+    },
+    scoreListWrap: {
+        flexWrap: "wrap",
     },
     scoreList1: {
         width: "50%",
@@ -49,9 +54,10 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(255,0,0, 0.3)"
     },
     score: {
-        fontSize: 30,
+        fontSize: 28,
         color: "black",
-        fontWeight: "400"
+        fontWeight: "400",
+        marginHorizontal: 10
     },
     scoreTotals: {
         position: "relative",
