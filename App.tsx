@@ -10,10 +10,12 @@ import type {PropsWithChildren} from 'react';
 import {
   Alert,
   Button,
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import RoundScoreDisplay from './RoundScoreDisplay';
@@ -23,10 +25,15 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 function App(): JSX.Element {
+  const [team1Name, setTeam1Name] = useState("Team 1")
+  const [team2Name, setTeam2Name] = useState("Team 2")
   const [score1, setScore1] = useState(0)
   const [score2, setScore2] = useState(0)
   const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
+
+  const [updateTeam1Modal, setUpdateTeam1Modal] = useState(false)
+  const [updateTeam2Modal, setUpdateTeam2Modal] = useState(false)
 
   const pointFor1 = () => setScore1(score1 + 1)
   const pointFor2 = () => setScore2(score2 + 1)
@@ -71,8 +78,12 @@ function App(): JSX.Element {
     <SafeAreaView style={styles.background}>
       <Button title="End Round" onPress={() => confirmNextRound()}/>
       <View style={styles.scoreTitles}>
-        <Text style={styles.scoreTitle}>Team 1</Text>
-        <Text style={styles.scoreTitle}>Team 2</Text>
+        <TouchableOpacity onLongPress={() => {setUpdateTeam1Modal(true)}}>
+          <Text style={styles.scoreTitle}>{team1Name}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onLongPress={() => {setUpdateTeam2Modal(true)}}>
+          <Text style={styles.scoreTitle}>{team2Name}</Text>
+        </TouchableOpacity>
       </View>
       <TouchableHighlight onPress={pointFor1}>
         <View style={[styles.scoreBox, styles.scoreBox1]}>
@@ -108,7 +119,7 @@ const styles = StyleSheet.create({
   },
   scoreTitle: {
     fontSize: 25,
-    color: "black"
+    color: "black",
   },
   scoreDisplay: {
     fontSize: 60,
