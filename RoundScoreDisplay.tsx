@@ -14,9 +14,13 @@ const RoundScoreDisplay = ({roundScore1, roundScore2}) => {
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2]}>
-                {roundScore2.map((score: number) => {
-                    return <Text style={styles.score}>{score}</Text>
+                {roundScore2.map((score: number, index: number) => {
+                    return <Text key={index} style={styles.score}>{score}</Text>
                 })}
+            </View>
+            <View style={[styles.scoreTotals]}>
+                <Text style={[styles.scoreTotal]}>{roundScore1.reduce((a: number, b: number) => a + b, 0)}</Text>
+                <Text style={[styles.scoreTotal]}>{roundScore2.reduce((a: number, b: number) => a + b, 0)}</Text>
             </View>
         </View>
     )
@@ -30,26 +34,38 @@ const styles = StyleSheet.create({
     },
     scoreList: {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        height: 300,
+    },
+    scoreList1: {
+        width: "50%",
+        backgroundColor: "rgba(0, 128, 0, 0.3)"
+    },
+    scoreList2: {
+        position: "absolute",
+        width: "50%",
+        top: 0,
+        right: 0,
+        backgroundColor: "rgba(255,0,0, 0.3)"
     },
     score: {
         fontSize: 30,
         color: "black",
         fontWeight: "400"
     },
-    scoreList1: {
-        width: "50%",
-        height: 400,
-        backgroundColor: "rgba(0, 128, 0, 0.3)"
+    scoreTotals: {
+        position: "relative",
+        bottom: 10,
+        width: "100%",
+        height: 150,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center"
     },
-    scoreList2: {
-        position: "absolute",
-        width: "50%",
-        height: 400,
-        top: 0,
-        right: 0,
-        backgroundColor: "rgba(255,0,0, 0.3)"
-    }
+    scoreTotal: {
+        fontSize: 30
+    },
 })
 
 export default RoundScoreDisplay
