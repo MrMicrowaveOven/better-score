@@ -92,12 +92,12 @@ function App(): JSX.Element {
             <Text style={styles.scoreDisplay}>{score2}</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight onPress={minusPointFor1}>
+      <TouchableHighlight onPress={() => score1 > 0 && minusPointFor1()}>
         <View style={[styles.minusBox, styles.minusBox1]}>
           <Text style={styles.minusSymbol}>-</Text>
         </View>
       </TouchableHighlight>
-      <TouchableHighlight onPress={minusPointFor2}>
+      <TouchableHighlight onPress={() => score2 > 0 && minusPointFor2()}>
         <View style={[styles.minusBox, styles.minusBox2]}>
           <Text style={styles.minusSymbol}>-</Text>
         </View>
