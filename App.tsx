@@ -8,6 +8,8 @@
 import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Alert,
+  Button,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -28,7 +30,7 @@ type SectionProps = PropsWithChildren<{
 function App(): JSX.Element {
   const [score1, setScore1] = useState(0)
   const [score2, setScore2] = useState(0)
-  const [roundScore1, setRoundScore1] = useState([1,2,3])
+  const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -39,8 +41,34 @@ function App(): JSX.Element {
   const pointFor1 = () => setScore1(score1 + 1)
   const pointFor2 = () => setScore2(score2 + 1)
 
+  const nextRound = () => {
+    const previousScore1 : Number[] = roundScore1
+    previousScore1.push(score1)
+    setRoundScore1(previousScore1)
+    setScore1(0)
+    const previousScore2 = roundScore2
+    previousScore2.push(score2)
+    setRoundScore2(previousScore2)
+    setScore2(0)
+  }
+
+  const confirmNextRound = () => {
+    Alert.alert("Confirmation",
+      "Are you sure you want to score this round?",[
+      {
+        text: "No",
+        onPress: () => {}
+      },
+      {
+        text: "Yes",
+        onPress: () => nextRound()
+      }
+    ])
+  }
+
   return (
     <SafeAreaView style={backgroundStyle}>
+      <Button title="End Round" onPress={() => confirmNextRound()}/>
       <View style={styles.scoreTitles}>
         <Text style={styles.scoreTitle}>Team 1</Text>
         <Text style={styles.scoreTitle}>Team 2</Text>
