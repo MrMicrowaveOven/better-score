@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   }
 });
 
