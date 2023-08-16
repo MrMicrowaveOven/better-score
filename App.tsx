@@ -82,26 +82,28 @@ function App(): JSX.Element {
         <Text style={styles.scoreTitle}>{team1Name}</Text>
         <Text style={styles.scoreTitle}>{team2Name}</Text>
       </View>
-      <TouchableHighlight onPress={pointFor1}>
-        <View style={[styles.scoreBox, styles.scoreBox1]}>
+      <View style={styles.scoreBoxes}>
+        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={pointFor1}>
           <Text style={styles.scoreDisplay}>{score1}</Text>
-        </View>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={pointFor2}>
-        <View style={[styles.scoreBox, styles.scoreBox2]}>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox2]} onPress={pointFor2}>
             <Text style={styles.scoreDisplay}>{score2}</Text>
-        </View>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => score1 > 0 && minusPointFor1()}>
-        <View style={[styles.minusBox, styles.minusBox1]}>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.minusBoxes}>
+        <TouchableOpacity
+          onPress={() => score1 > 0 && minusPointFor1()}
+          style={[styles.minusBox, styles.minusBox1]}
+        >
           <Text style={styles.minusSymbol}>-</Text>
-        </View>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => score2 > 0 && minusPointFor2()}>
-        <View style={[styles.minusBox, styles.minusBox2]}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => score2 > 0 && minusPointFor2()}
+          style={[styles.minusBox, styles.minusBox2]}
+        >
           <Text style={styles.minusSymbol}>-</Text>
-        </View>
-      </TouchableHighlight>
+        </TouchableOpacity>
+      </View>
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
       <View style={styles.resetButton}>
         <Button title="Reset Game" onPress={() => confirmReset()}/>
@@ -118,8 +120,7 @@ const styles = StyleSheet.create({
   },
   scoreTitles: {
     width: "100%",
-    position: "absolute",
-    top: 40,
+    marginTop: 40,
     display: "flex",
     flexDirection: "row",
     justifyContent: 'space-around'
@@ -127,18 +128,22 @@ const styles = StyleSheet.create({
   scoreTitle: {
     fontSize: 25,
     color: "black",
+    margin: 5
   },
   scoreDisplay: {
     fontSize: 60,
     fontWeight: "500",
     color: "black"
   },
+  scoreBoxes: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
   scoreBox: {
-    position: "absolute",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    top: 80,
     width: "50%",
     height: 150,
     zIndex: 100,
@@ -151,13 +156,15 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: "red",
   },
+  minusBoxes: {
+    display: "flex",
+    flexDirection: "row"
+  },
   minusBox: {
-    position: "absolute",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    top: 230,
-    height: 50,
+    height: 47,
     width: "50%",
   },
   minusBox1: {
