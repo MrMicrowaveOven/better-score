@@ -5,74 +5,84 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
+  TouchableHighlight,
   useColorScheme,
   View,
 } from 'react-native';
+import RoundScoreDisplay from './RoundScoreDisplay';
 
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
 function App(): JSX.Element {
+  const [score1, setScore1] = useState(0)
+  const [score2, setScore2] = useState(0)
+  const [roundScore1, setRoundScore1] = useState([1,2,3])
+  const [roundScore2, setRoundScore2] = useState([])
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const pointFor1 = () => setScore1(score1 + 1)
+  const pointFor2 = () => setScore2(score2 + 1)
+
   return (
     <SafeAreaView style={backgroundStyle}>
-      <Text>Team 1</Text>
-      <Text>Team 2</Text>
-      <View style={styles.scoreBox1} />
-      <View style={styles.scoreBox2} />
+      <View style={styles.scoreTitles}>
+        <Text style={styles.scoreTitle}>Team 1</Text>
+        <Text style={styles.scoreTitle}>Team 2</Text>
+      </View>
+      <TouchableHighlight onPress={pointFor1}>
+        <View style={[styles.scoreBox, styles.scoreBox1]}>
+          <Text style={styles.scoreDisplay}>{score1}</Text>
+        </View>
+      </TouchableHighlight>
+      <TouchableHighlight onPress={pointFor2}>
+        <View style={[styles.scoreBox, styles.scoreBox2]}>
+            <Text style={styles.scoreDisplay}>{score2}</Text>
+        </View>
+      </TouchableHighlight>
+      <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  scoreTitles: {
+    width: "100%",
+    position: "absolute",
+    top: 60,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-around'
+  },
+  scoreTitle: {
+    fontSize: 25,
+    color: "black"
+  },
+  scoreDisplay: {
+    fontSize: 60,
+    fontWeight: "500",
+    color: "black"
+  },
+  scoreBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   scoreBox1: {
     position: "absolute",
     left: 0,
@@ -90,22 +100,6 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: "red",
     zIndex: 100
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
