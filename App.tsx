@@ -10,7 +10,6 @@ import type {PropsWithChildren} from 'react';
 import {
   Alert,
   Button,
-  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -31,9 +30,6 @@ function App(): JSX.Element {
   const [score2, setScore2] = useState(0)
   const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
-
-  const [updateTeam1Modal, setUpdateTeam1Modal] = useState(false)
-  const [updateTeam2Modal, setUpdateTeam2Modal] = useState(false)
 
   const pointFor1 = () => setScore1(score1 + 1)
   const pointFor2 = () => setScore2(score2 + 1)
@@ -78,12 +74,8 @@ function App(): JSX.Element {
     <SafeAreaView style={styles.background}>
       <Button title="End Round" onPress={() => confirmNextRound()}/>
       <View style={styles.scoreTitles}>
-        <TouchableOpacity onLongPress={() => {setUpdateTeam1Modal(true)}}>
-          <Text style={styles.scoreTitle}>{team1Name}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onLongPress={() => {setUpdateTeam2Modal(true)}}>
-          <Text style={styles.scoreTitle}>{team2Name}</Text>
-        </TouchableOpacity>
+        <Text style={styles.scoreTitle}>{team1Name}</Text>
+        <Text style={styles.scoreTitle}>{team2Name}</Text>
       </View>
       <TouchableHighlight onPress={pointFor1}>
         <View style={[styles.scoreBox, styles.scoreBox1]}>
