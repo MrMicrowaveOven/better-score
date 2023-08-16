@@ -9,8 +9,8 @@ const RoundScoreDisplay = ({roundScore1, roundScore2}) => {
     return (
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1]}>
-                {roundScore1.map((score: number) => {
-                    return <Text style={styles.score}>{score}</Text>
+                {roundScore1.map((score: number, index: number) => {
+                    return <Text key={index} style={styles.score}>{score}</Text>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2]}>

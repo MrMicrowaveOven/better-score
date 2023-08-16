@@ -42,11 +42,11 @@ function App(): JSX.Element {
   const pointFor2 = () => setScore2(score2 + 1)
 
   const nextRound = () => {
-    const previousScore1 : Number[] = roundScore1
+    const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
     setRoundScore1(previousScore1)
     setScore1(0)
-    const previousScore2 = roundScore2
+    const previousScore2 : number[]= [...roundScore2]
     previousScore2.push(score2)
     setRoundScore2(previousScore2)
     setScore2(0)
@@ -64,6 +64,27 @@ function App(): JSX.Element {
         onPress: () => nextRound()
       }
     ])
+  }
+
+  const reset = () => {
+    setScore1(0)
+    setScore2(0)
+    setRoundScore1([])
+    setRoundScore2([])
+  }
+
+  const confirmReset = () => {
+    Alert.alert("Confirmation",
+    "Are you sure you want reset the score?",[
+    {
+      text: "No",
+      onPress: () => {}
+    },
+    {
+      text: "Yes",
+      onPress: () => reset()
+    }
+  ])
   }
 
   return (
@@ -84,6 +105,9 @@ function App(): JSX.Element {
         </View>
       </TouchableHighlight>
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
+      <View style={styles.resetButton}>
+        <Button title="Reset" onPress={() => confirmReset()}/>
+      </View>
     </SafeAreaView>
   );
 }
@@ -129,6 +153,11 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     zIndex: 100
   },
+  resetButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+  }
 });
 
 export default App;
