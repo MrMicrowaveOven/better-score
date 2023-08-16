@@ -34,6 +34,9 @@ function App(): JSX.Element {
   const pointFor1 = () => setScore1(score1 + 1)
   const pointFor2 = () => setScore2(score2 + 1)
 
+  const minusPointFor1 = () => setScore1(score1 - 1)
+  const minusPointFor2 = () => setScore2(score2 - 1)
+
   const nextRound = () => {
     const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
@@ -63,7 +66,7 @@ function App(): JSX.Element {
 
   const confirmReset = () => {
     Alert.alert("Confirmation",
-      "Are you sure you want reset the score?",[
+      "Are you sure you want reset the game?",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => reset() }
       ]
@@ -72,7 +75,9 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style={styles.background}>
-      <Button title="End Round" onPress={() => confirmNextRound()}/>
+      <View style={styles.endRoundButton}>
+        <Button title="Save Round Score" onPress={() => confirmNextRound()}/>
+      </View>
       <View style={styles.scoreTitles}>
         <Text style={styles.scoreTitle}>{team1Name}</Text>
         <Text style={styles.scoreTitle}>{team2Name}</Text>
@@ -87,9 +92,19 @@ function App(): JSX.Element {
             <Text style={styles.scoreDisplay}>{score2}</Text>
         </View>
       </TouchableHighlight>
+      <TouchableHighlight onPress={minusPointFor1}>
+        <View style={[styles.minusBox, styles.minusBox1]}>
+          <Text style={styles.minusSymbol}>-</Text>
+        </View>
+      </TouchableHighlight>
+      <TouchableHighlight onPress={minusPointFor2}>
+        <View style={[styles.minusBox, styles.minusBox2]}>
+          <Text style={styles.minusSymbol}>-</Text>
+        </View>
+      </TouchableHighlight>
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
       <View style={styles.resetButton}>
-        <Button title="Reset" onPress={() => confirmReset()}/>
+        <Button title="Reset Game" onPress={() => confirmReset()}/>
       </View>
     </SafeAreaView>
   );
@@ -119,32 +134,61 @@ const styles = StyleSheet.create({
     color: "black"
   },
   scoreBox: {
+    position: "absolute",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    top: 80,
+    width: "50%",
+    height: 150,
+    zIndex: 100,
   },
   scoreBox1: {
-    position: "absolute",
     left: 0,
-    top: 50,
-    width: "50%",
-    height: 150,
     backgroundColor: "green",
-    zIndex: 100
   },
   scoreBox2: {
-    position: "absolute",
     right: 0,
-    top: 50,
-    width: "50%",
-    height: 150,
     backgroundColor: "red",
-    zIndex: 100
+  },
+  minusBox: {
+    position: "absolute",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 230,
+    height: 50,
+    width: "50%",
+  },
+  minusBox1: {
+    left: 0,
+    backgroundColor: "rgba(0,128,0,.5)"
+  },
+  minusBox2: {
+    right: 0,
+    backgroundColor: "rgba(255,0,0,.5)"
+  },
+  minusSymbol: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 30
+  },
+  endRoundButton: {
+    position: "absolute",
+    bottom: 0,
+    top: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "flex-start",
   },
   resetButton: {
     position: "absolute",
     bottom: 0,
+    top: 0,
+    left: 0,
     right: 0,
+    justifyContent: "flex-end",
+    alignItems: "center"
   }
 });
 
