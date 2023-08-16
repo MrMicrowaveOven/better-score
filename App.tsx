@@ -14,14 +14,9 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  useColorScheme,
   View,
 } from 'react-native';
 import RoundScoreDisplay from './RoundScoreDisplay';
-
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -32,11 +27,6 @@ function App(): JSX.Element {
   const [score2, setScore2] = useState(0)
   const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   const pointFor1 = () => setScore1(score1 + 1)
   const pointFor2 = () => setScore2(score2 + 1)
@@ -54,16 +44,11 @@ function App(): JSX.Element {
 
   const confirmNextRound = () => {
     Alert.alert("Confirmation",
-      "Are you sure you want to score this round?",[
-      {
-        text: "No",
-        onPress: () => {}
-      },
-      {
-        text: "Yes",
-        onPress: () => nextRound()
-      }
-    ])
+      "Are you sure you want to score this round?", [
+        { text: "No", onPress: () => {} },
+        { text: "Yes", onPress: () => nextRound() }
+      ]
+    )
   }
 
   const reset = () => {
@@ -75,20 +60,15 @@ function App(): JSX.Element {
 
   const confirmReset = () => {
     Alert.alert("Confirmation",
-    "Are you sure you want reset the score?",[
-    {
-      text: "No",
-      onPress: () => {}
-    },
-    {
-      text: "Yes",
-      onPress: () => reset()
-    }
-  ])
+      "Are you sure you want reset the score?",[
+        { text: "No", onPress: () => {} },
+        { text: "Yes", onPress: () => reset() }
+      ]
+    )
   }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={styles.background}>
       <Button title="End Round" onPress={() => confirmNextRound()}/>
       <View style={styles.scoreTitles}>
         <Text style={styles.scoreTitle}>Team 1</Text>
@@ -113,6 +93,11 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  background: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(220,220,220,1)"
+  },
   scoreTitles: {
     width: "100%",
     position: "absolute",
