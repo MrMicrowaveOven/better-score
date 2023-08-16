@@ -67,10 +67,11 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
-        alignItems: "center"
+        alignItems: "center",
     },
     scoreTotal: {
-        fontSize: 30
+        fontSize: 30,
+        color: "black",
     },
 })
 
