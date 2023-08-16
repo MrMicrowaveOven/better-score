@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   scoreTitles: {
     width: "100%",
     position: "absolute",
-    top: 60,
+    top: 40,
     display: "flex",
     flexDirection: "row",
     justifyContent: 'space-around'
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   scoreBox1: {
     position: "absolute",
     left: 0,
-    top: 100,
+    top: 50,
     width: "50%",
     height: 150,
     backgroundColor: "green",
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   scoreBox2: {
     position: "absolute",
     right: 0,
-    top: 100,
+    top: 50,
     width: "50%",
     height: 150,
     backgroundColor: "red",

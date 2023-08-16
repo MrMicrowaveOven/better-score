@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     main: {
         width: "100%",
         position: "absolute",
-        top: 300,
+        top: 250,
     },
     scoreList: {
         display: "flex",
         alignItems: "center",
-        height: 300,
+        height: 400,
     },
     scoreList1: {
         width: "50%",
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
     },
     scoreTotals: {
         position: "relative",
-        bottom: 10,
+        bottom: 0,
         width: "100%",
-        height: 150,
+        height: 80,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
