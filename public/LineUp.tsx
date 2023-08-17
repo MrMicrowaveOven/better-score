@@ -44,6 +44,7 @@ const LineUp = () => {
 
   return (
     <View style={styles.body}>
+      <Text style={styles.title}>Lineup</Text>
       <View style={styles.list}>
         <DragList
           data={data}
@@ -68,20 +69,24 @@ const LineUp = () => {
 const styles = StyleSheet.create({
   body: {
     height: "100%",
-    backgroundColor: "blue",
+    backgroundColor: "rgba(220,220,220,1)",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
   },
+  title: {
+    fontSize: 40,
+    color: "black"
+  },
   list: {
     margin: 20,
-    marginTop: 50,
     width: "80%",
   },
   listItem: {
     fontSize: 30,
     borderColor: "black",
-    borderWidth: 1
+    borderWidth: 1,
+    padding: 5,
   },
   lockContainer: {
     width: "70%",
