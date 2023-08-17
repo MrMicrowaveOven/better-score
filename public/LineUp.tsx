@@ -1,28 +1,35 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View} from "react-native";
-import DragList, { DragListRenderItemInfo } from "react-native-draglist";
+import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback} from "react-native";
+import DragList from "react-native-draglist";
 
-const SOUND_OF_SILENCE = ["1","2","3","4","5","6","7","1","2","3","4","5","6","7",];
+const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = () => {
-  const [data, setData] = useState(SOUND_OF_SILENCE);
+  const [data, setData] = useState(DEFAULT_LIST);
+  const [locked, setLocked] = useState(true)
 
   function keyExtractor(str: string) {
     return str;
   }
 
-  function renderItem(info: DragListRenderItemInfo) {
+  function renderItem(info: any) {
     const {item, onStartDrag, isActive} = info;
 
     return (
       <TouchableOpacity
         key={item}
         style={{backgroundColor: isActive ? "skyblue" : "white"}}
-        onPress={onStartDrag}
+        onPress={() => !locked && onStartDrag()}
       >
         <Text style={styles.listItem}>{item}</Text>
       </TouchableOpacity>
     );
+  }
+
+  const addPlayer = () => {
+    const numPlayers = data.length
+    const playerName = "Player " + (numPlayers + 1)
+    setData([...data, playerName])
   }
 
   async function onReordered(fromIndex: number, toIndex: number) {
@@ -45,6 +52,15 @@ const LineUp = () => {
           renderItem={renderItem}
         />
       </View>
+      <View style={styles.lockContainer}>
+        <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
+          {locked
+              ? <Image style={styles.lock} source={require('./locked.png')}/>
+              : <Image style={styles.lock} source={require('./unlocked.png')}/>
+            }
+        </TouchableWithoutFeedback>
+      </View>
+      <Button title={"Add Player"} onPress={addPlayer}/>
     </View>
   );
 }
@@ -54,18 +70,29 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "blue",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center"
   },
   list: {
     margin: 20,
+    marginTop: 50,
     width: "80%",
-    height: "80%",
-    // backgroundColor: "blue"
   },
   listItem: {
-    fontSize: 30
-  }
+    fontSize: 30,
+    borderColor: "black",
+    borderWidth: 1
+  },
+  lockContainer: {
+    width: "70%",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+  lock: {
+    width: 25,
+    height: 25
+  },
 })
 
 export default LineUp
