@@ -10,11 +10,13 @@ import type {PropsWithChildren} from 'react';
 import {
   Alert,
   Button,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import RoundScoreDisplay from './RoundScoreDisplay';
@@ -30,6 +32,8 @@ function App(): JSX.Element {
   const [score2, setScore2] = useState(0)
   const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
+
+  const [screenLocked, setScreenLocked] = useState(false)
 
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
@@ -76,29 +80,29 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.endRoundButton}>
-        <Button title="Save Round Score" onPress={() => confirmNextRound()}/>
+        <Button title="Save Round Score" onPress={() => () => !screenLocked && confirmNextRound()}/>
       </View>
       <View style={styles.scoreTitles}>
         <Text style={styles.scoreTitle}>{team1Name}</Text>
         <Text style={styles.scoreTitle}>{team2Name}</Text>
       </View>
       <View style={styles.scoreBoxes}>
-        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={pointFor1}>
+        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={() => !screenLocked && pointFor1()}>
           <Text style={styles.scoreDisplay}>{score1}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox2]} onPress={pointFor2}>
+        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox2]} onPress={() => !screenLocked && pointFor2()}>
             <Text style={styles.scoreDisplay}>{score2}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.minusBoxes}>
         <TouchableOpacity
-          onPress={minusPointFor1}
+          onPress={() => !screenLocked && minusPointFor1()}
           style={[styles.minusBox, styles.minusBox1]}
         >
           <Text style={styles.minusSymbol}>-</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={minusPointFor2}
+          onPress={() => !screenLocked && minusPointFor2()}
           style={[styles.minusBox, styles.minusBox2]}
         >
           <Text style={styles.minusSymbol}>-</Text>
@@ -106,8 +110,16 @@ function App(): JSX.Element {
       </View>
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
       <View style={styles.resetButton}>
-        <Button title="Reset Game" onPress={() => confirmReset()}/>
+        <Button title="Reset Game" onPress={() => !screenLocked && confirmReset()}/>
       </View>
+      <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
+        <View style={styles.lockSection}>
+          {screenLocked
+            ? <Image style={[styles.lock, styles.locked]} source={require('./locked.png')}/>
+            : <Image style={[styles.lock, styles.unlocked]} source={require('./unlocked.png')}/>
+          }
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -146,7 +158,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "50%",
     height: 150,
-    zIndex: 100,
+    zIndex: 1,
   },
   scoreBox1: {
     left: 0,
@@ -196,7 +208,16 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: "flex-end",
     alignItems: "center",
-  }
+  },
+  lockSection: {
+    position: "absolute",
+    bottom: 5,
+    right: 5
+  },
+  lock: {
+    width: 25,
+    height: 25
+  },
 });
 
 export default App;
