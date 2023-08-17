@@ -23,7 +23,7 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function ScoreBoard(): JSX.Element {
+const ScoreBoard = () => {
   const [team1Name, setTeam1Name] = useState("Team 1")
   const [team2Name, setTeam2Name] = useState("Team 2")
   const [score1, setScore1] = useState(0)
