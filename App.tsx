@@ -31,11 +31,11 @@ function App(): JSX.Element {
   const [roundScore1, setRoundScore1] = useState([])
   const [roundScore2, setRoundScore2] = useState([])
 
-  const pointFor1 = () => setScore1(score1 + 1)
-  const pointFor2 = () => setScore2(score2 + 1)
+  const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
+  const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
 
-  const minusPointFor1 = () => setScore1(score1 - 1)
-  const minusPointFor2 = () => setScore2(score2 - 1)
+  const minusPointFor1 = () => score1 > 0 && setScore1(score1 - 1)
+  const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
 
   const nextRound = () => {
     const previousScore1 : number[] = [...roundScore1]
@@ -92,13 +92,13 @@ function App(): JSX.Element {
       </View>
       <View style={styles.minusBoxes}>
         <TouchableOpacity
-          onPress={() => score1 > 0 && minusPointFor1()}
+          onPress={minusPointFor1}
           style={[styles.minusBox, styles.minusBox1]}
         >
           <Text style={styles.minusSymbol}>-</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => score2 > 0 && minusPointFor2()}
+          onPress={minusPointFor2}
           style={[styles.minusBox, styles.minusBox2]}
         >
           <Text style={styles.minusSymbol}>-</Text>
