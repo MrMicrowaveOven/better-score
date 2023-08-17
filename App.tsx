@@ -19,7 +19,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import RoundScoreDisplay from './RoundScoreDisplay';
+import RoundScoreDisplay from './public/RoundScoreDisplay';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -80,7 +80,7 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.endRoundButton}>
-        <Button title="Save Round Score" onPress={() => () => !screenLocked && confirmNextRound()}/>
+        <Button title="Save Round Score" onPress={() => !screenLocked && confirmNextRound()}/>
       </View>
       <View style={styles.scoreTitles}>
         <Text style={styles.scoreTitle}>{team1Name}</Text>
