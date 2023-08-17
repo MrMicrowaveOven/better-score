@@ -115,8 +115,8 @@ function App(): JSX.Element {
       <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
         <View style={styles.lockSection}>
           {screenLocked
-            ? <Image style={[styles.lock, styles.locked]} source={require('./locked.png')}/>
-            : <Image style={[styles.lock, styles.unlocked]} source={require('./unlocked.png')}/>
+            ? <Image style={styles.lock} source={require('./locked.png')}/>
+            : <Image style={styles.lock} source={require('./unlocked.png')}/>
           }
         </View>
       </TouchableWithoutFeedback>
