@@ -108,10 +108,10 @@ const LineUp = () => {
         </TouchableWithoutFeedback>
       </View>
       <Prompt
-        title={editingPlayerNumber && `Edit ${data[editingPlayerNumber]}`}
+        title={editingPlayerNumber !== null && `Edit ${data[editingPlayerNumber]}`}
         visible={editingPlayerNumber !== null}
         response={(newName) => setPlayerName(newName)}
-        defaultText={editingPlayerNumber && data[editingPlayerNumber]}
+        defaultText={editingPlayerNumber !== null && data[editingPlayerNumber]}
       />
     </View>
   );
