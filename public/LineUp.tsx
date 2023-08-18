@@ -1,16 +1,28 @@
 import React, {useState} from "react";
 import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback} from "react-native";
 import DragList from "react-native-draglist";
+import Prompt from "./Prompt"
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = () => {
   const [data, setData] = useState(DEFAULT_LIST);
-  const [locked, setLocked] = useState(true)
+  const [locked, setLocked] = useState(false)
   const [turn, setTurn] = useState(0)
+
+  const [editingPlayerNumber, setEditingPlayerNumber] = useState(null)
 
   function keyExtractor(str: string) {
     return str;
+  }
+
+  const setPlayerName = (newName) => {
+    if(newName && editingPlayerNumber){
+      const names = [...data]
+      names[editingPlayerNumber] = newName
+      setData(names)
+    }
+    setEditingPlayerNumber(null)
   }
 
   const nextTurn = () => {
@@ -32,7 +44,7 @@ const LineUp = () => {
         </TouchableOpacity>
         {!locked
           ? <View style={styles.buttonRow}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
                   <Image source={require("./edit.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => !locked && deletePlayer(index)}>
@@ -93,6 +105,12 @@ const LineUp = () => {
             }
         </TouchableWithoutFeedback>
       </View>
+      <Prompt
+        title={editingPlayerNumber && `Edit ${data[editingPlayerNumber]}`}
+        visible={editingPlayerNumber !== null}
+        response={(newName) => setPlayerName(newName)}
+        defaultText={editingPlayerNumber && data[editingPlayerNumber]}
+      />
     </View>
   );
 }
