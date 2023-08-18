@@ -7,21 +7,27 @@ const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 const LineUp = () => {
   const [data, setData] = useState(DEFAULT_LIST);
   const [locked, setLocked] = useState(true)
+  const [turn, setTurn] = useState(0)
 
   function keyExtractor(str: string) {
     return str;
   }
 
+  const nextTurn = () => {
+    const numPlayers = data.length
+    setTurn(turn === numPlayers - 1 ? 0 : turn + 1)
+  }
+
   function renderItem(info: any) {
     const {item, onStartDrag, isActive} = info;
-
+    const index = data.indexOf(item)
     return (
       <TouchableOpacity
         key={item}
         style={{backgroundColor: isActive ? "skyblue" : "white"}}
         onPress={() => !locked && onStartDrag()}
       >
-        <Text style={styles.listItem}>{item}</Text>
+        <Text style={[styles.listItem, index === turn && styles.listItemTurn]}>{item}</Text>
       </TouchableOpacity>
     );
   }
@@ -61,7 +67,10 @@ const LineUp = () => {
             }
         </TouchableWithoutFeedback>
       </View>
-      <Button title={"Add Player"} onPress={addPlayer}/>
+      <Button title={"Next turn"} onPress={nextTurn}/>
+      <View style={styles.addPlayerButton}>
+        <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
+      </View>
     </View>
   );
 }
@@ -87,6 +96,13 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     padding: 5,
+  },
+  listItemTurn: {
+    backgroundColor: "pink"
+  },
+  addPlayerButton: {
+    position: "absolute",
+    bottom: 30,
   },
   lockContainer: {
     width: "70%",
