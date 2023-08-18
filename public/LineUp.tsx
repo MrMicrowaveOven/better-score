@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback} from "react-native";
+import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, ScrollView} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 
@@ -85,17 +85,21 @@ const LineUp = () => {
   return (
     <View style={styles.body}>
       <Text style={styles.title}>Lineup</Text>
-      <View style={styles.list}>
-        <DragList
-          data={data}
-          keyExtractor={keyExtractor}
-          onReordered={onReordered}
-          renderItem={renderItem}
-        />
-      </View>
-      <Button title={"Next turn"} onPress={nextTurn}/>
-      <View style={styles.addPlayerButton}>
-        <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
+      <ScrollView style={styles.scrollableList}>
+        <View style={styles.list}>
+          <DragList
+            data={data}
+            keyExtractor={keyExtractor}
+            onReordered={onReordered}
+            renderItem={renderItem}
+          />
+        </View>
+      </ScrollView>
+      <View style={styles.addAndNextPlayerButton}>
+        { locked
+          ? <Button title={"Next turn"} onPress={nextTurn}/>
+          : <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
+        }
       </View>
       <View style={styles.lockContainer}>
         <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
@@ -127,8 +131,12 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: "black"
   },
+  scrollableList: {
+    flex: 1,
+    maxHeight: "80%"
+  },
   list: {
-    margin: 20,
+    margin: 30,
     width: "80%",
   },
   listItem: {
@@ -158,7 +166,7 @@ const styles = StyleSheet.create({
   spaceBetweenPlayers: {
     height: 10
   },
-  addPlayerButton: {
+  addAndNextPlayerButton: {
     position: "absolute",
     bottom: 30,
   },
