@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
 
 const Prompt = ({title, response, defaultText, visible}) => {
     const [nameText, setNameText] = useState(defaultText)
+
+    useEffect(() => {
+        setNameText(defaultText)
+    }, [visible])
+
     let text = defaultText
     return (
         <Modal visible={visible} transparent={true} animationType="fade">
