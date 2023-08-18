@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, ScrollView} from "react-native";
+import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 
@@ -40,7 +40,7 @@ const LineUp = () => {
           style={{backgroundColor: isActive ? "skyblue" : "white"}}
           onPress={() => !locked && onStartDrag()}
         >
-          <Text style={[styles.listItem, index === turn && styles.listItemTurn]}>{item}</Text>
+          <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
         </TouchableOpacity>
         {!locked
           ? <View style={styles.buttonRow}>
@@ -85,7 +85,6 @@ const LineUp = () => {
   return (
     <View style={styles.body}>
       <Text style={styles.title}>Lineup</Text>
-      <ScrollView style={styles.scrollableList}>
         <View style={styles.list}>
           <DragList
             data={data}
@@ -94,7 +93,6 @@ const LineUp = () => {
             renderItem={renderItem}
           />
         </View>
-      </ScrollView>
       <View style={styles.addAndNextPlayerButton}>
         { locked
           ? <Button title={"Next turn"} onPress={nextTurn}/>
@@ -138,6 +136,7 @@ const styles = StyleSheet.create({
   list: {
     margin: 30,
     width: "80%",
+    height: "75%",
   },
   listItem: {
     fontSize: 20,
