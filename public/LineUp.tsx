@@ -30,14 +30,16 @@ const LineUp = () => {
         >
           <Text style={[styles.listItem, index === turn && styles.listItemTurn]}>{item}</Text>
         </TouchableOpacity>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity onPress={() => {}}>
-              <Image source={require("./edit.png")} style={styles.editNameButton}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => deletePlayer(index)}>
-              <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
-          </TouchableOpacity>
-        </View>
+        {!locked
+          ? <View style={styles.buttonRow}>
+              <TouchableOpacity onPress={() => {}}>
+                  <Image source={require("./edit.png")} style={styles.editNameButton}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => !locked && deletePlayer(index)}>
+                  <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
+              </TouchableOpacity>
+            </View>
+          : <View style={styles.spaceBetweenPlayers}/>}
       </View>
     );
   }
@@ -134,6 +136,9 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     margin: 5,
+  },
+  spaceBetweenPlayers: {
+    height: 10
   },
   addPlayerButton: {
     position: "absolute",
