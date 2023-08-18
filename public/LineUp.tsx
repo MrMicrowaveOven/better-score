@@ -22,19 +22,39 @@ const LineUp = () => {
     const {item, onStartDrag, isActive} = info;
     const index = data.indexOf(item)
     return (
-      <TouchableOpacity
-        key={item}
-        style={{backgroundColor: isActive ? "skyblue" : "white"}}
-        onPress={() => !locked && onStartDrag()}
-      >
-        <Text style={[styles.listItem, index === turn && styles.listItemTurn]}>{item}</Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          key={item}
+          style={{backgroundColor: isActive ? "skyblue" : "white"}}
+          onPress={() => !locked && onStartDrag()}
+        >
+          <Text style={[styles.listItem, index === turn && styles.listItemTurn]}>{item}</Text>
+        </TouchableOpacity>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity onPress={() => {}}>
+              <Image source={require("./edit.png")} style={styles.editNameButton}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => deletePlayer(index)}>
+              <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 
+  const deletePlayer = (index: number) => {
+    const players = [...data]
+    players.splice(index, 1)
+    setData(players)
+  }
+
   const addPlayer = () => {
-    const numPlayers = data.length
-    const playerName = "Player " + (numPlayers + 1)
+    let playerNameStart = "Player "
+    let playerNumber = 1
+    while(data.indexOf(playerNameStart + playerNumber) !== -1) {
+      playerNumber += 1
+    }
+    const playerName = playerNameStart + playerNumber
     setData([...data, playerName])
   }
 
@@ -59,6 +79,10 @@ const LineUp = () => {
           renderItem={renderItem}
         />
       </View>
+      <Button title={"Next turn"} onPress={nextTurn}/>
+      <View style={styles.addPlayerButton}>
+        <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
+      </View>
       <View style={styles.lockContainer}>
         <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
           {locked
@@ -66,10 +90,6 @@ const LineUp = () => {
               : <Image style={styles.lock} source={require('./unlocked.png')}/>
             }
         </TouchableWithoutFeedback>
-      </View>
-      <Button title={"Next turn"} onPress={nextTurn}/>
-      <View style={styles.addPlayerButton}>
-        <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
       </View>
     </View>
   );
@@ -92,7 +112,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   listItem: {
-    fontSize: 30,
+    fontSize: 20,
     borderColor: "black",
     borderWidth: 1,
     padding: 5,
@@ -100,11 +120,29 @@ const styles = StyleSheet.create({
   listItemTurn: {
     backgroundColor: "pink"
   },
+  buttonRow: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  editNameButton: {
+    width: 20,
+    height: 20,
+    margin: 5,
+  },
+  deletePlayerButton: {
+    width: 20,
+    height: 20,
+    margin: 5,
+  },
   addPlayerButton: {
     position: "absolute",
     bottom: 30,
   },
   lockContainer: {
+    position: "absolute",
+    bottom: 30,
+    right: 30,
     width: "70%",
     display: "flex",
     justifyContent: "flex-end",
