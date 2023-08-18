@@ -21,7 +21,6 @@ const Prompt = ({title, response, defaultText, visible}) => {
                             value={nameText}
                             placeholder={defaultText}
                             maxLength={30}
-                            // keyboardType="numeric"
                         />
                     </View>
                     <View style={styles.buttons}>

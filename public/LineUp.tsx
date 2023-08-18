@@ -17,7 +17,7 @@ const LineUp = () => {
   }
 
   const setPlayerName = (newName) => {
-    if(newName && editingPlayerNumber){
+    if(newName && editingPlayerNumber !== null){
       const names = [...data]
       names[editingPlayerNumber] = newName
       setData(names)
