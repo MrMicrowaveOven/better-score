@@ -18,6 +18,7 @@ import {
   View,
 } from 'react-native';
 import RoundScoreDisplay from './RoundScoreDisplay';
+import Prompt from './Prompt';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -26,6 +27,7 @@ type SectionProps = PropsWithChildren<{
 const ScoreBoard = () => {
   const [team1Name, setTeam1Name] = useState("Team 1")
   const [team2Name, setTeam2Name] = useState("Team 2")
+  const [renamingTeam, setRenamingTeam] = useState(null)
   const [score1, setScore1] = useState(0)
   const [score2, setScore2] = useState(0)
   const [roundScore1, setRoundScore1] = useState([])
@@ -59,6 +61,13 @@ const ScoreBoard = () => {
     )
   }
 
+  const renameTeam = (newName) => {
+    renamingTeam === 1
+      ? setTeam1Name(newName)
+      : setTeam2Name(newName)
+    setRenamingTeam(null)
+  }
+
   const reset = () => {
     setScore1(0)
     setScore2(0)
@@ -81,8 +90,16 @@ const ScoreBoard = () => {
         <Button title="Save Round Score" onPress={() => !screenLocked && confirmNextRound()}/>
       </View>
       <View style={styles.scoreTitles}>
-        <Text style={styles.scoreTitle}>{team1Name}</Text>
-        <Text style={styles.scoreTitle}>{team2Name}</Text>
+        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)}>
+          <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
+            {team1Name}
+          </Text>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)}>
+          <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
+            {team2Name}
+          </Text>
+        </TouchableWithoutFeedback>
       </View>
       <View style={styles.scoreBoxes}>
         <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={() => !screenLocked && pointFor1()}>
@@ -118,6 +135,12 @@ const ScoreBoard = () => {
           }
         </View>
       </TouchableWithoutFeedback>
+      <Prompt
+        title={renamingTeam !== null && `Rename ${renamingTeam === 1 ? team1Name : team2Name}`}
+        visible={renamingTeam !== null}
+        response={newName => renameTeam(newName)}
+        defaultText={renamingTeam !== null && (renamingTeam === 1 ? team1Name : team2Name)}
+      />
     </View>
   );
 }
