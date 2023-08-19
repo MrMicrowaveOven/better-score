@@ -20,6 +20,8 @@ const Prompt = ({title, response, defaultText, visible}) => {
                             value={nameText}
                             placeholder={defaultText}
                             maxLength={30}
+                            autoFocus={true}
+                            selectTextOnFocus={true}
                         />
                     </View>
                     <View style={styles.buttons}>
