@@ -72,6 +72,15 @@ const LineUp = () => {
     setData([...data, playerName])
   }
 
+  const scramblePlayers = () => {
+    const playerList = [...data]
+    const scrambledPlayersList = playerList
+      .map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value)
+    setData(scrambledPlayersList)
+  }
+
   async function onReordered(fromIndex: number, toIndex: number) {
     // // Since we remove the element first, account for its index shift
     const finalIndex = fromIndex < toIndex ? toIndex - 1 : toIndex;
@@ -96,7 +105,14 @@ const LineUp = () => {
       <View style={styles.addAndNextPlayerButton}>
         { locked
           ? <Button title={"Next turn"} onPress={nextTurn}/>
-          : <Button title={"Add Player"} onPress={() => !locked && addPlayer()}/>
+          : <View style={styles.editLineupButtons}>
+              <View style={styles.editLineupButton}>
+                <Button title={"Add Player"} onPress={addPlayer}/>
+              </View>
+              <View style={styles.editLineupButton}>
+                <Button title={"Scramble!"} onPress={scramblePlayers}/>
+              </View>
+            </View>
         }
       </View>
       <View style={styles.lockContainer}>
@@ -168,6 +184,14 @@ const styles = StyleSheet.create({
   addAndNextPlayerButton: {
     position: "absolute",
     bottom: 30,
+  },
+  editLineupButtons: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+  },
+  editLineupButton: {
+    marginHorizontal: 10
   },
   lockContainer: {
     position: "absolute",
