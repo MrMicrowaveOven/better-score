@@ -6,9 +6,9 @@ import Prompt from "./Prompt"
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = () => {
-  const [data, setData] = useState(DEFAULT_LIST);
-  const [locked, setLocked] = useState(false)
-  const [turn, setTurn] = useState(0)
+  const [data, setData] = useState<string[]>(DEFAULT_LIST);
+  const [locked, setLocked] = useState<boolean>(false)
+  const [turn, setTurn] = useState<number>(0)
 
   const [editingPlayerNumber, setEditingPlayerNumber] = useState<number | null>(null)
 

@@ -17,17 +17,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import ScoreTitles from './ScoreTitles';
 import RoundScoreDisplay from './RoundScoreDisplay';
 import Prompt from './Prompt';
+import ScoreBoxes from './ScoreBoxes';
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 const ScoreBoard = () => {
-  const [team1Name, setTeam1Name] = useState<string>("Team 1")
-  const [team2Name, setTeam2Name] = useState<string>("Team 2")
-  const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
   const [score1, setScore1] = useState<number>(0)
   const [score2, setScore2] = useState<number>(0)
   const [roundScore1, setRoundScore1] = useState<number[]>([])
@@ -61,13 +60,6 @@ const ScoreBoard = () => {
     )
   }
 
-  const renameTeam = (newName : string) => {
-    renamingTeam === 1
-      ? setTeam1Name(newName)
-      : setTeam2Name(newName)
-    setRenamingTeam(null)
-  }
-
   const reset = () => {
     setScore1(0)
     setScore2(0)
@@ -89,40 +81,16 @@ const ScoreBoard = () => {
       <View style={styles.endRoundButton}>
         <Button title="Save Round Score" onPress={() => !screenLocked && confirmNextRound()}/>
       </View>
-      <View style={styles.scoreTitles}>
-        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)} onPress={() => {}}>
-          <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
-            {team1Name}
-          </Text>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)} onPress={() => {}}>
-          <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
-            {team2Name}
-          </Text>
-        </TouchableWithoutFeedback>
-      </View>
-      <View style={styles.scoreBoxes}>
-        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={() => !screenLocked && pointFor1()}>
-          <Text style={styles.scoreDisplay}>{score1}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.scoreBox, styles.scoreBox2]} onPress={() => !screenLocked && pointFor2()}>
-            <Text style={styles.scoreDisplay}>{score2}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.minusBoxes}>
-        <TouchableOpacity
-          onPress={() => !screenLocked && minusPointFor1()}
-          style={[styles.minusBox, styles.minusBox1]}
-        >
-          <Text style={styles.minusSymbol}>-</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => !screenLocked && minusPointFor2()}
-          style={[styles.minusBox, styles.minusBox2]}
-        >
-          <Text style={styles.minusSymbol}>-</Text>
-        </TouchableOpacity>
-      </View>
+      <ScoreTitles />
+      <ScoreBoxes
+        score1={score1}
+        score2={score2}
+        pointFor1={pointFor1}
+        minusPointFor1={minusPointFor1}
+        pointFor2={pointFor2}
+        minusPointFor2={minusPointFor2}
+        screenLocked={screenLocked}
+      />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
       <View style={styles.resetButton}>
         <Button title="Reset Game" onPress={() => !screenLocked && confirmReset()}/>
@@ -135,12 +103,6 @@ const ScoreBoard = () => {
           }
         </View>
       </TouchableWithoutFeedback>
-      <Prompt
-        title={renamingTeam !== null ? `Rename ${renamingTeam === 1 ? team1Name : team2Name}` : ""}
-        visible={renamingTeam !== null}
-        response={(newName : string) => renameTeam(newName)}
-        defaultText={renamingTeam !== null ? (renamingTeam === 1 ? team1Name : team2Name) : ""}
-      />
     </View>
   );
 }
@@ -150,68 +112,6 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     backgroundColor: "rgba(220,220,220,1)"
-  },
-  scoreTitles: {
-    width: "100%",
-    marginTop: 40,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: 'space-around'
-  },
-  scoreTitle: {
-    fontSize: 25,
-    color: "black",
-    margin: 5
-  },
-  scoreDisplay: {
-    fontSize: 60,
-    fontWeight: "500",
-    color: "black"
-  },
-  scoreBoxes: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
-  scoreBox: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "50%",
-    height: 150,
-    zIndex: 1,
-  },
-  scoreBox1: {
-    left: 0,
-    backgroundColor: "green",
-  },
-  scoreBox2: {
-    right: 0,
-    backgroundColor: "red",
-  },
-  minusBoxes: {
-    display: "flex",
-    flexDirection: "row"
-  },
-  minusBox: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 47,
-    width: "50%",
-  },
-  minusBox1: {
-    left: 0,
-    backgroundColor: "rgba(0,128,0,.5)"
-  },
-  minusBox2: {
-    right: 0,
-    backgroundColor: "rgba(255,0,0,.5)"
-  },
-  minusSymbol: {
-    color: "black",
-    textAlign: "center",
-    fontSize: 30
   },
   endRoundButton: {
     position: "absolute",
