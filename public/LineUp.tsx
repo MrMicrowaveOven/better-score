@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
+    margin: 10,
     color: "black"
   },
   scrollableList: {
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
   },
   list: {
     margin: 30,
+    marginTop: 0,
     width: "80%",
     height: "75%",
   },
