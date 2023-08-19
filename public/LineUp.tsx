@@ -10,13 +10,13 @@ const LineUp = () => {
   const [locked, setLocked] = useState(false)
   const [turn, setTurn] = useState(0)
 
-  const [editingPlayerNumber, setEditingPlayerNumber] = useState(null)
+  const [editingPlayerNumber, setEditingPlayerNumber] = useState<number | null>(null)
 
   function keyExtractor(str: string) {
     return str;
   }
 
-  const setPlayerName = (newName) => {
+  const setPlayerName = (newName : string) => {
     if(newName && editingPlayerNumber !== null){
       const names = [...data]
       names[editingPlayerNumber] = newName
@@ -131,10 +131,10 @@ const LineUp = () => {
         </TouchableWithoutFeedback>
       </View>
       <Prompt
-        title={editingPlayerNumber !== null && `Edit ${data[editingPlayerNumber]}`}
+        title={editingPlayerNumber !== null ? `Edit ${data[editingPlayerNumber]}` : ""}
         visible={editingPlayerNumber !== null}
-        response={(newName) => setPlayerName(newName)}
-        defaultText={editingPlayerNumber !== null && data[editingPlayerNumber]}
+        response={(newName : string) => setPlayerName(newName)}
+        defaultText={editingPlayerNumber !== null ? data[editingPlayerNumber] : ""}
       />
     </View>
   );
