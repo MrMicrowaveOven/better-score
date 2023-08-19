@@ -25,8 +25,8 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 const ScoreBoard = () => {
-  const [team1Name, setTeam1Name] = useState<String>("Team 1")
-  const [team2Name, setTeam2Name] = useState<String>("Team 2")
+  const [team1Name, setTeam1Name] = useState<string>("Team 1")
+  const [team2Name, setTeam2Name] = useState<string>("Team 2")
   const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
   const [score1, setScore1] = useState<number>(0)
   const [score2, setScore2] = useState<number>(0)
@@ -61,7 +61,7 @@ const ScoreBoard = () => {
     )
   }
 
-  const renameTeam = (newName : String) => {
+  const renameTeam = (newName : string) => {
     renamingTeam === 1
       ? setTeam1Name(newName)
       : setTeam2Name(newName)
@@ -136,10 +136,10 @@ const ScoreBoard = () => {
         </View>
       </TouchableWithoutFeedback>
       <Prompt
-        title={renamingTeam !== null && `Rename ${renamingTeam === 1 ? team1Name : team2Name}`}
+        title={renamingTeam !== null ? `Rename ${renamingTeam === 1 ? team1Name : team2Name}` : ""}
         visible={renamingTeam !== null}
         response={(newName : string) => renameTeam(newName)}
-        defaultText={renamingTeam !== null && (renamingTeam === 1 ? team1Name : team2Name)}
+        defaultText={renamingTeam !== null ? (renamingTeam === 1 ? team1Name : team2Name) : ""}
       />
     </View>
   );

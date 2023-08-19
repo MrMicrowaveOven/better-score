@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
 
-const Prompt = ({title, response, defaultText, visible}) => {
+type PromptProps = {
+    title: string;
+    response: Function;
+    defaultText: string;
+    visible: boolean;
+}
+
+const Prompt = (props : PromptProps) => {
+    const {title, response, defaultText, visible} = props
     const [nameText, setNameText] = useState(defaultText)
 
     useEffect(() => {
