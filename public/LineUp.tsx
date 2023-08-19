@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback} from "react-native";
+import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 
@@ -73,12 +73,19 @@ const LineUp = () => {
   }
 
   const scramblePlayers = () => {
-    const playerList = [...data]
-    const scrambledPlayersList = playerList
-      .map(value => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
-    setData(scrambledPlayersList)
+    Alert.alert("Confirmation",
+      "Are you sure you want scramble the order of all players?",[
+        { text: "No", onPress: () => {} },
+        { text: "Yes", onPress: () => {
+          const playerList = [...data]
+          const scrambledPlayersList = playerList
+            .map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value)
+          setData(scrambledPlayersList)
+        }}
+      ]
+    )
   }
 
   async function onReordered(fromIndex: number, toIndex: number) {
