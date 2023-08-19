@@ -5,10 +5,9 @@ const Prompt = ({title, response, defaultText, visible}) => {
     const [nameText, setNameText] = useState(defaultText)
 
     useEffect(() => {
-        setNameText(defaultText)
+        visible && setNameText(defaultText)
     }, [visible])
 
-    let text = defaultText
     return (
         <Modal visible={visible} transparent={true} animationType="fade">
             <View style={styles.modalContainer}>
