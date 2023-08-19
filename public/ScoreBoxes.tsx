@@ -15,11 +15,11 @@ const ScoreBoxes = (props : ScoreBoxesProps) => {
     const {score1, score2, pointFor1, minusPointFor1, pointFor2, minusPointFor2, screenLocked} = props
     return (
         <View>
-            <View style={styles.scoreBoxes}>
-                <TouchableOpacity style={[styles.scoreBox, styles.scoreBox1]} onPress={() => !screenLocked && pointFor1()}>
+            <View style={styles.addBoxes}>
+                <TouchableOpacity style={[styles.addBox, styles.addBox1]} onPress={() => !screenLocked && pointFor1()}>
                 <Text style={styles.scoreDisplay}>{score1}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.scoreBox, styles.scoreBox2]} onPress={() => !screenLocked && pointFor2()}>
+                <TouchableOpacity style={[styles.addBox, styles.addBox2]} onPress={() => !screenLocked && pointFor2()}>
                     <Text style={styles.scoreDisplay}>{score2}</Text>
                 </TouchableOpacity>
             </View>
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: "black"
     },
-    scoreBoxes: {
+    addBoxes: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-evenly",
     },
-    scoreBox: {
+    addBox: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
         height: 150,
         zIndex: 1,
     },
-    scoreBox1: {
+    addBox1: {
         left: 0,
         backgroundColor: "green",
     },
-    scoreBox2: {
+    addBox2: {
         right: 0,
         backgroundColor: "red",
     },
