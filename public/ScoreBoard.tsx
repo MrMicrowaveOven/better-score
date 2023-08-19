@@ -25,15 +25,15 @@ type SectionProps = PropsWithChildren<{
 }>;
 
 const ScoreBoard = () => {
-  const [team1Name, setTeam1Name] = useState("Team 1")
-  const [team2Name, setTeam2Name] = useState("Team 2")
-  const [renamingTeam, setRenamingTeam] = useState(null)
-  const [score1, setScore1] = useState(0)
-  const [score2, setScore2] = useState(0)
-  const [roundScore1, setRoundScore1] = useState([])
-  const [roundScore2, setRoundScore2] = useState([])
+  const [team1Name, setTeam1Name] = useState<String>("Team 1")
+  const [team2Name, setTeam2Name] = useState<String>("Team 2")
+  const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
+  const [score1, setScore1] = useState<number>(0)
+  const [score2, setScore2] = useState<number>(0)
+  const [roundScore1, setRoundScore1] = useState<number[]>([])
+  const [roundScore2, setRoundScore2] = useState<number[]>([])
 
-  const [screenLocked, setScreenLocked] = useState(false)
+  const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
@@ -61,7 +61,7 @@ const ScoreBoard = () => {
     )
   }
 
-  const renameTeam = (newName) => {
+  const renameTeam = (newName : String) => {
     renamingTeam === 1
       ? setTeam1Name(newName)
       : setTeam2Name(newName)
@@ -90,12 +90,12 @@ const ScoreBoard = () => {
         <Button title="Save Round Score" onPress={() => !screenLocked && confirmNextRound()}/>
       </View>
       <View style={styles.scoreTitles}>
-        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)}>
+        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)} onPress={() => {}}>
           <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
             {team1Name}
           </Text>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)}>
+        <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)} onPress={() => {}}>
           <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
             {team2Name}
           </Text>
@@ -138,7 +138,7 @@ const ScoreBoard = () => {
       <Prompt
         title={renamingTeam !== null && `Rename ${renamingTeam === 1 ? team1Name : team2Name}`}
         visible={renamingTeam !== null}
-        response={newName => renameTeam(newName)}
+        response={(newName : string) => renameTeam(newName)}
         defaultText={renamingTeam !== null && (renamingTeam === 1 ? team1Name : team2Name)}
       />
     </View>
