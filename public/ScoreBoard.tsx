@@ -21,16 +21,18 @@ import ScoreTitles from './ScoreTitles';
 import RoundScoreDisplay from './RoundScoreDisplay';
 import Prompt from './Prompt';
 import ScoreBoxes from './ScoreBoxes';
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+const storage = new MMKVLoader().initialize();
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
 const ScoreBoard = () => {
-  const [score1, setScore1] = useState<number>(0)
-  const [score2, setScore2] = useState<number>(0)
-  const [roundScore1, setRoundScore1] = useState<number[]>([])
-  const [roundScore2, setRoundScore2] = useState<number[]>([])
+  const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
+  const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
+  const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
+  const [roundScore2, setRoundScore2] = useMMKVStorage<number[]>('roundScore2', storage, [])
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 

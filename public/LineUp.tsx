@@ -2,15 +2,15 @@ import React, {useState} from "react";
 import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
-// import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
-// const storage = new MMKVLoader().initialize();
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = () => {
-  const [lineUp, setLineUp] = useState<string[]>(DEFAULT_LIST);
+  const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
   const [locked, setLocked] = useState<boolean>(false)
-  const [turn, setTurn] = useState<number>(0)
+  const [turn, setTurn] = useMMKVStorage<number>('turn', storage, 0)
 
   const [editingPlayerNumber, setEditingPlayerNumber] = useState<number | null>(null)
 

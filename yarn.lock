@@ -5633,6 +5633,11 @@
   "resolved" "https://registry.npmjs.org/react-native-draglist/-/react-native-draglist-3.5.1.tgz"
   "version" "3.5.1"
 
+"react-native-mmkv-storage@^0.9.1":
+  "integrity" "sha512-FzSx4PKxK2ocT/OuKGlaVziWZyQYHYLUx9595i1oXY263C5mG19PN5RiBgEGL2S5lK4VGUCzO85GAcsrNPtpOg=="
+  "resolved" "https://registry.npmjs.org/react-native-mmkv-storage/-/react-native-mmkv-storage-0.9.1.tgz"
+  "version" "0.9.1"
+
 "react-native-pager-view@^6.2.0":
   "integrity" "sha512-pf9OnL/Tkr+5s4Gjmsn7xh91PtJLDa6qxYa/bmtUhd/+s4cQdWQ8DIFoOFghwZIHHHwVdWtoXkp6HtpjN+r20g=="
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.0.tgz"

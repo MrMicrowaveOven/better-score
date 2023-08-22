@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Prompt from './Prompt'
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+const storage = new MMKVLoader().initialize();
 
 const ScoreTitles = () => {
-    const [team1Name, setTeam1Name] = useState<string>("Team 1")
-    const [team2Name, setTeam2Name] = useState<string>("Team 2")
+    const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
+    const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
     const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
 
     const renameTeam = (newName : string) => {
