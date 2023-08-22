@@ -78,4 +78,8 @@ To learn more about React Native, take a look at the following resources:
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
 
-cd android && ./gradlew assembleRelease
+cd android && ./gradlew assembleRelease && cd ..
+
+
+(update version code first!)
+npx react-native build-android --mode=release
