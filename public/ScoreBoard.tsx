@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   resetButton: {
     position: "absolute",
     bottom: 0,
-    top: 0,
     left: 0,
     right: 0,
     justifyContent: "flex-end",
