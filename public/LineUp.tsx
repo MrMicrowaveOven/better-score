@@ -137,6 +137,7 @@ const LineUp = () => {
         visible={editingPlayerNumber !== null}
         response={(newName : string) => setPlayerName(newName)}
         defaultText={editingPlayerNumber !== null ? lineUp[editingPlayerNumber] : ""}
+        maxChars={30}
       />
     </View>
   );

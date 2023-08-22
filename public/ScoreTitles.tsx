@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Prompt from './Prompt'
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
@@ -16,15 +16,24 @@ const ScoreTitles = () => {
         setRenamingTeam(null)
       }
 
+    const scoreTitleFontSize = (teamNumber : number) => {
+        const screenWidth = Dimensions.get('window').width;
+        const textWidth = screenWidth / 2
+        const teamNameLength = teamNumber === 1 ? team1Name.length : team2Name.length
+        const minimumFontSize = 25
+        const fontSize = Math.sqrt(textWidth*25/teamNameLength)
+        return Math.min(fontSize, minimumFontSize)
+    }
+
     return (
         <View style={styles.scoreTitles}>
             <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)} onPress={() => {}}>
-                <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
+                <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(1)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team1Name}
                 </Text>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)} onPress={() => {}}>
-                <Text style={styles.scoreTitle} adjustsFontSizeToFit={true} numberOfLines={1}>
+                <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(2)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team2Name}
                 </Text>
             </TouchableWithoutFeedback>
@@ -33,6 +42,7 @@ const ScoreTitles = () => {
                 visible={renamingTeam !== null}
                 response={(newName : string) => renameTeam(newName)}
                 defaultText={renamingTeam !== null ? (renamingTeam === 1 ? team1Name : team2Name) : ""}
+                maxChars={1000}
             />
         </View>
     )
@@ -44,12 +54,15 @@ const styles = StyleSheet.create({
         marginTop: 40,
         display: "flex",
         flexDirection: "row",
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: "center",
+        height: 45,
     },
     scoreTitle: {
-        fontSize: 25,
+        width: "50%",
+        textAlign: "center",
         color: "black",
-        margin: 5
+        margin: 5,
     },
 })
 

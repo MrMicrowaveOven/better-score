@@ -6,10 +6,11 @@ type PromptProps = {
     response: Function;
     defaultText: string;
     visible: boolean;
+    maxChars: number;
 }
 
 const Prompt = (props : PromptProps) => {
-    const {title, response, defaultText, visible} = props
+    const {title, response, defaultText, visible, maxChars} = props
     const [nameText, setNameText] = useState(defaultText)
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const Prompt = (props : PromptProps) => {
                             onChangeText={(newText) => setNameText(newText)}
                             value={nameText}
                             placeholder={defaultText}
-                            maxLength={30}
+                            maxLength={maxChars ? maxChars : 1000}
                             autoFocus={true}
                             selectTextOnFocus={true}
                         />
