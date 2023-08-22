@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
+// import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+// const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = () => {
-  const [data, setData] = useState<string[]>(DEFAULT_LIST);
+  const [lineUp, setLineUp] = useState<string[]>(DEFAULT_LIST);
   const [locked, setLocked] = useState<boolean>(false)
   const [turn, setTurn] = useState<number>(0)
 
@@ -18,21 +20,21 @@ const LineUp = () => {
 
   const setPlayerName = (newName : string) => {
     if(newName && editingPlayerNumber !== null){
-      const names = [...data]
+      const names = [...lineUp]
       names[editingPlayerNumber] = newName
-      setData(names)
+      setLineUp(names)
     }
     setEditingPlayerNumber(null)
   }
 
   const nextTurn = () => {
-    const numPlayers = data.length
+    const numPlayers = lineUp.length
     setTurn(turn === numPlayers - 1 ? 0 : turn + 1)
   }
 
   function renderItem(info: any) {
     const {item, onStartDrag, isActive} = info;
-    const index = data.indexOf(item)
+    const index = lineUp.indexOf(item)
     return (
       <View>
         <TouchableOpacity
@@ -57,19 +59,19 @@ const LineUp = () => {
   }
 
   const deletePlayer = (index: number) => {
-    const players = [...data]
+    const players = [...lineUp]
     players.splice(index, 1)
-    setData(players)
+    setLineUp(players)
   }
 
   const addPlayer = () => {
     let playerNameStart = "Player "
     let playerNumber = 1
-    while(data.indexOf(playerNameStart + playerNumber) !== -1) {
+    while(lineUp.indexOf(playerNameStart + playerNumber) !== -1) {
       playerNumber += 1
     }
     const playerName = playerNameStart + playerNumber
-    setData([...data, playerName])
+    setLineUp([...lineUp, playerName])
   }
 
   const scramblePlayers = () => {
@@ -77,12 +79,12 @@ const LineUp = () => {
       "Are you sure you want scramble the order of all players?",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => {
-          const playerList = [...data]
+          const playerList = [...lineUp]
           const scrambledPlayersList = playerList
             .map(value => ({ value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
             .map(({ value }) => value)
-          setData(scrambledPlayersList)
+          setLineUp(scrambledPlayersList)
         }}
       ]
     )
@@ -91,11 +93,11 @@ const LineUp = () => {
   async function onReordered(fromIndex: number, toIndex: number) {
     // // Since we remove the element first, account for its index shift
     const finalIndex = fromIndex < toIndex ? toIndex - 1 : toIndex;
-    const copy = [...data];		// Don't modify react data in-place
+    const copy = [...lineUp];		// Don't modify react data in-place
     const removed = copy.splice(fromIndex, 1);
 
     copy.splice(finalIndex, 0, removed[0]);	// Now insert at the new pos
-	  setData(copy);
+	  setLineUp(copy);
   }
 
   return (
@@ -103,7 +105,7 @@ const LineUp = () => {
       <Text style={styles.title}>Lineup</Text>
         <View style={styles.list}>
           <DragList
-            data={data}
+            data={lineUp}
             keyExtractor={keyExtractor}
             onReordered={onReordered}
             renderItem={renderItem}
@@ -131,10 +133,10 @@ const LineUp = () => {
         </TouchableWithoutFeedback>
       </View>
       <Prompt
-        title={editingPlayerNumber !== null ? `Edit ${data[editingPlayerNumber]}` : ""}
+        title={editingPlayerNumber !== null ? `Edit ${lineUp[editingPlayerNumber]}` : ""}
         visible={editingPlayerNumber !== null}
         response={(newName : string) => setPlayerName(newName)}
-        defaultText={editingPlayerNumber !== null ? data[editingPlayerNumber] : ""}
+        defaultText={editingPlayerNumber !== null ? lineUp[editingPlayerNumber] : ""}
       />
     </View>
   );
