@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     main: {
         width: "100%",
         position: "absolute",
-        top: 280,
+        top: 282,
     },
     scoreList: {
         display: "flex",
@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     },
     scoreList1: {
         width: "50%",
-        backgroundColor: "rgba(90, 202, 133, .9)"
+        backgroundColor: "rgba(90, 202, 133, 1)"
     },
     scoreList2: {
         position: "absolute",
         width: "50%",
         top: 0,
         right: 0,
-        backgroundColor: "rgba(255,0,0, 0.7)"
+        backgroundColor: "rgba(255,0,0, 0.9)"
     },
     score: {
         fontSize: 28,

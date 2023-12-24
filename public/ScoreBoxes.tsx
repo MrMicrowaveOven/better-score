@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     minusSymbol: {
         color: "black",
         textAlign: "center",
-        fontSize: 30
+        fontSize: 30,
+        paddingBottom: 10,
     },
 })
 
