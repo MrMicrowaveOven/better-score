@@ -62,11 +62,11 @@ const styles = StyleSheet.create({
     },
     addBox1: {
         left: 0,
-        backgroundColor: "green",
+        backgroundColor: "rgba(90, 202, 133, 256)",
     },
     addBox2: {
         right: 0,
-        backgroundColor: "red",
+        backgroundColor: "rgba(249, 63, 64, 256)",
     },
     minusBoxes: {
         display: "flex",
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     minusBox1: {
         left: 0,
-        backgroundColor: "rgba(0,128,0,.5)"
+        backgroundColor: "rgba(90, 202, 133, .3)"
     },
     minusBox2: {
         right: 0,

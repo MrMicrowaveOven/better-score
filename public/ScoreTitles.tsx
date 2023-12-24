@@ -51,17 +51,17 @@ const ScoreTitles = () => {
 const styles = StyleSheet.create({
     scoreTitles: {
         width: "100%",
-        marginTop: 40,
         display: "flex",
         flexDirection: "row",
         justifyContent: 'space-around',
         alignItems: "center",
         height: 45,
+        backgroundColor: "#000500"
     },
     scoreTitle: {
         width: "50%",
         textAlign: "center",
-        color: "black",
+        color: "#fdda00",
         margin: 5,
     },
 })

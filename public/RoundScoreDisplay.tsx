@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     scoreList1: {
         width: "50%",
-        backgroundColor: "rgba(0, 128, 0, 0.3)"
+        backgroundColor: "rgba(90, 202, 133, .5)"
     },
     scoreList2: {
         position: "absolute",
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     scoreTotal: {
         fontSize: 30,
-        color: "black",
+        color: "#fdda00",
     },
 })
 

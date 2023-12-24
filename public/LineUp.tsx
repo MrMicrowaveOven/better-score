@@ -146,7 +146,7 @@ const LineUp = () => {
 const styles = StyleSheet.create({
   body: {
     height: "100%",
-    backgroundColor: "rgba(220,220,220,1)",
+    // backgroundColor: "#000500",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     margin: 10,
-    color: "black"
+    color: "#fdda00"
   },
   scrollableList: {
     flex: 1,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   listItemTurn: {
-    backgroundColor: "pink"
+    backgroundColor: "#fdda00"
   },
   buttonRow: {
     display: "flex",
@@ -212,11 +212,12 @@ const styles = StyleSheet.create({
     width: "70%",
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    // backgroundColor: "#fdda00"
   },
   lock: {
     width: 25,
-    height: 25
+    height: 25,
   },
 })
 

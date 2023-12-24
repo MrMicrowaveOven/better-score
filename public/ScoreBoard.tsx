@@ -80,9 +80,9 @@ const ScoreBoard = () => {
 
   return (
     <View style={styles.background}>
-      <View style={styles.endRoundButton}>
-        <Button title="Save Round Score" onPress={() => !screenLocked && confirmNextRound()}/>
-      </View>
+      <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
+        <Text style={styles.endRoundButtonText}>SAVE ROUND SCORES</Text>
+      </TouchableOpacity>
       <ScoreTitles />
       <ScoreBoxes
         score1={score1}
@@ -94,8 +94,10 @@ const ScoreBoard = () => {
         screenLocked={screenLocked}
       />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
-      <View style={styles.resetButton}>
-        <Button title="Reset Game" onPress={() => !screenLocked && confirmReset()}/>
+      <View style={styles.resetButtonContainer}>
+        <TouchableOpacity style={styles.resetButton} onPress={() => !screenLocked && confirmReset()}>
+          <Text style={styles.resetButtonText}>Reset Game</Text>
+        </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
         <View style={styles.lockSection}>
@@ -113,23 +115,40 @@ const styles = StyleSheet.create({
   background: {
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(220,220,220,1)"
+    backgroundColor: "#000500"
   },
   endRoundButton: {
-    position: "absolute",
-    bottom: 0,
-    top: 0,
-    left: 0,
-    right: 0,
-    justifyContent: "flex-start",
+    backgroundColor: "#fdda00",
+    width: "100%",
+    height: 40,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  resetButton: {
+  endRoundButtonText: {
+    color: "#000500",
+  },
+  resetButtonContainer: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+  },
+  resetButton: {
+    width: 120,
+    height: 25,
+    borderRadius: 5,
+    backgroundColor: "#fdda00",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  resetButtonText: {
+    color: "#000500"
   },
   lockSection: {
     position: "absolute",
