@@ -80,8 +80,8 @@ const ScoreBoard = () => {
 
   return (
     <View style={styles.background}>
-      <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
-        <Text style={styles.endRoundButtonText}>SAVE ROUND SCORES</Text>
+      <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
+        <Text style={styles.endRoundButtonText}>RESET GAME</Text>
       </TouchableOpacity>
       <ScoreTitles />
       <ScoreBoxes
@@ -95,8 +95,8 @@ const ScoreBoard = () => {
       />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
       <View style={styles.resetButtonContainer}>
-        <TouchableOpacity style={styles.resetButton} onPress={() => !screenLocked && confirmReset()}>
-          <Text style={styles.resetButtonText}>Reset Game</Text>
+        <TouchableOpacity style={styles.resetButton} onPress={() => !screenLocked && confirmNextRound()}>
+          <Text style={styles.resetButtonText}>SAVE ROUND</Text>
         </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
