@@ -83,11 +83,11 @@ const styles = StyleSheet.create({
     },
     minusBox1: {
         left: 0,
-        backgroundColor: "rgba(90, 202, 133, .3)"
+        backgroundColor: "rgba(90, 202, 133, .6)"
     },
     minusBox2: {
         right: 0,
-        backgroundColor: "rgba(255,0,0,.5)"
+        backgroundColor: "rgba(255,0,0,.7)"
     },
     minusSymbol: {
         color: "black",

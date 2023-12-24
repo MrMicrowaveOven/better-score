@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     },
     scoreList1: {
         width: "50%",
-        backgroundColor: "rgba(90, 202, 133, .5)"
+        backgroundColor: "rgba(90, 202, 133, .9)"
     },
     scoreList2: {
         position: "absolute",
         width: "50%",
         top: 0,
         right: 0,
-        backgroundColor: "rgba(255,0,0, 0.3)"
+        backgroundColor: "rgba(255,0,0, 0.7)"
     },
     score: {
         fontSize: 28,
