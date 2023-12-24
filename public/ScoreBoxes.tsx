@@ -17,10 +17,12 @@ const ScoreBoxes = (props : ScoreBoxesProps) => {
         <View>
             <View style={styles.addBoxes}>
                 <TouchableOpacity style={[styles.addBox, styles.addBox1]} onPress={() => !screenLocked && pointFor1()}>
-                <Text style={styles.scoreDisplay}>{score1}</Text>
+                    <Text style={styles.scoreDisplay}>{score1}</Text>
+                    <Text style={styles.minusSymbol}>+</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.addBox, styles.addBox2]} onPress={() => !screenLocked && pointFor2()}>
                     <Text style={styles.scoreDisplay}>{score2}</Text>
+                    <Text style={styles.minusSymbol}>+</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.minusBoxes}>
