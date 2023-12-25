@@ -28,7 +28,7 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-const ScoreBoard = () => {
+const ScoreBoard = (props) => {
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
@@ -83,8 +83,8 @@ const ScoreBoard = () => {
       <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.endRoundButtonText}>RESET GAME</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.moveToLineUp} onPress={() => console.log("FUN!")}>
-        <Text>Lineup</Text>
+      <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef.current.setPage(1)}>
+        <Text style={styles.moveToLineUpText}>{"LINEUP =>"}</Text>
       </TouchableOpacity>
       <ScoreTitles />
       <ScoreBoxes
@@ -127,9 +127,25 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    borderRightWidth: 1,
+    borderRightColor: "#000500",
+    borderRightStyle: "solid",
   },
   endRoundButtonText: {
     color: "#000500",
+  },
+  moveToLineUp: {
+    width: "25%",
+    height: 40,
+    backgroundColor: "yellow",
+    position: "absolute",
+    right: 0,
+    top: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  moveToLineUpText: {
   },
   resetButtonContainer: {
     position: "absolute",

@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { createRef, useRef } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import ScoreBoard from './public/ScoreBoard';
 import LineUp from './public/LineUp'
 import PagerView from 'react-native-pager-view';
 
 const App = () => {
+  const pagerViewRef = useRef(null);
   return (
-    <PagerView style={styles.pagerView} initialPage={0}>
+    <PagerView style={styles.pagerView} initialPage={0} ref={pagerViewRef}>
       <View key="1">
-        <ScoreBoard />
+        <ScoreBoard pagerViewRef={pagerViewRef}/>
       </View>
       <View key="2">
         <LineUp />
