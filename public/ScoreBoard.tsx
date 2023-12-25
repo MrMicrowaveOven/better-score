@@ -83,6 +83,9 @@ const ScoreBoard = () => {
       <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.endRoundButtonText}>RESET GAME</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.moveToLineUp} onPress={() => console.log("FUN!")}>
+        <Text>Lineup</Text>
+      </TouchableOpacity>
       <ScoreTitles />
       <ScoreBoxes
         score1={score1}
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
   },
   endRoundButton: {
     backgroundColor: "#fdda00",
-    width: "100%",
+    width: "75%",
     height: 40,
     display: "flex",
     justifyContent: "center",
