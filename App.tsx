@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from 'react';
+import React, { useRef } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import ScoreBoard from './public/ScoreBoard';
 import LineUp from './public/LineUp'
@@ -12,7 +12,7 @@ const App = () => {
         <ScoreBoard pagerViewRef={pagerViewRef}/>
       </View>
       <View key="2">
-        <LineUp />
+        <LineUp pagerViewRef={pagerViewRef}/>
       </View>
     </PagerView>
   )

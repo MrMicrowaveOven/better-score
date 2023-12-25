@@ -83,10 +83,10 @@ const ScoreBoard = (props) => {
       <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.endRoundButtonText}>RESET GAME</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef.current.setPage(1)}>
+      <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.current?.setPage(1)}>
         <Text style={styles.moveToLineUpText}>{"LINEUP =>"}</Text>
       </TouchableOpacity>
-      <ScoreTitles />
+      <ScoreTitles/>
       <ScoreBoxes
         score1={score1}
         score2={score2}

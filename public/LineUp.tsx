@@ -7,7 +7,7 @@ const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
-const LineUp = () => {
+const LineUp = (props) => {
   const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
   const [locked, setLocked] = useState<boolean>(false)
   const [turn, setTurn] = useMMKVStorage<number>('turn', storage, 0)
@@ -101,44 +101,49 @@ const LineUp = () => {
   }
 
   return (
-    <View style={styles.body}>
-      <Text style={styles.title}>Lineup</Text>
-        <View style={styles.list}>
-          <DragList
-            data={lineUp}
-            keyExtractor={keyExtractor}
-            onReordered={onReordered}
-            renderItem={renderItem}
-          />
+    <View>
+      <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.current?.setPage(0)}>
+        <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOAR"}</Text>
+      </TouchableOpacity>
+      <View style={styles.body}>
+        <Text style={styles.title}>Lineup</Text>
+          <View style={styles.list}>
+            <DragList
+              data={lineUp}
+              keyExtractor={keyExtractor}
+              onReordered={onReordered}
+              renderItem={renderItem}
+            />
+          </View>
+        <View style={styles.addAndNextPlayerButton}>
+          { locked
+            ? <Button title={"Next turn"} onPress={nextTurn}/>
+            : <View style={styles.editLineupButtons}>
+                <View style={styles.editLineupButton}>
+                  <Button title={"Add Player"} onPress={addPlayer}/>
+                </View>
+                <View style={styles.editLineupButton}>
+                  <Button title={"Scramble!"} onPress={scramblePlayers}/>
+                </View>
+              </View>
+          }
         </View>
-      <View style={styles.addAndNextPlayerButton}>
-        { locked
-          ? <Button title={"Next turn"} onPress={nextTurn}/>
-          : <View style={styles.editLineupButtons}>
-              <View style={styles.editLineupButton}>
-                <Button title={"Add Player"} onPress={addPlayer}/>
-              </View>
-              <View style={styles.editLineupButton}>
-                <Button title={"Scramble!"} onPress={scramblePlayers}/>
-              </View>
-            </View>
-        }
+        <View style={styles.lockContainer}>
+          <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
+            {locked
+                ? <Image style={styles.lock} source={require('./locked.png')}/>
+                : <Image style={styles.lock} source={require('./unlocked.png')}/>
+              }
+          </TouchableWithoutFeedback>
+        </View>
+        <Prompt
+          title={editingPlayerNumber !== null ? `Edit ${lineUp[editingPlayerNumber]}` : ""}
+          visible={editingPlayerNumber !== null}
+          response={(newName : string) => setPlayerName(newName)}
+          defaultText={editingPlayerNumber !== null ? lineUp[editingPlayerNumber] : ""}
+          maxChars={30}
+        />
       </View>
-      <View style={styles.lockContainer}>
-        <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
-          {locked
-              ? <Image style={styles.lock} source={require('./locked.png')}/>
-              : <Image style={styles.lock} source={require('./unlocked.png')}/>
-            }
-        </TouchableWithoutFeedback>
-      </View>
-      <Prompt
-        title={editingPlayerNumber !== null ? `Edit ${lineUp[editingPlayerNumber]}` : ""}
-        visible={editingPlayerNumber !== null}
-        response={(newName : string) => setPlayerName(newName)}
-        defaultText={editingPlayerNumber !== null ? lineUp[editingPlayerNumber] : ""}
-        maxChars={30}
-      />
     </View>
   );
 }
@@ -150,6 +155,26 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
+  },
+  moveToScoreBoard: {
+    width: 120,
+    height: 40,
+    backgroundColor: "yellow",
+    position: "absolute",
+    left: 0,
+    top: 0,
+    borderRightColor: "black",
+    borderRightWidth: 1,
+    borderRightStyle: "solid",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  moveToScoreBoardText: {
+    color: "black"
   },
   title: {
     fontSize: 40,
