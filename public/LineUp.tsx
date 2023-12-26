@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert} from "react-native";
+import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert, SafeAreaView} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
@@ -101,9 +101,9 @@ const LineUp = (props) => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.current?.setPage(0)}>
-        <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOAR"}</Text>
+        <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
       </TouchableOpacity>
       <View style={styles.body}>
         <Text style={styles.title}>Lineup</Text>
@@ -144,7 +144,7 @@ const LineUp = (props) => {
           maxChars={30}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

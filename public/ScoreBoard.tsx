@@ -11,6 +11,7 @@ import {
   Alert,
   Button,
   Image,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -79,7 +80,7 @@ const ScoreBoard = (props) => {
   }
 
   return (
-    <View style={styles.background}>
+    <SafeAreaView style={styles.background}>
       <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.endRoundButtonText}>RESET GAME</Text>
       </TouchableOpacity>
@@ -110,7 +111,7 @@ const ScoreBoard = (props) => {
           }
         </View>
       </TouchableWithoutFeedback>
-    </View>
+    </SafeAreaView>
   );
 }
 
