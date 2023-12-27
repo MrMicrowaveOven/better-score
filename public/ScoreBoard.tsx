@@ -117,7 +117,10 @@ const styles = StyleSheet.create({
   background: {
     height: "100%",
     width: "100%",
-    backgroundColor: "#000500"
+    backgroundColor: "#000500",
+    borderRightWidth: 1,
+    borderRightColor: "#000500",
+    borderRightStyle: "solid",
   },
   resetGameButton: {
     backgroundColor: "#fdda00",
@@ -129,6 +132,9 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: "#000500",
     borderRightStyle: "solid",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
   },
   resetGameButtonText: {
     color: "#000500",
@@ -142,7 +148,13 @@ const styles = StyleSheet.create({
     top: 0,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderRightColor: "black",
+    borderRightWidth: 1,
+    borderRightStyle: "solid",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
   },
   moveToLineUpText: {
   },
