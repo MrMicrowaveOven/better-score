@@ -29,7 +29,8 @@ const LineUp = (props: any) => {
 
   const nextTurn = () => {
     const numPlayers = lineUp.length
-    setTurn(turn === numPlayers - 1 ? 0 : turn + 1)
+    const nextTurnIndex = turn + 1
+    setTurn(nextTurnIndex >= numPlayers ? 0 : nextTurnIndex)
   }
 
   function renderItem(info: any) {
