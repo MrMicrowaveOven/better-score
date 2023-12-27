@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   lockSection: {
     position: "absolute",
     bottom: 10,
-    right: 20,
+    right: 10,
   },
   lock: {
     width: 20,

@@ -3,6 +3,7 @@ import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithou
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+import LineUpButton  from "./LineUpButton";
 const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
@@ -121,14 +122,10 @@ const LineUp = (props: any) => {
           </View>
         <View style={styles.addAndNextPlayerButton}>
           { locked
-            ? <Button title={"Next turn"} onPress={nextTurn}/>
+            ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
             : <View style={styles.editLineupButtons}>
-                <View style={styles.editLineupButton}>
-                  <Button title={"Add Player"} onPress={addPlayer}/>
-                </View>
-                <View style={styles.editLineupButton}>
-                  <Button title={"Scramble!"} onPress={scramblePlayers}/>
-                </View>
+                <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
+                <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
               </View>
           }
         </View>
@@ -241,9 +238,6 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "row",
-  },
-  editLineupButton: {
-    marginHorizontal: 10
   },
   lockContainer: {
     position: "absolute",
