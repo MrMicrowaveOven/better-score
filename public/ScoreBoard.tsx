@@ -182,12 +182,12 @@ const styles = StyleSheet.create({
   },
   lockSection: {
     position: "absolute",
-    bottom: 5,
-    right: 5
+    bottom: 10,
+    right: 20,
   },
   lock: {
-    width: 25,
-    height: 25
+    width: 20,
+    height: 27.1,
   },
 });
 

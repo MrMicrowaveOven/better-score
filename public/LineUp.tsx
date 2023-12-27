@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   lock: {
     width: 20,
-    height: 30,
+    height: 27.1,
   },
 })
 
