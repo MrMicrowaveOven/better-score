@@ -39,20 +39,20 @@ const LineUp = (props: any) => {
       <View>
         <View
           key={item}
-          style={[styles.player, {backgroundColor: isActive ? "#fdda00" : "white"}]}
+          style={[styles.player, {backgroundColor: isActive && !locked ? "#fdda00" : "white"}]}
         >
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
-          {isActive && <Image source={require("./draggable.png")} style={styles.draggable}/>}
+          {isActive && !locked && <Image source={require("./draggable.png")} style={styles.draggable}/>}
         </View>
         {!locked
           ? <View style={styles.buttonRow}>
               <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
                   <Image source={require("./edit.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => !locked && onStartDrag()}>
+              <TouchableOpacity onPress={() => onStartDrag()}>
                   <Image source={require("./move.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => !locked && deletePlayer(index)}>
+              <TouchableOpacity onPress={() => deletePlayer(index)}>
                   <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
               </TouchableOpacity>
             </View>
@@ -203,10 +203,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   listItemTurn: {
-    position: "absolute",
-    right: 0,
-    top: 0,
-    bottom: 0,
     backgroundColor: "#fdda00"
   },
   player: {},
