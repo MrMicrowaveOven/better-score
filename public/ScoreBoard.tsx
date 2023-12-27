@@ -9,7 +9,6 @@ import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   Alert,
-  Button,
   Image,
   SafeAreaView,
   StyleSheet,
@@ -20,7 +19,6 @@ import {
 } from 'react-native';
 import ScoreTitles from './ScoreTitles';
 import RoundScoreDisplay from './RoundScoreDisplay';
-import Prompt from './Prompt';
 import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
@@ -29,7 +27,7 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-const ScoreBoard = (props) => {
+const ScoreBoard = (props: any) => {
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
@@ -72,7 +70,7 @@ const ScoreBoard = (props) => {
 
   const confirmReset = () => {
     Alert.alert("Confirmation",
-      "Are you sure you want reset the game?",[
+      "Are you sure you want to reset the game?",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => reset() }
       ]
@@ -81,8 +79,8 @@ const ScoreBoard = (props) => {
 
   return (
     <SafeAreaView style={styles.background}>
-      <TouchableOpacity style={styles.endRoundButton} onPress={() => !screenLocked && confirmReset()}>
-        <Text style={styles.endRoundButtonText}>RESET GAME</Text>
+      <TouchableOpacity style={styles.resetGameButton} onPress={() => !screenLocked && confirmReset()}>
+        <Text style={styles.resetGameButtonText}>RESET GAME</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.current?.setPage(1)}>
         <Text style={styles.moveToLineUpText}>{"LINEUP =>"}</Text>
@@ -98,9 +96,9 @@ const ScoreBoard = (props) => {
         screenLocked={screenLocked}
       />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
-      <View style={styles.resetButtonContainer}>
-        <TouchableOpacity style={styles.resetButton} onPress={() => !screenLocked && confirmNextRound()}>
-          <Text style={styles.resetButtonText}>SAVE ROUND</Text>
+      <View style={styles.nextRoundButtonContainer}>
+        <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
+          <Text style={styles.nextRoundButtonText}>SAVE ROUND</Text>
         </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#000500"
   },
-  endRoundButton: {
+  resetGameButton: {
     backgroundColor: "#fdda00",
     width: "75%",
     height: 40,
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     borderRightColor: "#000500",
     borderRightStyle: "solid",
   },
-  endRoundButtonText: {
+  resetGameButtonText: {
     color: "#000500",
   },
   moveToLineUp: {
@@ -148,7 +146,7 @@ const styles = StyleSheet.create({
   },
   moveToLineUpText: {
   },
-  resetButtonContainer: {
+  nextRoundButtonContainer: {
     position: "absolute",
     bottom: 0,
     left: 0,
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  resetButton: {
+  nextRoundButton: {
     width: 120,
     height: 25,
     borderRadius: 5,
@@ -167,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  resetButtonText: {
+  nextRoundButtonText: {
     color: "#000500"
   },
   lockSection: {

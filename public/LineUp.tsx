@@ -7,7 +7,7 @@ const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
-const LineUp = (props) => {
+const LineUp = (props: any) => {
   const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
   const [locked, setLocked] = useState<boolean>(false)
   const [turn, setTurn] = useMMKVStorage<number>('turn', storage, 0)
