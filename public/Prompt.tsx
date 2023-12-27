@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
 
 type PromptProps = {
@@ -29,7 +29,6 @@ const Prompt = (props : PromptProps) => {
                             value={nameText}
                             placeholder={defaultText}
                             maxLength={maxChars ? maxChars : 1000}
-                            autoFocus={true}
                             selectTextOnFocus={true}
                         />
                     </View>
