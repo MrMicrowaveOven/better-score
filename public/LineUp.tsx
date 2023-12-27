@@ -37,17 +37,20 @@ const LineUp = (props: any) => {
     const index = lineUp.indexOf(item)
     return (
       <View>
-        <TouchableOpacity
+        <View
           key={item}
-          style={{backgroundColor: isActive ? "skyblue" : "white"}}
-          onPress={() => !locked && onStartDrag()}
+          style={[styles.player, {backgroundColor: isActive ? "#fdda00" : "white"}]}
         >
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
-        </TouchableOpacity>
+          {isActive && <Image source={require("./draggable.png")} style={styles.draggable}/>}
+        </View>
         {!locked
           ? <View style={styles.buttonRow}>
               <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
                   <Image source={require("./edit.png")} style={styles.editNameButton}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => !locked && onStartDrag()}>
+                  <Image source={require("./move.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => !locked && deletePlayer(index)}>
                   <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
@@ -200,7 +203,19 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   listItemTurn: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    bottom: 0,
     backgroundColor: "#fdda00"
+  },
+  player: {},
+  draggable: {
+    position: "absolute",
+    right: 12,
+    top: 8,
+    width: 20,
+    height: 20,
   },
   buttonRow: {
     display: "flex",
