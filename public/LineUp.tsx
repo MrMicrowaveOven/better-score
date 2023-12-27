@@ -151,7 +151,7 @@ const LineUp = (props: any) => {
 const styles = StyleSheet.create({
   body: {
     height: "100%",
-    // backgroundColor: "#000500",
+    backgroundColor: "#000500",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
@@ -171,7 +171,8 @@ const styles = StyleSheet.create({
     borderBottomStyle: "solid",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    zIndex: 5
   },
   moveToScoreBoardText: {
     color: "#000500"
@@ -234,15 +235,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 30,
-    width: "70%",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    // backgroundColor: "#fdda00"
   },
   lock: {
-    width: 25,
-    height: 25,
+    width: 20,
+    height: 30,
   },
 })
 
