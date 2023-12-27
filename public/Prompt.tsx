@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         width: "70%",
         height: "50%",
         backgroundColor: 'white',
-        borderColor: "black",
+        borderColor: "#000500",
         borderWidth: 1,
     },
     title: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: "white",
-        borderColor: "black",
+        borderColor: "#000500",
         borderWidth: 1,
         margin: 5,
     },

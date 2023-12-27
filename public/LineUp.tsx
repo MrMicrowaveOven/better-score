@@ -158,15 +158,15 @@ const styles = StyleSheet.create({
   },
   moveToScoreBoard: {
     width: 120,
-    height: 40,
-    backgroundColor: "yellow",
+    height: 30,
+    backgroundColor: "#fdda00",
     position: "absolute",
     left: 0,
     top: 0,
-    borderRightColor: "black",
+    borderRightColor: "#000500",
     borderRightWidth: 1,
     borderRightStyle: "solid",
-    borderBottomColor: "black",
+    borderBottomColor: "#000500",
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     display: "flex",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   moveToScoreBoardText: {
-    color: "black"
+    color: "#000500"
   },
   title: {
     fontSize: 40,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     fontSize: 20,
-    borderColor: "black",
+    borderColor: "#000500",
     borderWidth: 1,
     padding: 5,
   },

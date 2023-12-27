@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     scoreDisplay: {
         fontSize: 60,
         fontWeight: "500",
-        color: "black"
+        color: "#000500"
     },
     addBoxes: {
         display: "flex",
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(249, 63, 64, .7)",
     },
     minusSymbol: {
-        color: "black",
+        color: "#000500",
         textAlign: "center",
         fontSize: 30,
         paddingBottom: 10,
