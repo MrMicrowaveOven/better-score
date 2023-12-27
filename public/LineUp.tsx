@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     margin: 10,
+    marginTop: 20,
     color: "#fdda00"
   },
   scrollableList: {
@@ -204,7 +205,8 @@ const styles = StyleSheet.create({
   buttonRow: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   editNameButton: {
     width: 20,
