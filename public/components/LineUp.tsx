@@ -127,7 +127,7 @@ const LineUp = (props: any) => {
     </View>
 
   const TopMenu = () =>
-    <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.current?.setPage(0)}>
+    <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.setPage(0)}>
       <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
     </TouchableOpacity>
 
