@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import ScoreBoard from './public/ScoreBoard';
-import LineUp from './public/LineUp'
+import ScoreBoard from './public/components/ScoreBoard';
+import LineUp from './public/components/LineUp'
 import PagerView from 'react-native-pager-view';
 
 const App = () => {
