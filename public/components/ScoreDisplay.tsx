@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
     Text,
     View,
     StyleSheet,
   } from 'react-native';
 
-const RoundScoreDisplay = ({roundScore1, roundScore2}) => {
+type LineUpButtonProps = PropsWithChildren<{
+    roundScore1: number[];
+    roundScore2: number[];
+}>
+
+const RoundScoreDisplay = ({roundScore1, roundScore2}: LineUpButtonProps) => {
     return (
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
