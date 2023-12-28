@@ -104,8 +104,8 @@ const ScoreBoard = (props: any) => {
       <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
         <View style={styles.lockSection}>
           {screenLocked
-            ? <Image style={styles.lock} source={require('./locked.png')}/>
-            : <Image style={styles.lock} source={require('./unlocked.png')}/>
+            ? <Image style={styles.lock} source={require('./images/locked.png')}/>
+            : <Image style={styles.lock} source={require('./images/unlocked.png')}/>
           }
         </View>
       </TouchableWithoutFeedback>

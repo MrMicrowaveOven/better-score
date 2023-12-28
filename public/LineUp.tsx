@@ -44,18 +44,18 @@ const LineUp = (props: any) => {
           style={[styles.player, {backgroundColor: isActive && !locked ? "#fdda00" : "white"}]}
         >
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
-          {isActive && !locked && <Image source={require("./draggable.png")} style={styles.draggable}/>}
+          {isActive && !locked && <Image source={require("./images/draggable.png")} style={styles.draggable}/>}
         </View>
         {!locked
           ? <View style={styles.buttonRow}>
               <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
-                  <Image source={require("./edit.png")} style={styles.editNameButton}/>
+                  <Image source={require("./images/edit.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartDrag()}>
-                  <Image source={require("./move.png")} style={styles.editNameButton}/>
+                  <Image source={require("./images/move.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deletePlayer(index)}>
-                  <Image source={require("./delete.png")} style={styles.deletePlayerButton}/>
+                  <Image source={require("./images/delete.png")} style={styles.deletePlayerButton}/>
               </TouchableOpacity>
             </View>
           : <View style={styles.spaceBetweenPlayers}/>}
@@ -132,8 +132,8 @@ const LineUp = (props: any) => {
         <View style={styles.lockContainer}>
           <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
             {locked
-                ? <Image style={styles.lock} source={require('./locked.png')}/>
-                : <Image style={styles.lock} source={require('./unlocked.png')}/>
+                ? <Image style={styles.lock} source={require('./images/locked.png')}/>
+                : <Image style={styles.lock} source={require('./images/unlocked.png')}/>
               }
           </TouchableWithoutFeedback>
         </View>
