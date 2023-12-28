@@ -105,38 +105,50 @@ const LineUp = (props: any) => {
 	  setLineUp(copy);
   }
 
+  const Buttons = () =>
+    <View style={styles.addAndNextPlayerButton}>
+      { locked
+        ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
+        : <View style={styles.editLineupButtons}>
+            <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
+            <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
+          </View>
+      }
+    </View>
+
+  const LockButton = () =>
+    <View style={styles.lockContainer}>
+      <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
+        {locked
+            ? <Image style={styles.lock} source={require('../images/locked.png')}/>
+            : <Image style={styles.lock} source={require('../images/unlocked.png')}/>
+          }
+      </TouchableWithoutFeedback>
+    </View>
+
+  const TopMenu = () =>
+    <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.current?.setPage(0)}>
+      <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
+    </TouchableOpacity>
+
+  const LineUpList = () =>
+    <View style={styles.list}>
+      <DragList
+        data={lineUp}
+        keyExtractor={keyExtractor}
+        onReordered={onReordered}
+        renderItem={renderItem}
+      />
+    </View>
+
   return (
     <SafeAreaView>
-      <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.current?.setPage(0)}>
-        <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
-      </TouchableOpacity>
+      <TopMenu />
       <View style={styles.body}>
         <Text style={styles.title}>Lineup</Text>
-          <View style={styles.list}>
-            <DragList
-              data={lineUp}
-              keyExtractor={keyExtractor}
-              onReordered={onReordered}
-              renderItem={renderItem}
-            />
-          </View>
-        <View style={styles.addAndNextPlayerButton}>
-          { locked
-            ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
-            : <View style={styles.editLineupButtons}>
-                <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
-                <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
-              </View>
-          }
-        </View>
-        <View style={styles.lockContainer}>
-          <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
-            {locked
-                ? <Image style={styles.lock} source={require('../images/locked.png')}/>
-                : <Image style={styles.lock} source={require('../images/unlocked.png')}/>
-              }
-          </TouchableWithoutFeedback>
-        </View>
+        <LineUpList />
+        <Buttons />
+        <LockButton />
         <Prompt
           title={editingPlayerNumber !== null ? `Edit ${lineUp[editingPlayerNumber]}` : ""}
           visible={editingPlayerNumber !== null}

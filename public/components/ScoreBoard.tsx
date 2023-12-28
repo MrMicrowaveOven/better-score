@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 import ScoreTitles from './ScoreTitles';
-import RoundScoreDisplay from './RoundScoreDisplay';
+import RoundScoreDisplay from './ScoreDisplay';
 import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
@@ -77,14 +77,36 @@ const ScoreBoard = (props: any) => {
     )
   }
 
-  return (
-    <SafeAreaView style={styles.background}>
+  const TopMenu = () =>
+    <View>
       <TouchableOpacity style={styles.resetGameButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.resetGameButtonText}>RESET GAME</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.current?.setPage(1)}>
         <Text style={styles.moveToLineUpText}>{"LINEUP =>"}</Text>
       </TouchableOpacity>
+    </View>
+
+  const SaveRoundButton = () =>
+    <View style={styles.nextRoundButtonContainer}>
+      <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
+        <Text style={styles.nextRoundButtonText}>SAVE ROUND</Text>
+      </TouchableOpacity>
+    </View>
+
+  const LockButton = () =>
+    <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
+      <View style={styles.lockSection}>
+        {screenLocked
+          ? <Image style={styles.lock} source={require('./images/locked.png')}/>
+          : <Image style={styles.lock} source={require('./images/unlocked.png')}/>
+        }
+      </View>
+    </TouchableWithoutFeedback>
+
+  return (
+    <SafeAreaView style={styles.background}>
+      <TopMenu />
       <ScoreTitles/>
       <ScoreBoxes
         score1={score1}
@@ -96,19 +118,8 @@ const ScoreBoard = (props: any) => {
         screenLocked={screenLocked}
       />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
-      <View style={styles.nextRoundButtonContainer}>
-        <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
-          <Text style={styles.nextRoundButtonText}>SAVE ROUND</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableWithoutFeedback onPress={() => setScreenLocked(!screenLocked)}>
-        <View style={styles.lockSection}>
-          {screenLocked
-            ? <Image style={styles.lock} source={require('./images/locked.png')}/>
-            : <Image style={styles.lock} source={require('./images/unlocked.png')}/>
-          }
-        </View>
-      </TouchableWithoutFeedback>
+      <SaveRoundButton />
+      <LockButton />
     </SafeAreaView>
   );
 }
