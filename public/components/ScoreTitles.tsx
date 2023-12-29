@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Prompt from './Prompt'
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 
-const ScoreTitles = () => {
+type ScoreTitlesProps = PropsWithChildren<{
+    screenLocked: boolean;
+}>
+
+const ScoreTitles = ({screenLocked}: ScoreTitlesProps) => {
     const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
     const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
     const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
@@ -27,12 +31,12 @@ const ScoreTitles = () => {
 
     return (
         <View style={styles.scoreTitles}>
-            <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(1)} onPress={() => {}}>
+            <TouchableWithoutFeedback onLongPress={() => !screenLocked && setRenamingTeam(1)} onPress={() => {}}>
                 <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(1)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team1Name}
                 </Text>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onLongPress={() => setRenamingTeam(2)} onPress={() => {}}>
+            <TouchableWithoutFeedback onLongPress={() => !screenLocked && setRenamingTeam(2)} onPress={() => {}}>
                 <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(2)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team2Name}
                 </Text>

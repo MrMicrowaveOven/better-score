@@ -108,7 +108,7 @@ const ScoreBoard = (props: any) => {
   return (
     <SafeAreaView style={styles.background}>
       <TopMenu />
-      <ScoreTitles/>
+      <ScoreTitles screenLocked={screenLocked} />
       <ScoreBoxes
         score1={score1}
         score2={score2}
