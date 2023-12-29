@@ -82,7 +82,7 @@ const ScoreBoard = (props: any) => {
       <TouchableOpacity style={styles.resetGameButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.resetGameButtonText}>RESET GAME</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.setPage(1)}>
+      <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.current?.setPage(1)}>
         <Text style={styles.moveToLineUpText}>{"LINEUP"}</Text>
         <Image source={require("../images/arrowRight.png")} style={styles.moveToLineUpArrow}/>
       </TouchableOpacity>

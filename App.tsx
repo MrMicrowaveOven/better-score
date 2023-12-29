@@ -9,10 +9,10 @@ const App = () => {
   return (
     <PagerView style={styles.pagerView} initialPage={0} ref={pagerViewRef}>
       <View key="1">
-        <ScoreBoard pagerViewRef={pagerViewRef.current}/>
+        <ScoreBoard pagerViewRef={pagerViewRef}/>
       </View>
       <View key="2">
-        <LineUp pagerViewRef={pagerViewRef.current}/>
+        <LineUp pagerViewRef={pagerViewRef}/>
       </View>
     </PagerView>
   )
