@@ -5,7 +5,7 @@ import LineUp from './public/components/LineUp'
 import PagerView from 'react-native-pager-view';
 
 const App = () => {
-  const pagerViewRef = useRef(null);
+  const pagerViewRef: any = useRef(null);
 
   const goToScoreBoard = () => {
     pagerViewRef?.current?.setPage(0)
