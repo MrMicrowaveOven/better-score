@@ -96,7 +96,12 @@ const LineUp = (props: any) => {
     const {item, onDragStart, onDragEnd, isActive} = info;
     const index = lineUp.indexOf(item)
     return (
-      <View>
+      <View style={styles.playerRow}>
+        {!locked &&
+          <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
+            <Image source={require("../images/edit.png")} style={styles.editNameButton}/>
+          </TouchableOpacity>
+        }
         <TouchableOpacity
           onPressIn={() => draggable && onDragStart()}
           onPressOut={onDragEnd}
@@ -107,16 +112,9 @@ const LineUp = (props: any) => {
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
           {!locked && draggable && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
         </TouchableOpacity>
-        {!locked
-          ? <View style={styles.buttonRow}>
-              <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
-                  <Image source={require("../images/edit.png")} style={styles.editNameButton}/>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => deletePlayer(index)}>
-                  <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
-              </TouchableOpacity>
-            </View>
-          : <View style={styles.spaceBetweenPlayers}/>}
+        <TouchableOpacity onPress={() => deletePlayer(index)}>
+          <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -209,7 +207,7 @@ const styles = StyleSheet.create({
   list: {
     margin: 30,
     marginTop: 0,
-    width: "80%",
+    width: "100%",
     height: "75%",
   },
   listItem: {
@@ -221,19 +219,23 @@ const styles = StyleSheet.create({
   listItemTurn: {
     backgroundColor: "#fdda00"
   },
-  player: {},
+  playerRow: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  player: {
+    width: "80%"
+  },
   draggable: {
     position: "absolute",
     right: 12,
     top: 8,
     width: 20,
     height: 20,
-  },
-  buttonRow: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
   },
   editNameButton: {
     width: 20,
@@ -244,9 +246,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     margin: 5,
-  },
-  spaceBetweenPlayers: {
-    height: 10
   },
   addAndNextPlayerButton: {
     position: "absolute",
