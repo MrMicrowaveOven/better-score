@@ -10,6 +10,7 @@ const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = (props: any) => {
   const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
+  const [draggable, setDraggable] = useState<boolean>(false)
   const [locked, setLocked] = useState<boolean>(false)
   const [turn, setTurn] = useMMKVStorage<number>('turn', storage, 0)
 
@@ -92,24 +93,24 @@ const LineUp = (props: any) => {
     </View>
   
   const renderItem = (info: any) => {
-    const {item, onStartDrag, isActive} = info;
+    const {item, onDragStart, onDragEnd, isActive} = info;
     const index = lineUp.indexOf(item)
     return (
       <View>
-        <View
+        <TouchableOpacity
+          onPressIn={() => draggable && onDragStart()}
+          onPressOut={onDragEnd}
           key={item}
-          style={[styles.player, {backgroundColor: isActive && !locked ? "#fdda00" : "white"}]}
+          style={[styles.player, {backgroundColor: "white"}]}
+          activeOpacity={1}
         >
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
-          {isActive && !locked && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
-        </View>
+          {!locked && draggable && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
+        </TouchableOpacity>
         {!locked
           ? <View style={styles.buttonRow}>
               <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
                   <Image source={require("../images/edit.png")} style={styles.editNameButton}/>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => onStartDrag()}>
-                  <Image source={require("../images/move.png")} style={styles.editNameButton}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deletePlayer(index)}>
                   <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
@@ -124,16 +125,21 @@ const LineUp = (props: any) => {
     <View style={styles.addAndNextPlayerButton}>
       { locked
         ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
-        : <View style={styles.editLineupButtons}>
-            <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
-            <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
-          </View>
+        : draggable
+          ? <View style={styles.editLineupButtons}>
+              <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
+              <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
+            </View>
+          : <View style={styles.editLineupButtons}>
+              <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
+              <LineUpButton text={"REORDER"} onPress={() => setDraggable(true)}/>
+            </View>
       }
     </View>
 
   const LockButton = () =>
     <View style={styles.lockContainer}>
-      <TouchableWithoutFeedback onPress={() => setLocked(!locked)}>
+      <TouchableWithoutFeedback onPress={() => {setLocked(!locked); setDraggable(false)}}>
         {locked
             ? <Image style={styles.lock} source={require('../images/locked.png')}/>
             : <Image style={styles.lock} source={require('../images/unlocked.png')}/>
