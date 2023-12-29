@@ -34,35 +34,6 @@ const LineUp = (props: any) => {
     setTurn(nextTurnIndex >= numPlayers ? 0 : nextTurnIndex)
   }
 
-  function renderItem(info: any) {
-    const {item, onStartDrag, isActive} = info;
-    const index = lineUp.indexOf(item)
-    return (
-      <View>
-        <View
-          key={item}
-          style={[styles.player, {backgroundColor: isActive && !locked ? "#fdda00" : "white"}]}
-        >
-          <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
-          {isActive && !locked && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
-        </View>
-        {!locked
-          ? <View style={styles.buttonRow}>
-              <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
-                  <Image source={require("../images/edit.png")} style={styles.editNameButton}/>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => onStartDrag()}>
-                  <Image source={require("../images/move.png")} style={styles.editNameButton}/>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => deletePlayer(index)}>
-                  <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
-              </TouchableOpacity>
-            </View>
-          : <View style={styles.spaceBetweenPlayers}/>}
-      </View>
-    );
-  }
-
   const deletePlayer = (index: number) => {
     const players = [...lineUp]
     players.splice(index, 1)
@@ -105,6 +76,50 @@ const LineUp = (props: any) => {
 	  setLineUp(copy);
   }
 
+  const TopMenu = () =>
+    <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.setPage(0)}>
+      <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
+    </TouchableOpacity>
+
+  const LineUpList = () =>
+    <View style={styles.list}>
+      <DragList
+        data={lineUp}
+        keyExtractor={keyExtractor}
+        onReordered={onReordered}
+        renderItem={renderItem}
+      />
+    </View>
+  
+  const renderItem = (info: any) => {
+    const {item, onStartDrag, isActive} = info;
+    const index = lineUp.indexOf(item)
+    return (
+      <View>
+        <View
+          key={item}
+          style={[styles.player, {backgroundColor: isActive && !locked ? "#fdda00" : "white"}]}
+        >
+          <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
+          {isActive && !locked && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
+        </View>
+        {!locked
+          ? <View style={styles.buttonRow}>
+              <TouchableOpacity onPress={() => setEditingPlayerNumber(index)}>
+                  <Image source={require("../images/edit.png")} style={styles.editNameButton}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => onStartDrag()}>
+                  <Image source={require("../images/move.png")} style={styles.editNameButton}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deletePlayer(index)}>
+                  <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
+              </TouchableOpacity>
+            </View>
+          : <View style={styles.spaceBetweenPlayers}/>}
+      </View>
+    );
+  }
+
   const Buttons = () =>
     <View style={styles.addAndNextPlayerButton}>
       { locked
@@ -124,21 +139,6 @@ const LineUp = (props: any) => {
             : <Image style={styles.lock} source={require('../images/unlocked.png')}/>
           }
       </TouchableWithoutFeedback>
-    </View>
-
-  const TopMenu = () =>
-    <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.setPage(0)}>
-      <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
-    </TouchableOpacity>
-
-  const LineUpList = () =>
-    <View style={styles.list}>
-      <DragList
-        data={lineUp}
-        keyExtractor={keyExtractor}
-        onReordered={onReordered}
-        renderItem={renderItem}
-      />
     </View>
 
   return (
