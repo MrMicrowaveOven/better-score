@@ -83,7 +83,8 @@ const ScoreBoard = (props: any) => {
         <Text style={styles.resetGameButtonText}>RESET GAME</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.moveToLineUp} onPress={() => props.pagerViewRef?.setPage(1)}>
-        <Text style={styles.moveToLineUpText}>{"LINEUP =>"}</Text>
+        <Text style={styles.moveToLineUpText}>{"LINEUP"}</Text>
+        <Image source={require("../images/arrowRight.png")} style={styles.moveToLineUpArrow}/>
       </TouchableOpacity>
     </View>
 
@@ -158,7 +159,8 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
     borderRightColor: "#000500",
     borderRightWidth: 1,
@@ -168,6 +170,10 @@ const styles = StyleSheet.create({
     borderBottomStyle: "solid",
   },
   moveToLineUpText: {
+  },
+  moveToLineUpArrow: {
+    width: 20,
+    height: 20,
   },
   nextRoundButtonContainer: {
     position: "absolute",

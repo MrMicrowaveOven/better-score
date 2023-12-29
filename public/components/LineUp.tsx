@@ -79,7 +79,8 @@ const LineUp = (props: any) => {
 
   const TopMenu = () =>
     <TouchableOpacity style={styles.moveToScoreBoard} onPress={() => props.pagerViewRef?.setPage(0)}>
-      <Text style={styles.moveToScoreBoardText}>{"<= SCOREBOARD"}</Text>
+      <Image source={require("../images/arrowLeft.png")} style={styles.moveToScoreBoardArrow} />
+      <Text style={styles.moveToScoreBoardText}>{"SCOREBOARD"}</Text>
     </TouchableOpacity>
 
   const LineUpList = () =>
@@ -187,12 +188,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
     zIndex: 5
   },
   moveToScoreBoardText: {
     color: "#000500"
+  },
+  moveToScoreBoardArrow: {
+    height: 20,
+    width: 20,
   },
   title: {
     fontSize: 40,
