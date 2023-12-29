@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, Modal, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 type PromptProps = {
     title: string;
@@ -17,6 +17,11 @@ const Prompt = (props : PromptProps) => {
         visible && setNameText(defaultText)
     }, [visible])
 
+    const PromptButton = ({text, onPress}: any) =>
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+            <Text style={styles.buttonText}>{text}</Text>
+        </TouchableOpacity>
+
     return (
         <Modal visible={visible} transparent={true} animationType="fade">
             <View style={styles.modalContainer}>
@@ -24,27 +29,23 @@ const Prompt = (props : PromptProps) => {
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.input}>
                         <TextInput
-                            // style={styles.input}
                             onChangeText={(newText) => setNameText(newText)}
                             value={nameText}
                             placeholder={defaultText}
                             maxLength={maxChars ? maxChars : 1000}
                             selectTextOnFocus={true}
+                            style={styles.textInput}
                         />
                     </View>
                     <View style={styles.buttons}>
-                        <View style={styles.button}>
-                            <Button
-                                title={"Cancel"}
-                                onPress={() => response(defaultText)}
-                            />
-                        </View>
-                        <View style={styles.button}>
-                            <Button
-                                title={"Save"}
-                                onPress={() => response(nameText)}
-                            />
-                        </View>
+                        <PromptButton
+                            text={"Cancel"}
+                            onPress={() => response(defaultText)}
+                        />
+                        <PromptButton
+                            text={"Save"}
+                            onPress={() => response(nameText)}
+                        />
                     </View>
                 </View>
             </View>
@@ -57,6 +58,8 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        width: 400,
+        borderRadius: 10,
     },
     modal: {
         width: "70%",
@@ -64,15 +67,25 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: "#000500",
         borderWidth: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
     },
     title: {
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: 18,
+        margin: 10,
     },
     input: {
+        width: "80%",
         backgroundColor: "white",
         borderColor: "#000500",
         borderWidth: 1,
-        margin: 5,
+        borderRadius: 5,
+        margin: 10,
+    },
+    textInput: {
+        fontSize: 20,
     },
     buttons: {
         position: "absolute",
@@ -80,11 +93,24 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
-        width: "100%"
+        width: "100%",
+        margin: 10,
     },
     button: {
-        width: "40%"
+        backgroundColor: "#fdda00",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#000500",
+        borderStyle: "solid",
+        width: 125,
+        height: 40,
+        borderRadius: 5,
     },
+    buttonText: {
+        fontSize: 18,
+    }
 })
 
 export default Prompt;
