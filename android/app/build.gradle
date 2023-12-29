@@ -78,8 +78,8 @@ android {
         applicationId "com.betterscore"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
-        versionName "1.55"
+        versionCode 23
+        versionName "1.56"
     }
     signingConfigs {
         debug {
