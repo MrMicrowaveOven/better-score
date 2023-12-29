@@ -7,21 +7,21 @@ import PagerView from 'react-native-pager-view';
 const App = () => {
   const pagerViewRef = useRef(null);
 
-  const ScoreBoardComponent = forwardRef((props, pagerViewRef) => (
-    <ScoreBoard pagerViewRef={pagerViewRef}/>
-  ))
+  const goToScoreBoard = () => {
+    pagerViewRef?.current?.setPage(0)
+  }
 
-  const LineUpComponent = forwardRef((props, pagerViewRef) => (
-    <LineUp pagerViewRef={pagerViewRef}/>
-  ))
+  const goToLineUp = () => {
+    pagerViewRef?.current?.setPage(1)
+  }
 
   return (
     <PagerView style={styles.pagerView} initialPage={0} ref={pagerViewRef}>
       <View key="1">
-        <ScoreBoardComponent ref={pagerViewRef}/>
+        <ScoreBoard goToLineUp={goToLineUp} />
       </View>
       <View key="2">
-        <LineUpComponent ref={pagerViewRef}/>
+        <LineUp goToScoreBoard={goToScoreBoard} />
       </View>
     </PagerView>
   )
