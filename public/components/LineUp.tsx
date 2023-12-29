@@ -113,9 +113,11 @@ const LineUp = (props: any) => {
           <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
           {!locked && draggable && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => deletePlayer(index)}>
-          <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
-        </TouchableOpacity>
+        {!locked &&
+          <TouchableOpacity onPress={() => deletePlayer(index)}>
+            <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
+          </TouchableOpacity>
+        }
       </View>
     );
   }
