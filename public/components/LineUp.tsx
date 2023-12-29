@@ -126,8 +126,8 @@ const LineUp = (props: any) => {
         ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
         : draggable
           ? <View style={styles.editLineupButtons}>
-              <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
               <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
+              <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
             </View>
           : <View style={styles.editLineupButtons}>
               <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
