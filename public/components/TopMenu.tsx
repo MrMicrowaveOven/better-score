@@ -11,14 +11,11 @@ type TopMenuProps = PropsWithChildren<{
     backgroundColor?: string;
 }>;
 
-const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, backgroundColor}: any) => {
-    console.log(backgroundColor)
+const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, backgroundColor}: TopMenuProps) => {
     return(
         <View style={[styles.body, !left && {justifyContent: "flex-end"}, {backgroundColor: backgroundColor}]}>
             {left && leftAction &&
-                <TouchableOpacity style={styles.left}
-                    onPress={() => leftAction()}
-                >
+                <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
                     <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
                     <Text style={styles.leftText}>{left}</Text>
                 </TouchableOpacity>}
@@ -27,9 +24,7 @@ const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, ba
                     <Text style={styles.centerText}>{center}</Text>
                 </TouchableOpacity>}
             {right && rightAction &&
-                <TouchableOpacity style={styles.right}
-                    onPress={() => rightAction()}
-                >
+                <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
                     <Text style={styles.rightText}>{right}</Text>
                     <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
                 </TouchableOpacity>}
