@@ -144,7 +144,7 @@ const LineUp = (props: any) => {
     </View>
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <TopMenu
         left={"SCOREBOARD"}
         leftAction={() => props.goToScoreBoard()}
@@ -168,9 +168,11 @@ const LineUp = (props: any) => {
 }
 
 const styles = StyleSheet.create({
-  body: {
+  container: {
     height: "100%",
     backgroundColor: "#000500",
+  },
+  body: {
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center"
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     margin: 10,
-    marginTop: 20,
+    marginTop: 0,
     color: "#fdda00"
   },
   scrollableList: {
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
   },
   addAndNextPlayerButton: {
     position: "absolute",
-    bottom: 30,
+    bottom: 0,
   },
   editLineupButtons: {
     width: "100%",
@@ -265,8 +267,8 @@ const styles = StyleSheet.create({
   },
   lockContainer: {
     position: "absolute",
-    bottom: 30,
-    right: 30,
+    bottom: 10,
+    right: 20,
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-end",
