@@ -23,15 +23,26 @@ import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
+type ScoreBoardProps = PropsWithChildren<{
+  goToLineUp?: Function;
+  goToStats?: Function;
+  statsPage: boolean;
 }>;
 
-const ScoreBoard = (props: any) => {
+type Game = {
+  team1: string;
+  team2: string;
+  score1: number[];
+  score2: number[];
+  time: Date;
+}
+
+const ScoreBoard = ({goToLineUp, goToStats, statsPage}: ScoreBoardProps) => {
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
   const [roundScore2, setRoundScore2] = useMMKVStorage<number[]>('roundScore2', storage, [])
+  const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
@@ -61,7 +72,24 @@ const ScoreBoard = (props: any) => {
     )
   }
 
+  const saveHistory = async () => {
+    const MMKV = new MMKVLoader().initialize();
+    const team1 = await MMKV.getStringAsync("team1Name") ?? "";
+    const team2 = await MMKV.getStringAsync("team2Name") ?? "";
+    const game = {
+      team1: team1,
+      team2: team2,
+      score1: roundScore1,
+      score2: roundScore2,
+      time: new Date(),
+    }
+    const previousHistory = history
+    previousHistory.push(game)
+    setHistory(previousHistory)
+  }
+
   const reset = () => {
+    saveHistory()
     setScore1(0)
     setScore2(0)
     setRoundScore1([])
@@ -78,12 +106,20 @@ const ScoreBoard = (props: any) => {
   }
 
   const TopMenu = () =>
-    <View>
+    <View style={styles.topMenu}>
+      <TouchableOpacity style={styles.moveToStats}
+        onPress={() => goToStats()}
+      >
+        <Image source={require("../images/arrowLeft.png")} style={styles.moveToLineUpArrow}/>
+        <Text style={styles.moveToStatsText}>STATS</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.resetGameButton} onPress={() => !screenLocked && confirmReset()}>
         <Text style={styles.resetGameButtonText}>RESET GAME</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.moveToLineUp} onPress={props.goToLineUp} >
-        <Text style={styles.moveToLineUpText}>{"LINEUP"}</Text>
+      <TouchableOpacity style={styles.moveToLineUp}
+        onPress={() => goToLineUp()}
+      >
+        <Text style={styles.moveToLineUpText}>LINEUP</Text>
         <Image source={require("../images/arrowRight.png")} style={styles.moveToLineUpArrow}/>
       </TouchableOpacity>
     </View>
@@ -134,9 +170,39 @@ const styles = StyleSheet.create({
     borderRightColor: "#000500",
     borderRightStyle: "solid",
   },
+  topMenu: {
+    display: "flex",
+    flexDirection: "row",
+    // position: "absolute",
+    // top: 0,
+  },
+  moveToStats: {
+    width: "25%",
+    height: 30,
+    backgroundColor: "#fdda00",
+    // position: "absolute",
+    // left: 0,
+    // top: 0,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRightColor: "#000500",
+    borderRightWidth: 1,
+    borderRightStyle: "solid",
+    borderBottomColor: "#000500",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+  },
+  moveToStatsText: {
+  },
+  moveToStatsArrow: {
+    width: 20,
+    height: 20,
+  },
   resetGameButton: {
     backgroundColor: "#fdda00",
-    width: "75%",
+    width: "50%",
     height: 30,
     display: "flex",
     justifyContent: "center",
@@ -155,9 +221,9 @@ const styles = StyleSheet.create({
     width: "25%",
     height: 30,
     backgroundColor: "#fdda00",
-    position: "absolute",
-    right: 0,
-    top: 0,
+    // position: "absolute",
+    // right: 0,
+    // top: 0,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -78,7 +78,9 @@ const LineUp = (props: any) => {
   }
 
   const TopMenu = () =>
-    <TouchableOpacity style={styles.moveToScoreBoard} onPress={props.goToScoreBoard} >
+    <TouchableOpacity style={styles.moveToScoreBoard}
+      onPress={props.goToScoreBoard}
+    >
       <Image source={require("../images/arrowLeft.png")} style={styles.moveToScoreBoardArrow} />
       <Text style={styles.moveToScoreBoardText}>{"SCOREBOARD"}</Text>
     </TouchableOpacity>
