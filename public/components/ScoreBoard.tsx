@@ -24,9 +24,10 @@ import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 
 type ScoreBoardProps = PropsWithChildren<{
-  goToLineUp?: Function;
-  goToStats?: Function;
+  goToLineUp: Function;
+  goToStats: Function;
   statsPage: boolean;
+  saveHistory: Function;
 }>;
 
 type Game = {
@@ -37,7 +38,7 @@ type Game = {
   time: Date;
 }
 
-const ScoreBoard = ({goToLineUp, goToStats, statsPage}: ScoreBoardProps) => {
+const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
@@ -72,24 +73,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage}: ScoreBoardProps) => {
     )
   }
 
-  const saveHistory = async () => {
-    const MMKV = new MMKVLoader().initialize();
-    const team1 = await MMKV.getStringAsync("team1Name") ?? "Team 1";
-    const team2 = await MMKV.getStringAsync("team2Name") ?? "Team 2";
-    const game = {
-      team1: team1,
-      team2: team2,
-      score1: roundScore1,
-      score2: roundScore2,
-      time: new Date(),
-    }
-    const previousHistory = history
-    previousHistory.push(game)
-    setHistory(previousHistory)
-  }
-
   const reset = () => {
-    saveHistory()
+    saveHistory({roundScore1: roundScore1, roundScore2: roundScore2})
     setScore1(0)
     setScore2(0)
     setRoundScore1([])

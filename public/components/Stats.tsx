@@ -1,7 +1,5 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
-const storage = new MMKVLoader().initialize();
 
 type Game = {
     team1: string;
@@ -10,10 +8,11 @@ type Game = {
     score2: number[];
     time: Date;
   }
+type ScoreBoardProps = PropsWithChildren<{
+    history: Game[]
+}>;
 
-const Stats = () => {
-    const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
-
+const Stats = ({history}: ScoreBoardProps) => {
     return (
         <ScrollView style={styles.body}>
             <Text style={styles.title}>Stats</Text>
@@ -39,7 +38,6 @@ const Game = ({game}: any) => {
     return(
         <View style={styles.scoreCard}>
             <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
-
             <View style={styles.scores}>
                 <View style={styles.score}>
                     <Text style={styles.teamName}>{team1}</Text>
