@@ -21,6 +21,7 @@ import ScoreTitles from './ScoreTitles';
 import RoundScoreDisplay from './ScoreDisplay';
 import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+import TopMenu from './TopMenu';
 const storage = new MMKVLoader().initialize();
 
 type ScoreBoardProps = PropsWithChildren<{
@@ -29,14 +30,6 @@ type ScoreBoardProps = PropsWithChildren<{
   statsPage: boolean;
   saveHistory: Function;
 }>;
-
-type Game = {
-  team1: string;
-  team2: string;
-  score1: number[];
-  score2: number[];
-  time: Date;
-}
 
 const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
@@ -89,25 +82,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     )
   }
 
-  const TopMenu = () =>
-    <View style={styles.topMenu}>
-      <TouchableOpacity style={styles.moveToStats}
-        onPress={() => goToStats()}
-      >
-        <Image source={require("../images/arrowLeft.png")} style={styles.moveToLineUpArrow}/>
-        <Text style={styles.moveToStatsText}>STATS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.resetGameButton} onPress={() => !screenLocked && confirmReset()}>
-        <Text style={styles.resetGameButtonText}>RESET GAME</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.moveToLineUp}
-        onPress={() => goToLineUp()}
-      >
-        <Text style={styles.moveToLineUpText}>LINEUP</Text>
-        <Image source={require("../images/arrowRight.png")} style={styles.moveToLineUpArrow}/>
-      </TouchableOpacity>
-    </View>
-
   const SaveRoundButton = () =>
     <View style={styles.nextRoundButtonContainer}>
       <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
@@ -127,7 +101,14 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
 
   return (
     <SafeAreaView style={styles.background}>
-      <TopMenu />
+      <TopMenu
+        left={"STATS"}
+        leftAction={() => goToStats()}
+        center={"RESET GAME"}
+        centerAction={() => !screenLocked && confirmReset()}
+        right={"LINEUP"}
+        rightAction={() => goToLineUp()}
+      />
       <ScoreTitles screenLocked={screenLocked} />
       <ScoreBoxes
         score1={score1}

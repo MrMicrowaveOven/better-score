@@ -4,6 +4,7 @@ import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 import LineUpButton  from "./LineUpButton";
+import TopMenu from "./TopMenu";
 const storage = new MMKVLoader().initialize();
 
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
@@ -77,14 +78,6 @@ const LineUp = (props: any) => {
 	  setLineUp(copy);
   }
 
-  const TopMenu = () =>
-    <TouchableOpacity style={styles.moveToScoreBoard}
-      onPress={props.goToScoreBoard}
-    >
-      <Image source={require("../images/arrowLeft.png")} style={styles.moveToScoreBoardArrow} />
-      <Text style={styles.moveToScoreBoardText}>{"SCOREBOARD"}</Text>
-    </TouchableOpacity>
-
   const LineUpList = () =>
     <View style={styles.list}>
       <DragList
@@ -152,7 +145,11 @@ const LineUp = (props: any) => {
 
   return (
     <SafeAreaView>
-      <TopMenu />
+      <TopMenu
+        left={"SCOREBOARD"}
+        leftAction={() => props.goToScoreBoard()}
+        backgroundColor={"#000500"}
+      />
       <View style={styles.body}>
         <Text style={styles.title}>Lineup</Text>
         <LineUpList />

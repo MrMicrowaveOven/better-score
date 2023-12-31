@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import TopMenu from "./TopMenu";
 
 type Game = {
     team1: string;
@@ -10,18 +11,26 @@ type Game = {
   }
 type ScoreBoardProps = PropsWithChildren<{
     history: Game[]
+    goToScoreBoard: Function;
 }>;
 
-const Stats = ({history}: ScoreBoardProps) => {
+const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
     return (
-        <ScrollView style={styles.body}>
-            <Text style={styles.title}>Stats</Text>
-            <View style={styles.scoreCards}>
-                {history.reverse().map((game, index) =>
-                    <Game key={index} game={game}/>
-                )}
-            </View>
-        </ScrollView>
+        <View style={styles.background}>
+            <TopMenu
+                right={"SCOREBOARD"}
+                rightAction={() => goToScoreBoard()}
+                backgroundColor={"white"}
+            />
+            <ScrollView style={styles.body}>
+                <Text style={styles.title}>Stats</Text>
+                <View style={styles.scoreCards}>
+                    {history.reverse().map((game, index) =>
+                        <Game key={index} game={game}/>
+                    )}
+                </View>
+            </ScrollView>
+        </View>
     )
 }
 
@@ -63,6 +72,9 @@ const Game = ({game}: any) => {
 }
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: "white"
+    },
     title: {
         fontSize: 40,
         margin: 10,

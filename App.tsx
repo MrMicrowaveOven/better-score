@@ -57,7 +57,10 @@ const App = () => {
   return (
     <PagerView style={styles.pagerView} initialPage={1} ref={pagerViewRef}>
       <View key="0">
-        <Stats history={history}/>
+        <Stats
+          goToScoreBoard={goToScoreBoard}
+          history={history}
+        />
       </View>
       <View key="1">
         <ScoreBoard
