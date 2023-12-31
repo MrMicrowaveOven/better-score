@@ -26,7 +26,7 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
                 <Text style={styles.title}>Stats</Text>
                 <View style={styles.scoreCards}>
                     {history.reverse().map((game, index) =>
-                        <Game key={index} game={game}/>
+                        <Game key={index} game={game} index={index}/>
                     )}
                 </View>
             </ScrollView>
@@ -42,10 +42,10 @@ type GameProps = {
     time: Date;
 }
 
-const Game = ({game}: any) => {
+const Game = ({game, index}: any) => {
     const {team1, team2, score1, score2, time} = game
     return(
-        <View style={styles.scoreCard}>
+        <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
             <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
             <View style={styles.scores}>
                 <View style={styles.score}>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     },
     scoreCard: {
         width: "50%",
-        backgroundColor: "#fdda00",
+        // backgroundColor: "#fdda00",
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "black",
