@@ -43,7 +43,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
   const [roundScore2, setRoundScore2] = useMMKVStorage<number[]>('roundScore2', storage, [])
-  const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
@@ -158,16 +157,11 @@ const styles = StyleSheet.create({
   topMenu: {
     display: "flex",
     flexDirection: "row",
-    // position: "absolute",
-    // top: 0,
   },
   moveToStats: {
     width: "25%",
     height: 30,
     backgroundColor: "#fdda00",
-    // position: "absolute",
-    // left: 0,
-    // top: 0,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -206,9 +200,6 @@ const styles = StyleSheet.create({
     width: "25%",
     height: 30,
     backgroundColor: "#fdda00",
-    // position: "absolute",
-    // right: 0,
-    // top: 0,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
