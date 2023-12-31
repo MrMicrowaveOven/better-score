@@ -16,9 +16,12 @@ const Stats = () => {
 
     return (
         <ScrollView style={styles.body}>
-            {history.reverse().map((game, index) =>
-                <Game key={index} game={game}/>
-            )}
+            <Text style={styles.title}>Stats</Text>
+            <View style={styles.scoreCards}>
+                {history.reverse().map((game, index) =>
+                    <Game key={index} game={game}/>
+                )}
+            </View>
         </ScrollView>
     )
 }
@@ -35,19 +38,26 @@ const Game = ({game}: any) => {
     const {team1, team2, score1, score2, time} = game
     return(
         <View style={styles.scoreCard}>
-            <Text>{new Date(time).toString().split("GMT")[0]}</Text>
+            <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
+
             <View style={styles.scores}>
                 <View style={styles.score}>
-                    <Text>{team1}</Text>
-                    {score1.map((score: number, index: number) =>
-                        <Text key={index}>{score}</Text>
-                    )}
+                    <Text style={styles.teamName}>{team1}</Text>
+                    {score1.length === 0
+                        ? <Text>{"(no score)"}</Text>
+                        :   score1.map((score: number, index: number) =>
+                                <Text key={index}>{score}</Text>
+                            )
+                    }
                 </View>
                 <View style={styles.score}>
-                    <Text>{team2}</Text>
-                    {score2.map((score: number, index: number) =>
-                        <Text key={index}>{score}</Text>
-                    )}
+                    <Text style={styles.teamName}>{team2}</Text>
+                    {score2.length === 0
+                        ? <Text>{"(no score)"}</Text>
+                        :   score2.map((score: number, index: number) =>
+                                <Text style={styles.scoreNumber} key={index}>{score}</Text>
+                            )
+                    }
                 </View>
             </View>
         </View>
@@ -55,17 +65,32 @@ const Game = ({game}: any) => {
 }
 
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 40,
+        margin: 10,
+        marginTop: 10,
+        color: "black",
+        textAlign: "center",
+    },
     body: {
         width: "100%",
         display: "flex",
         flexDirection: "column",
     },
+    scoreCards: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
     scoreCard: {
-        width: "100%",
-        backgroundColor: "yellow",
+        width: "50%",
+        backgroundColor: "#fdda00",
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "black",
+    },
+    gameTime: {
+        margin: 5,
     },
     scores: {
         display: "flex",
@@ -74,7 +99,16 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     score: {
-        margin: 5
+        margin: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    scoreNumber: {
+        textAlign: "center"
+    },
+    teamName: {
+        textAlign: "center"
     }
 })
 

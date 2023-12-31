@@ -74,8 +74,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage}: ScoreBoardProps) => {
 
   const saveHistory = async () => {
     const MMKV = new MMKVLoader().initialize();
-    const team1 = await MMKV.getStringAsync("team1Name") ?? "";
-    const team2 = await MMKV.getStringAsync("team2Name") ?? "";
+    const team1 = await MMKV.getStringAsync("team1Name") ?? "Team 1";
+    const team2 = await MMKV.getStringAsync("team2Name") ?? "Team 2";
     const game = {
       team1: team1,
       team2: team2,
@@ -98,7 +98,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage}: ScoreBoardProps) => {
 
   const confirmReset = () => {
     Alert.alert("Confirmation",
-      "Are you sure you want to reset the game?",[
+      "Are you sure you want to reset the game?  This will also save the game in your Stats.",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => reset() }
       ]
