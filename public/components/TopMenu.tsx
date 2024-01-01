@@ -12,22 +12,44 @@ type TopMenuProps = PropsWithChildren<{
 }>;
 
 const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, backgroundColor}: TopMenuProps) => {
+    return (
+        !center && !centerAction
+            ?   right && rightAction && !left && !leftAction
+                ? <RightMenu right={right} rightAction={rightAction}/>
+                : <LeftMenu left={left} leftAction={leftAction}/>
+            :   leftAction && centerAction && rightAction && 
+                    <View style={[styles.body, !left && {justifyContent: "flex-end"}]}>
+                        <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
+                            <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
+                            <Text style={styles.leftText}>{left}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.center} onPress={() => centerAction()}>
+                            <Text style={styles.centerText}>{center}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
+                            <Text style={styles.rightText}>{right}</Text>
+                            <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
+                        </TouchableOpacity>
+                    </View>
+    )
+}
+
+const LeftMenu = ({left, leftAction}: any) => {
     return(
-        <View style={[styles.body, !left && {justifyContent: "flex-end"}, {backgroundColor: backgroundColor}]}>
-            {left && leftAction &&
-                <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
-                    <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
-                    <Text style={styles.leftText}>{left}</Text>
-                </TouchableOpacity>}
-            {center && centerAction &&
-                <TouchableOpacity style={styles.center} onPress={() => centerAction()}>
-                    <Text style={styles.centerText}>{center}</Text>
-                </TouchableOpacity>}
-            {right && rightAction &&
-                <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
-                    <Text style={styles.rightText}>{right}</Text>
-                    <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
-                </TouchableOpacity>}
+        <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
+            <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
+            <Text style={styles.leftText}>{left}</Text>
+        </TouchableOpacity>
+    )
+}
+
+const RightMenu = ({right, rightAction}: any) => {
+    return(
+        <View style={styles.rightContainer}>
+            <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
+                <Text style={styles.rightText}>{right}</Text>
+                <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -36,7 +58,6 @@ const styles = StyleSheet.create({
     body: {
         display: "flex",
         flexDirection: "row",
-        // backgroundColor: 'rgba(0, 0, 0, 0)'
     },
     left: {
         width: "30%",
@@ -73,6 +94,11 @@ const styles = StyleSheet.create({
     },
     centerText: {
         color: "#000500",
+    },
+    rightContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
     },
     right: {
         width: "30%",

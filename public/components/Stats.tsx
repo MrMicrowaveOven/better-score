@@ -22,8 +22,8 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
                 rightAction={() => goToScoreBoard()}
                 backgroundColor={"white"}
             />
+            <Text style={styles.title}>Stats</Text>
             <ScrollView style={styles.body}>
-                <Text style={styles.title}>Stats</Text>
                 <View style={styles.scoreCards}>
                     {history.reverse().map((game, index) =>
                         <Game key={index} game={game} index={index}/>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         margin: 10,
-        marginTop: 10,
+        marginTop: 0,
         color: "black",
         textAlign: "center",
     },
@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
         width: "100%",
         display: "flex",
         flexDirection: "column",
+        borderTopColor: "black",
+        borderTopWidth: 1,
+        borderTopStyle: "solid"
     },
     scoreCards: {
         display: "flex",
