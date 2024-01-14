@@ -21,8 +21,9 @@ import ScoreTitles from './ScoreTitles';
 import RoundScoreDisplay from './ScoreDisplay';
 import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
-import TopMenu from './TopMenu';
 const storage = new MMKVLoader().initialize();
+import TopMenu from './TopMenu';
+import CountDown from 'react-native-countdown-component';
 
 type ScoreBoardProps = PropsWithChildren<{
   goToLineUp: Function;
@@ -38,6 +39,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [roundScore2, setRoundScore2] = useMMKVStorage<number[]>('roundScore2', storage, [])
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
+
+  const [timerId, setTimerId] = useMMKVStorage<number>('timerId', storage, Math.random())
 
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
@@ -71,6 +74,11 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setScore2(0)
     setRoundScore1([])
     setRoundScore2([])
+    resetTimer()
+  }
+
+  const resetTimer = () => {
+    setTimerId(Math.random)
   }
 
   const confirmReset = () => {
@@ -78,6 +86,15 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       "Are you sure you want to reset the game?  This will also save the game in your Stats.",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => reset() }
+      ]
+    )
+  }
+
+  const confirmResetTimer = () => {
+    Alert.alert("Confirmation",
+      "Are you sure you want to reset the timer?",[
+        { text: "No", onPress: () => {} },
+        { text: "Yes", onPress: () => resetTimer() }
       ]
     )
   }
@@ -120,6 +137,18 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         screenLocked={screenLocked}
       />
       <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
+      <View style={styles.timer}>
+        <CountDown
+          id={timerId}
+          until={45 * 60}
+          timeToShow={['M', 'S']}
+          timeLabels={{m: null, s: null}}
+          separatorStyle={{color: 'yellow', fontSize: 30}}
+          showSeparator
+          onPress={confirmResetTimer}
+          onFinish={() => Alert.alert('Game Over!')}
+        />
+      </View>
       <SaveRoundButton />
       <LockButton />
     </SafeAreaView>
@@ -219,6 +248,12 @@ const styles = StyleSheet.create({
   },
   nextRoundButtonText: {
     color: "#000500"
+  },
+  timer: {
+    position: "absolute",
+    bottom: 35,
+    left: 0,
+    right: 0,
   },
   lockSection: {
     position: "absolute",
