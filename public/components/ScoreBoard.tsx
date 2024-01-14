@@ -24,6 +24,7 @@ import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import TopMenu from './TopMenu';
 import CountDown from 'react-native-countdown-component';
+import SoundPlayer from 'react-native-sound-player'
 
 type ScoreBoardProps = PropsWithChildren<{
   goToLineUp: Function;
@@ -49,6 +50,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
 
   const nextRound = () => {
+    if (score1 > score2) playMissionImpossibleTheme()
     const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
     setRoundScore1(previousScore1)
@@ -99,6 +101,22 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     )
   }
 
+  const playGameOverSound = () => {
+    try {
+      SoundPlayer.playSoundFile('game_over_sound', 'mp3')
+    } catch (e) {
+
+    }
+  }
+
+  const playMissionImpossibleTheme = () => {
+    try {
+      SoundPlayer.playSoundFile('mission_impossible_theme', 'mp3')
+    } catch (e) {
+
+    }
+  }
+
   const SaveRoundButton = () =>
     <View style={styles.nextRoundButtonContainer}>
       <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
@@ -146,7 +164,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
           separatorStyle={{color: 'yellow', fontSize: 30}}
           showSeparator
           onPress={confirmResetTimer}
-          onFinish={() => Alert.alert('Game Over!')}
+          onFinish={() => playGameOverSound()}
         />
       </View>
       <SaveRoundButton />
