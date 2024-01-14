@@ -52,18 +52,26 @@ const Game = ({game, index}: any) => {
                     <Text style={styles.teamName}>{team1}</Text>
                     {score1.length === 0
                         ? <Text>{"(no score)"}</Text>
-                        :   score1.map((score: number, index: number) =>
-                                <Text key={index}>{score}</Text>
-                            )
+                        :   <View>
+                                {score1.map((score: number, index: number) =>
+                                    <Text style={styles.scoreNumber} key={index}>{score}</Text>
+                                )}
+                                <View style={styles.horLine} />
+                                <Text style={styles.scoreNumber}>{score1.reduce((a: number, b: number) => a + b, 0)}</Text>
+                            </View>
                     }
                 </View>
                 <View style={styles.score}>
                     <Text style={styles.teamName}>{team2}</Text>
                     {score2.length === 0
                         ? <Text>{"(no score)"}</Text>
-                        :   score2.map((score: number, index: number) =>
-                                <Text style={styles.scoreNumber} key={index}>{score}</Text>
-                            )
+                        :   <View>
+                                {score2.map((score: number, index: number) =>
+                                    <Text style={styles.scoreNumber} key={index}>{score}</Text>
+                                )}
+                                <View style={styles.horLine} />
+                                <Text style={styles.scoreNumber}>{score2.reduce((a: number, b: number) => a + b, 0)}</Text>
+                            </View>
                     }
                 </View>
             </View>
@@ -119,6 +127,13 @@ const styles = StyleSheet.create({
     },
     scoreNumber: {
         textAlign: "center"
+    },
+    horLine: {
+        width: 40,
+        height: 3,
+        borderBottomColor: "black",
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid",
     },
     teamName: {
         textAlign: "center"
