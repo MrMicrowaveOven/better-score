@@ -64,7 +64,7 @@ const Game = ({game, index}: any) => {
                 <View style={styles.score}>
                     <Text style={styles.teamName}>{team2}</Text>
                     {score2.length === 0
-                        ? <Text>{"(no score)"}</Text>
+                        ?   <Text>{"(no score)"}</Text>
                         :   <View>
                                 {score2.map((score: number, index: number) =>
                                     <Text style={styles.scoreNumber} key={index}>{score}</Text>
