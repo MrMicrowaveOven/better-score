@@ -6,19 +6,18 @@ const storage = new MMKVLoader().initialize();
 
 type ScoreTitlesProps = PropsWithChildren<{
     screenLocked: boolean;
+    setTeamName: Function;
+    team1Name: string;
+    team2Name: string;
 }>
 
-const ScoreTitles = ({screenLocked}: ScoreTitlesProps) => {
-    const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
-    const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
+const ScoreTitles = ({screenLocked, setTeamName, team1Name, team2Name}: ScoreTitlesProps) => {
     const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
 
     const renameTeam = (newName : string) => {
-        renamingTeam === 1
-          ? setTeam1Name(newName)
-          : setTeam2Name(newName)
+        setTeamName(renamingTeam, newName)
         setRenamingTeam(null)
-      }
+    }
 
     const scoreTitleFontSize = (teamNumber : number) => {
         const screenWidth = Dimensions.get('window').width;

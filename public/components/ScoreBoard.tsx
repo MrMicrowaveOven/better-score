@@ -34,6 +34,8 @@ type ScoreBoardProps = PropsWithChildren<{
 }>;
 
 const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
+  const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
+  const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
@@ -50,7 +52,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
 
   const nextRound = () => {
-    if (score1 > score2) playMissionImpossibleTheme()
+    if (shouldPlayMissionImpossibleTheme()) playMissionImpossibleTheme()
     const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
     setRoundScore1(previousScore1)
@@ -68,6 +70,22 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         { text: "Yes", onPress: () => nextRound() }
       ]
     )
+  }
+
+  const setTeamName = (renamingTeam: number, newName: string) => {
+    renamingTeam === 1
+              ? setTeam1Name(newName)
+              : setTeam2Name(newName)
+  }
+
+  const shouldPlayMissionImpossibleTheme = () => {
+    if (team1Name === "Mission Imbocceball" && score1 > score2) {
+      return true
+    } else if (team2Name === "Mission Imbocceball" && score1 < score2) {
+      return true
+    } else {
+      return false
+    }
   }
 
   const reset = () => {
@@ -144,7 +162,12 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         right={"LINEUP"}
         rightAction={() => goToLineUp()}
       />
-      <ScoreTitles screenLocked={screenLocked} />
+      <ScoreTitles
+        screenLocked={screenLocked}
+        setTeamName={(renamingTeam: number, newName: string) => setTeamName(renamingTeam, newName)}
+        team1Name={team1Name}
+        team2Name={team2Name}
+      />
       <ScoreBoxes
         score1={score1}
         score2={score2}
