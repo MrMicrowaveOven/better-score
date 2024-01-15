@@ -33,6 +33,15 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             }
         }
     }
+
+    const handleUpdate = (editedScore: string) => {
+        const editedScoreInt = parseInt(editedScore)
+        if(editedScoreInt >= 0 && editedScoreInt <= 4) {
+            editScore(editedScoreInt, editingScore);
+            setEditingScore([null, null])
+        }
+    }
+
     return (
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
@@ -57,7 +66,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
                 title={"Edit Score"}
                 defaultText={previousScore()}
                 visible={!!editingScore[0]}
-                response={(editedScore: string) => {editScore(parseInt(editedScore), editingScore); setEditingScore([null, null])}}
+                response={(editedScore: string) => handleUpdate(editedScore)}
                 maxChars={5}
             />
         </View>
