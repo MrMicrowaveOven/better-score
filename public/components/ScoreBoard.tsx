@@ -204,7 +204,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       />
       <View style={styles.timer}>
         <CountDown
-          id={typeof timerId === "number" ? timerId.toString() : ""}
+          id={timerId.toString()}
           until={45 * 60}
           timeToShow={['M', 'S']}
           timeLabels={{m: null, s: null}}
