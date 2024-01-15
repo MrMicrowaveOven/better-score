@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type PromptProps = {
     title: string;

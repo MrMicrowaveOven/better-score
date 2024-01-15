@@ -1,32 +1,63 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import {
     Text,
     View,
     StyleSheet,
+    TouchableHighlight,
   } from 'react-native';
+import Prompt from './Prompt';
 
 type LineUpButtonProps = PropsWithChildren<{
     roundScore1: number[];
     roundScore2: number[];
+    editScore: Function;
 }>
 
-const RoundScoreDisplay = ({roundScore1, roundScore2}: LineUpButtonProps) => {
+const RoundScoreDisplay = ({roundScore1, roundScore2, editScore}: LineUpButtonProps) => {
+    const [editingScore, setEditingScore] = useState<(string|number|null)[]>([null, null])
+
+    const previousScore = () => {
+        if (
+            typeof editingScore[1] === "number"
+            && typeof roundScore1[editingScore[1]] === "number"
+            && typeof roundScore2[editingScore[1]] === "number") {
+            switch(editingScore[0]) {
+                case 1:
+                    return roundScore1[editingScore[1]].toString()
+                case 2:
+                    return roundScore2[editingScore[1]].toString()
+                default:
+                    return ""
+            }
+        }
+    }
     return (
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
-                    return <Text key={index} style={styles.score}>{score}</Text>
+                    return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([1, index])}>
+                                <Text style={styles.score}>{score}</Text>
+                            </TouchableHighlight>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
-                    return <Text key={index} style={styles.score}>{score}</Text>
+                    return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([2, index])}>
+                                <Text key={index} style={styles.score}>{score}</Text>
+                            </TouchableHighlight>
                 })}
             </View>
             <View style={[styles.scoreTotals]}>
                 <Text style={[styles.scoreTotal]}>{roundScore1.reduce((a: number, b: number) => a + b, 0)}</Text>
                 <Text style={[styles.scoreTotal]}>{roundScore2.reduce((a: number, b: number) => a + b, 0)}</Text>
             </View>
+            <Prompt
+                title={"Edit Score"}
+                defaultText={previousScore()}
+                visible={!!editingScore[0]}
+                response={(editedScore: string) => {editScore(parseInt(editedScore), editingScore); setEditingScore([null, null])}}
+                maxChars={5}
+            />
         </View>
     )
 }

@@ -40,6 +40,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [score2, setScore2] = useMMKVStorage<number>('score2', storage, 0)
   const [roundScore1, setRoundScore1] = useMMKVStorage<number[]>('roundScore1', storage, [])
   const [roundScore2, setRoundScore2] = useMMKVStorage<number[]>('roundScore2', storage, [])
+  const [roundScore1edits, setroundScore1edits] = useMMKVStorage<number[]>('roundScore1edits', storage, [])
+  const [roundScore2edits, setroundScore2edits] = useMMKVStorage<number[]>('roundScore2edits', storage, [])
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
@@ -135,6 +137,15 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     }
   }
 
+  const editScore = (editedScore: number, editingScore: Array<string|number|null>) => {
+    const [editingTeam, scoreIndex] = editingScore
+    const oldRoundScore = editingTeam == 1 ? roundScore1 : roundScore2
+    if (typeof scoreIndex === 'number') {
+      oldRoundScore[scoreIndex] = editedScore
+      editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
+    }
+  }
+
   const SaveRoundButton = () =>
     <View style={styles.nextRoundButtonContainer}>
       <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
@@ -177,10 +188,14 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         minusPointFor2={minusPointFor2}
         screenLocked={screenLocked}
       />
-      <RoundScoreDisplay roundScore1={roundScore1} roundScore2={roundScore2}/>
+      <RoundScoreDisplay
+        roundScore1={roundScore1}
+        roundScore2={roundScore2}
+        editScore={(editedScore: number, editingScore: Array<string|number|null>) => editScore(editedScore, editingScore)}
+      />
       <View style={styles.timer}>
         <CountDown
-          id={timerId}
+          id={typeof timerId === "number" ? timerId.toString() : ""}
           until={45 * 60}
           timeToShow={['M', 'S']}
           timeLabels={{m: null, s: null}}
