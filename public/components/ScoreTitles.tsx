@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import Prompt from './Prompt'
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
@@ -30,16 +30,16 @@ const ScoreTitles = ({screenLocked, setTeamName, team1Name, team2Name}: ScoreTit
 
     return (
         <View style={styles.scoreTitles}>
-            <TouchableWithoutFeedback onLongPress={() => !screenLocked && setRenamingTeam(1)} onPress={() => {}}>
-                <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(1)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
+            <TouchableHighlight style={styles.scoreTitle} onLongPress={() => !screenLocked && setRenamingTeam(1)} onPress={() => {}}>
+                <Text style={[styles.scoreTitleText, {fontSize: scoreTitleFontSize(1)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team1Name}
                 </Text>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onLongPress={() => !screenLocked && setRenamingTeam(2)} onPress={() => {}}>
-                <Text style={[styles.scoreTitle, {fontSize: scoreTitleFontSize(2)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.scoreTitle} onLongPress={() => !screenLocked && setRenamingTeam(2)} onPress={() => {}}>
+                <Text style={[styles.scoreTitleText, {fontSize: scoreTitleFontSize(2)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team2Name}
                 </Text>
-            </TouchableWithoutFeedback>
+            </TouchableHighlight>
             <Prompt
                 title={renamingTeam !== null ? `Rename ${renamingTeam === 1 ? team1Name : team2Name}` : ""}
                 visible={renamingTeam !== null}
@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#000500"
     },
     scoreTitle: {
-        width: "50%",
+        width: "50%"
+    },
+    scoreTitleText: {
         textAlign: "center",
         color: "#fdda00",
         margin: 5,
