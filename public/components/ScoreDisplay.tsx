@@ -11,9 +11,11 @@ type LineUpButtonProps = PropsWithChildren<{
     roundScore1: number[];
     roundScore2: number[];
     editScore: Function;
+    roundScore1edits: number[];
+    roundScore2edits: number[];
 }>
 
-const RoundScoreDisplay = ({roundScore1, roundScore2, editScore}: LineUpButtonProps) => {
+const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edits, roundScore2edits}: LineUpButtonProps) => {
     const [editingScore, setEditingScore] = useState<(string|number|null)[]>([null, null])
 
     const previousScore = () => {
@@ -36,14 +38,14 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore}: LineUpButtonPr
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
                     return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([1, index])}>
-                                <Text style={styles.score}>{score}</Text>
+                                <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableHighlight>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
                     return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([2, index])}>
-                                <Text key={index} style={styles.score}>{score}</Text>
+                                <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableHighlight>
                 })}
             </View>
@@ -91,7 +93,6 @@ const styles = StyleSheet.create({
     },
     score: {
         fontSize: 28,
-        color: "#000500",
         fontWeight: "400",
         marginHorizontal: 10
     },

@@ -143,7 +143,14 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     if (typeof scoreIndex === 'number') {
       oldRoundScore[scoreIndex] = editedScore
       editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
+      addToRoundScoreEdits(editingTeam, scoreIndex)
     }
+  }
+
+  const addToRoundScoreEdits = (editingTeam: number, scoreIndex: number) => {
+    const edits = editingTeam === 1 ? roundScore1edits : roundScore2edits
+    edits.push(scoreIndex)
+    editingTeam === 1 ? setroundScore1edits(edits) : setroundScore2edits(edits)
   }
 
   const SaveRoundButton = () =>
@@ -192,6 +199,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         roundScore1={roundScore1}
         roundScore2={roundScore2}
         editScore={(editedScore: number, editingScore: Array<string|number|null>) => editScore(editedScore, editingScore)}
+        roundScore1edits={roundScore1edits}
+        roundScore2edits={roundScore2edits}
       />
       <View style={styles.timer}>
         <CountDown
