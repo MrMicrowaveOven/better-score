@@ -31,6 +31,8 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
                 default:
                     return ""
             }
+        } else {
+            return ""
         }
     }
 

@@ -140,7 +140,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const editScore = (editedScore: number, editingScore: Array<string|number|null>) => {
     const [editingTeam, scoreIndex] = editingScore
     const oldRoundScore = editingTeam == 1 ? roundScore1 : roundScore2
-    if (typeof scoreIndex === 'number') {
+    if (typeof scoreIndex === 'number' && typeof editingTeam === 'number') {
       oldRoundScore[scoreIndex] = editedScore
       editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
       addToRoundScoreEdits(editingTeam, scoreIndex)
