@@ -141,9 +141,11 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     const [editingTeam, scoreIndex] = editingScore
     const oldRoundScore = editingTeam == 1 ? roundScore1 : roundScore2
     if (typeof scoreIndex === 'number' && typeof editingTeam === 'number') {
-      oldRoundScore[scoreIndex] = editedScore
-      editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
-      addToRoundScoreEdits(editingTeam, scoreIndex)
+      if(oldRoundScore[scoreIndex] !== editedScore) {
+        addToRoundScoreEdits(editingTeam, scoreIndex)
+        oldRoundScore[scoreIndex] = editedScore
+        editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
+      }
     }
   }
 
