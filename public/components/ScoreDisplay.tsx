@@ -68,6 +68,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
                 visible={!!editingScore[0]}
                 response={(editedScore: string) => handleUpdate(editedScore)}
                 maxChars={5}
+                keyboardType={"numeric"}
             />
         </View>
     )

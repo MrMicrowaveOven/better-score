@@ -7,10 +7,13 @@ type PromptProps = {
     defaultText: string;
     visible: boolean;
     maxChars: number;
+    keyboardType?: KeyboardType;
 }
 
+type KeyboardType = 'numeric'
+
 const Prompt = (props : PromptProps) => {
-    const {title, response, defaultText, visible, maxChars} = props
+    const {title, response, defaultText, visible, maxChars, keyboardType} = props
     const [nameText, setNameText] = useState(defaultText)
 
     useEffect(() => {
@@ -35,6 +38,7 @@ const Prompt = (props : PromptProps) => {
                             maxLength={maxChars ? maxChars : 1000}
                             selectTextOnFocus={true}
                             style={styles.textInput}
+                            keyboardType={keyboardType ? keyboardType : undefined}
                         />
                     </View>
                     <View style={styles.buttons}>
