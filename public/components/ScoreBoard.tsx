@@ -96,6 +96,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setScore2(0)
     setRoundScore1([])
     setRoundScore2([])
+    setroundScore1edits([])
+    setroundScore2edits([])
     resetTimer()
   }
 
