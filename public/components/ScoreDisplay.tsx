@@ -4,6 +4,7 @@ import {
     View,
     StyleSheet,
     TouchableHighlight,
+    TouchableOpacity,
   } from 'react-native';
 import Prompt from './Prompt';
 
@@ -48,16 +49,16 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
-                    return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([1, index])}>
+                    return  <TouchableOpacity key={index} onLongPress={() => setEditingScore([1, index])}>
                                 <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
-                    return  <TouchableHighlight key={index} onLongPress={() => setEditingScore([2, index])}>
+                    return  <TouchableOpacity key={index} onLongPress={() => setEditingScore([2, index])}>
                                 <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                 })}
             </View>
             <View style={[styles.scoreTotals]}>

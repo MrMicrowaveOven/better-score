@@ -211,7 +211,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
           id={timerId.toString()}
           until={45 * 60}
           timeToShow={['M', 'S']}
-          timeLabels={{m: null, s: null}}
+          timeLabels={{m: undefined, s: undefined}}
           separatorStyle={{color: 'yellow', fontSize: 30}}
           showSeparator
           onPress={confirmResetTimer}
