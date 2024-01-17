@@ -77,7 +77,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
                 defaultText={previousScore()}
                 visible={!!editingScoreTeam}
                 response={(editedScore: string) => handleUpdate(editedScore)}
-                maxChars={5}
+                maxChars={1}
                 keyboardType={"numeric"}
             />
         </View>
