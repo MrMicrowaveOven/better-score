@@ -5,6 +5,7 @@ import {
     StyleSheet,
     TouchableHighlight,
     TouchableOpacity,
+    Alert,
   } from 'react-native';
 import Prompt from './Prompt';
 
@@ -39,6 +40,17 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         }
     }
 
+    const handleEdit = (team: number, index: number) => {
+        if((team === 1 && roundScore2[index] === 0) || (team === 2 && roundScore1[index] === 0)) {
+            setEditingScoreTeam(team)
+            setEditingScoreIndex(index)
+        } else {
+            cannotEditError()
+        }
+    }
+
+    const cannotEditError = () => Alert.alert("Edit Score Error", "Cannot edit score from 0, as the other team has a score in that round.")
+
     const handleUpdate = (editedScore: string) => {
         const editedScoreInt = parseInt(editedScore)
         if(editedScoreInt >= 0 && editedScoreInt <= 4) {
@@ -62,14 +74,14 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => {setEditingScoreTeam(1); setEditingScoreIndex(index)}}>
+                    return  <TouchableOpacity key={index} onLongPress={() => handleEdit(1, index)}>
                                 <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => {setEditingScoreTeam(2); setEditingScoreIndex(index)}}>
+                    return  <TouchableOpacity key={index} onLongPress={() => handleEdit(2, index)}>
                                 <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}
