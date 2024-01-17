@@ -51,6 +51,13 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         }
     }
 
+    const errorMessageText = () =>
+        badScore !== badScore
+            ? "Invalid score.\nPlease enter a score 0 through 4."
+            : typeof badScore === 'number'
+                ? `${badScore} is an invalid score.\nPlease enter a score 0 through 4.`
+                : undefined
+
     return (
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
@@ -73,7 +80,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             </View>
             <Prompt
                 title={"Edit Score"}
-                errorMessage={typeof badScore === 'number' ? `${badScore} is an invalid score.\nPlease enter a score 0 through 4.` : undefined}
+                errorMessage={errorMessageText()}
                 defaultText={previousScore()}
                 visible={!!editingScoreTeam}
                 response={(editedScore: string) => handleUpdate(editedScore)}
