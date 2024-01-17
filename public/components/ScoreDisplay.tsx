@@ -73,7 +73,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             </View>
             <Prompt
                 title={"Edit Score"}
-                errorMessage={typeof badScore === 'number' ? `${badScore} is an invalid score.  Please enter a score 0 through 4.` : undefined}
+                errorMessage={typeof badScore === 'number' ? `${badScore} is an invalid score.\nPlease enter a score 0 through 4.` : undefined}
                 defaultText={previousScore()}
                 visible={!!editingScoreTeam}
                 response={(editedScore: string) => handleUpdate(editedScore)}
