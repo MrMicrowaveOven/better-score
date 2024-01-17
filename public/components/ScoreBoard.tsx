@@ -139,14 +139,13 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     }
   }
 
-  const editScore = (editedScore: number, editingScore: Array<string|number|null>) => {
-    const [editingTeam, scoreIndex] = editingScore
-    const oldRoundScore = editingTeam == 1 ? roundScore1 : roundScore2
-    if (typeof scoreIndex === 'number' && typeof editingTeam === 'number') {
-      if(oldRoundScore[scoreIndex] !== editedScore) {
-        addToRoundScoreEdits(editingTeam, scoreIndex)
-        oldRoundScore[scoreIndex] = editedScore
-        editingTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
+  const editScore = (editedScore: number, editingScoreTeam: number|null, editingScoreIndex: number|null) => {
+    const oldRoundScore = editingScoreTeam == 1 ? roundScore1 : roundScore2
+    if (typeof editingScoreIndex === 'number' && typeof editingScoreTeam === 'number') {
+      if(oldRoundScore[editingScoreIndex] !== editedScore) {
+        addToRoundScoreEdits(editingScoreTeam, editingScoreIndex)
+        oldRoundScore[editingScoreIndex] = editedScore
+        editingScoreTeam == 1 ? setRoundScore1(oldRoundScore) : setRoundScore2(oldRoundScore)
       }
     }
   }
@@ -202,7 +201,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       <RoundScoreDisplay
         roundScore1={roundScore1}
         roundScore2={roundScore2}
-        editScore={(editedScore: number, editingScore: Array<string|number|null>) => editScore(editedScore, editingScore)}
+        editScore={(editedScore: number, editingScoreTeam: number|null, editingScoreIndex: number|null) => editScore(editedScore, editingScoreTeam, editingScoreIndex)}
         roundScore1edits={roundScore1edits}
         roundScore2edits={roundScore2edits}
       />

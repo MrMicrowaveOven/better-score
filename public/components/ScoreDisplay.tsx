@@ -17,18 +17,19 @@ type LineUpButtonProps = PropsWithChildren<{
 }>
 
 const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edits, roundScore2edits}: LineUpButtonProps) => {
-    const [editingScore, setEditingScore] = useState<(string|number|null)[]>([null, null])
+    const [editingScoreTeam, setEditingScoreTeam] = useState<number|null>(null)
+    const [editingScoreIndex, setEditingScoreIndex] = useState<number|null>(null)
 
     const previousScore = () => {
         if (
-            typeof editingScore[1] === "number"
-            && typeof roundScore1[editingScore[1]] === "number"
-            && typeof roundScore2[editingScore[1]] === "number") {
-            switch(editingScore[0]) {
+            typeof editingScoreIndex === "number"
+            && typeof roundScore1[editingScoreIndex] === "number"
+            && typeof roundScore2[editingScoreIndex] === "number") {
+            switch(editingScoreTeam) {
                 case 1:
-                    return roundScore1[editingScore[1]].toString()
+                    return roundScore1[editingScoreIndex].toString()
                 case 2:
-                    return roundScore2[editingScore[1]].toString()
+                    return roundScore2[editingScoreIndex].toString()
                 default:
                     return ""
             }
@@ -40,8 +41,9 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
     const handleUpdate = (editedScore: string) => {
         const editedScoreInt = parseInt(editedScore)
         if(editedScoreInt >= 0 && editedScoreInt <= 4) {
-            editScore(editedScoreInt, editingScore);
-            setEditingScore([null, null])
+            editScore(editedScoreInt, editingScoreTeam, editingScoreIndex);
+            setEditingScoreTeam(null)
+            setEditingScoreIndex(null)
         }
     }
 
@@ -49,14 +51,14 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => setEditingScore([1, index])}>
+                    return  <TouchableOpacity key={index} onLongPress={() => {setEditingScoreTeam(1); setEditingScoreIndex(index)}}>
                                 <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => setEditingScore([2, index])}>
+                    return  <TouchableOpacity key={index} onLongPress={() => {setEditingScoreTeam(2); setEditingScoreIndex(index)}}>
                                 <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}
@@ -68,7 +70,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             <Prompt
                 title={"Edit Score"}
                 defaultText={previousScore()}
-                visible={!!editingScore[0]}
+                visible={!!editingScoreTeam}
                 response={(editedScore: string) => handleUpdate(editedScore)}
                 maxChars={5}
                 keyboardType={"numeric"}
