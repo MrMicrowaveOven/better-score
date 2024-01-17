@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type PromptProps = {
     title: string;
@@ -8,12 +8,13 @@ type PromptProps = {
     visible: boolean;
     maxChars: number;
     keyboardType?: KeyboardType;
+    errorMessage?: string;
 }
 
 type KeyboardType = 'numeric'
 
 const Prompt = (props : PromptProps) => {
-    const {title, response, defaultText, visible, maxChars, keyboardType} = props
+    const {title, response, defaultText, visible, maxChars, keyboardType, errorMessage} = props
     const [nameText, setNameText] = useState(defaultText)
 
     useEffect(() => {
@@ -26,10 +27,11 @@ const Prompt = (props : PromptProps) => {
         </TouchableOpacity>
 
     return (
-        <Modal visible={visible} transparent={true} animationType="fade">
-            <View style={styles.modalContainer}>
+        <Modal visible={visible} transparent={true} animationType="fade" style={errorMessage ? {margin: 0} : undefined}>
+            <View style={[styles.modalContainer, errorMessage ? {height: 450} : undefined]}>
                 <View style={styles.modal}>
                     <Text style={styles.title}>{title}</Text>
+                    {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
                     <View style={styles.input}>
                         <TextInput
                             onChangeText={(newText) => setNameText(newText)}
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: 400,
+        width: 450,
         borderRadius: 10,
     },
     modal: {
@@ -79,6 +81,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 18,
         margin: 10,
+    },
+    errorMessage: {
+        color: "red"
     },
     input: {
         width: "80%",

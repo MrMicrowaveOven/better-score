@@ -19,6 +19,7 @@ type LineUpButtonProps = PropsWithChildren<{
 const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edits, roundScore2edits}: LineUpButtonProps) => {
     const [editingScoreTeam, setEditingScoreTeam] = useState<number|null>(null)
     const [editingScoreIndex, setEditingScoreIndex] = useState<number|null>(null)
+    const [badScore, setBadScore] = useState<number|null>(null)
 
     const previousScore = () => {
         if (
@@ -44,6 +45,9 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             editScore(editedScoreInt, editingScoreTeam, editingScoreIndex);
             setEditingScoreTeam(null)
             setEditingScoreIndex(null)
+            setBadScore(null)
+        } else {
+            setBadScore(editedScoreInt)
         }
     }
 
@@ -69,6 +73,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
             </View>
             <Prompt
                 title={"Edit Score"}
+                errorMessage={typeof badScore === 'number' ? `${badScore} is an invalid score.  Please enter a score 0 through 4.` : undefined}
                 defaultText={previousScore()}
                 visible={!!editingScoreTeam}
                 response={(editedScore: string) => handleUpdate(editedScore)}
