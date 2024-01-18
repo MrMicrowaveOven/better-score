@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
+import { Dropdown } from 'react-native-element-dropdown';
 
 type SettingsWindowProps = PropsWithChildren<{
     isVisible: boolean;
@@ -9,7 +10,7 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playMIMusic: boolean;
     setPlayMIMusic: Function;
-    gameTimeMinutes: number | null;
+    gameTimeMinutes: 0|30|45|60;
     setGameTimeMinutes: Function;
 }>;
 
@@ -32,6 +33,15 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
             <Text style={styles.exitButtonText}>X</Text>
         </TouchableOpacity>
 
+    const dropdownData = [
+        { label: 'No Timer', value: 0 },
+        { label: '30 minutes', value: 30},
+        { label: '45 minutes', value: 45},
+        { label: '60 minutes', value: 60}
+    ]
+
+    const getDataByValue = (value: 0|30|45|60) => dropdownData.find((item) => item.value === value)
+
     return (
         <Modal visible={isVisible} transparent={true} animationType="fade">
             <View style={styles.container}>
@@ -41,7 +51,17 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                     <View style={styles.options}>
                         {SettingsCheckbox("Play Sound on Game Over", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                         {SettingsCheckbox("Play Sound on Mission Imbocceball score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
-                        {/* <TextInput defaultValue={gameTimeMinutes.toString()} onChangeText={(gameTime) => setGameTimeMinutes(parseInt(gameTime))}/> */}
+                        <View style={styles.gameTimerSelector}>
+                            <Text style={styles.gameTimerSelectorLabel}>Game Timer Length</Text>
+                            <Dropdown
+                                data={dropdownData}
+                                labelField="label"
+                                valueField="value"
+                                onChange={(item) => setGameTimeMinutes(item.value)}
+                                value={getDataByValue(gameTimeMinutes)}
+                                style={styles.gameTimeDropdown}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>
@@ -58,12 +78,16 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "90%",
-        height: "30%",
-        backgroundColor: "white"
+        height: "50%",
+        backgroundColor: "white",
+        borderColor: "black",
+        borderWidth: 2,
+        borderStyle: "solid"
     },
     title: {
         fontSize: 50,
-        textAlign: "center"
+        textAlign: "center",
+        marginTop: 20,
     },
     options: {
         display: "flex",
@@ -100,6 +124,25 @@ const styles = StyleSheet.create({
     },
     optionText: {
         fontSize: 20,
+    },
+    gameTimerSelector: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginTop: 20,
+    },
+    gameTimerSelectorLabel: {
+        fontSize: 15,
+    },
+    gameTimeDropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        width: 150
     },
     exitButton: {
         position: "absolute",
