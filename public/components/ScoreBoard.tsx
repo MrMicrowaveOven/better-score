@@ -107,8 +107,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setroundScore1edits([])
     setroundScore2edits([])
     resetTimer()
-    setGameStartTime(new Date().getTime())
-    setTimerId(Math.random)
   }
 
   const resetTimer = () => {
