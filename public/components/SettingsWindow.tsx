@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
 
 type SettingsWindowProps = PropsWithChildren<{
@@ -9,9 +9,11 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playMIMusic: boolean;
     setPlayMIMusic: Function;
+    gameTimeMinutes: number;
+    setGameTimeMinutes: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic} : SettingsWindowProps) => {
+const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic, gameTimeMinutes, setGameTimeMinutes} : SettingsWindowProps) => {
     const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
         return (
             <View style={styles.option}>
@@ -39,6 +41,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                     <View style={styles.options}>
                         {SettingsCheckbox("Play Sound on Game Over", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                         {SettingsCheckbox("Play Sound on Mission Imbocceball score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
+                        {/* <TextInput defaultValue={gameTimeMinutes.toString()} onChangeText={(gameTime) => setGameTimeMinutes(parseInt(gameTime))}/> */}
                     </View>
                 </View>
             </View>
