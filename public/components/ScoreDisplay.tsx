@@ -9,15 +9,16 @@ import {
   } from 'react-native';
 import Prompt from './Prompt';
 
-type LineUpButtonProps = PropsWithChildren<{
+type RoundScoreDisplayProps = PropsWithChildren<{
     roundScore1: number[];
     roundScore2: number[];
     editScore: Function;
     roundScore1edits: number[];
     roundScore2edits: number[];
+    screenLocked: boolean;
 }>
 
-const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edits, roundScore2edits}: LineUpButtonProps) => {
+const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edits, roundScore2edits, screenLocked}: RoundScoreDisplayProps) => {
     const [editingScoreTeam, setEditingScoreTeam] = useState<number|null>(null)
     const [editingScoreIndex, setEditingScoreIndex] = useState<number|null>(null)
     const [badScore, setBadScore] = useState<number|null>(null)
@@ -74,14 +75,14 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         <View style={styles.main}>
             <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
                 {roundScore1.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => handleEdit(1, index)}>
+                    return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(1, index)}>
                                 <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}
             </View>
             <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
                 {roundScore2.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => handleEdit(2, index)}>
+                    return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(2, index)}>
                                 <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
                             </TouchableOpacity>
                 })}

@@ -206,6 +206,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         editScore={(editedScore: number, editingScoreTeam: number|null, editingScoreIndex: number|null) => editScore(editedScore, editingScoreTeam, editingScoreIndex)}
         roundScore1edits={roundScore1edits}
         roundScore2edits={roundScore2edits}
+        screenLocked={screenLocked}
       />
       <View style={styles.timer}>
         <CountDown
