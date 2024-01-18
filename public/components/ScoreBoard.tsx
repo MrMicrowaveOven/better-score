@@ -25,6 +25,7 @@ const storage = new MMKVLoader().initialize();
 import TopMenu from './TopMenu';
 import CountDown from 'react-native-countdown-component';
 import SoundPlayer from 'react-native-sound-player'
+import SettingsWindow from './SettingsWindow';
 
 type ScoreBoardProps = PropsWithChildren<{
   goToLineUp: Function;
@@ -34,6 +35,8 @@ type ScoreBoardProps = PropsWithChildren<{
 }>;
 
 const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
+  const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
+
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
   const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
@@ -159,6 +162,13 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     editingTeam === 1 ? setroundScore1edits(edits) : setroundScore2edits(edits)
   }
 
+  const SettingsButton = () =>
+    <View style={styles.settingsSection}>
+      <TouchableOpacity onPress={() => !screenLocked && setSettingsWindowOpen(!settingsWindowOpen)}>
+        <Image style={styles.settingsButton} source={require('../images/settingsIcon.png')} />
+      </TouchableOpacity>
+    </View>
+
   const SaveRoundButton = () =>
     <View style={styles.nextRoundButtonContainer}>
       <TouchableOpacity style={styles.nextRoundButton} onPress={() => !screenLocked && confirmNextRound()}>
@@ -221,8 +231,10 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
           onFinish={() => playGameOverSound()}
         />
       </View>
+      <SettingsButton />
       <SaveRoundButton />
       <LockButton />
+      <SettingsWindow isVisible={settingsWindowOpen} />
     </SafeAreaView>
   );
 }
@@ -298,6 +310,15 @@ const styles = StyleSheet.create({
   moveToLineUpArrow: {
     width: 20,
     height: 20,
+  },
+  settingsSection: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  settingsButton: {
+    width: 30,
+    height: 30,
   },
   nextRoundButtonContainer: {
     position: "absolute",
