@@ -322,6 +322,8 @@ const styles = StyleSheet.create({
     bottom: 35,
     left: 0,
     right: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   lockSection: {
     position: "absolute",
