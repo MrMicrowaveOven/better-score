@@ -234,7 +234,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       <SettingsButton />
       <SaveRoundButton />
       <LockButton />
-      <SettingsWindow isVisible={settingsWindowOpen} />
+      <SettingsWindow isVisible={settingsWindowOpen} exit={() => setSettingsWindowOpen(false)} />
     </SafeAreaView>
   );
 }
