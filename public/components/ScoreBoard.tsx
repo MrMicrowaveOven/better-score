@@ -105,6 +105,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
 
   const resetTimer = () => {
     setTimerId(Math.random)
+    setGameStartTime(new Date().getTime())
   }
 
   const confirmReset = () => {
