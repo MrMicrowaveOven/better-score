@@ -117,6 +117,10 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setTimerId(Math.random())
   }, [gameStartTime])
 
+  useEffect(() => {
+    if(gameTimeMinutes !== 0) resetTimer()
+  }, [gameTimeMinutes])
+
   const confirmReset = () => {
     Alert.alert("Confirmation",
       "Are you sure you want to reset the game?  This will also save the game in your Stats.",[
@@ -192,6 +196,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       </View>
     </TouchableWithoutFeedback>
 
+  const countDownTime = ((gameStartTime + (gameTimeMinutes * 60 * 1000)) - (new Date().getTime()))/1000 + 1
+
   return (
     <SafeAreaView style={styles.background}>
       <TopMenu
@@ -225,18 +231,19 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         roundScore2edits={roundScore2edits}
         screenLocked={screenLocked}
       />
-      <View style={styles.timer}>
-        <CountDown
-          id={timerId.toString()}
-          until={((gameStartTime + (gameTimeMinutes * 60 * 1000)) - (new Date().getTime()))/1000 + 1}
-          timeToShow={['M', 'S']}
-          timeLabels={{m: undefined, s: undefined}}
-          separatorStyle={{color: 'yellow', fontSize: 30}}
-          showSeparator
-          onPress={() => !screenLocked && confirmResetTimer()}
-          onFinish={() => playEndMusic && playGameOverSound()}
-        />
-      </View>
+      {gameTimeMinutes > 0 &&
+        <View style={styles.timer}>
+          <CountDown
+            id={timerId.toString()}
+            until={countDownTime}
+            timeToShow={['M', 'S']}
+            timeLabels={{m: undefined, s: undefined}}
+            separatorStyle={{color: 'yellow', fontSize: 30}}
+            showSeparator
+            onPress={() => !screenLocked && confirmResetTimer()}
+            onFinish={() => playEndMusic && playGameOverSound()}
+          />
+        </View>}
       <SettingsButton />
       <SaveRoundButton />
       <LockButton />

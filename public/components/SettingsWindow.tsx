@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -42,6 +42,15 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
 
     const getDataByValue = (value: 0|30|45|60) => dropdownData.find((item) => item.value === value)
 
+    const onGameTimeChange = (value: number) => {
+        Alert.alert("Confirm Game Timer Change",
+            "Changing the Game Length will reset the Game Timer.  Do you want to proceed?", [
+            { text: "No", onPress: () => {} },
+            { text: "Yes", onPress: () => { setGameTimeMinutes(value) } }
+            ]
+        )
+    }
+
     return (
         <Modal visible={isVisible} transparent={true} animationType="fade">
             <View style={styles.container}>
@@ -57,7 +66,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                                 data={dropdownData}
                                 labelField="label"
                                 valueField="value"
-                                onChange={(item) => setGameTimeMinutes(item.value)}
+                                onChange={(item) => onGameTimeChange(item.value)}
                                 value={getDataByValue(gameTimeMinutes)}
                                 style={styles.gameTimeDropdown}
                             />
