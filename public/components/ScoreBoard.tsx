@@ -38,6 +38,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
+  const [gameTimeMinutes, setGameTimeMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
 
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
   const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
@@ -107,11 +108,12 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setroundScore2edits([])
     resetTimer()
     setGameStartTime(new Date().getTime())
+    setTimerId(Math.random)
   }
 
   const resetTimer = () => {
-    setTimerId(Math.random)
     setGameStartTime(new Date().getTime())
+    setTimerId(Math.random)
   }
 
   const confirmReset = () => {
@@ -225,7 +227,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       <View style={styles.timer}>
         <CountDown
           id={timerId.toString()}
-          until={((gameStartTime + (45 * 60 * 1000)) - (new Date().getTime()))/1000 + 1}
+          until={((gameStartTime + (gameTimeMinutes * 60 * 1000)) - (new Date().getTime()))/1000 + 1}
           timeToShow={['M', 'S']}
           timeLabels={{m: undefined, s: undefined}}
           separatorStyle={{color: 'yellow', fontSize: 30}}
