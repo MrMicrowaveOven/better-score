@@ -9,7 +9,7 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playMIMusic: boolean;
     setPlayMIMusic: Function;
-    gameTimeMinutes: number;
+    gameTimeMinutes: number | null;
     setGameTimeMinutes: Function;
 }>;
 

@@ -247,8 +247,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         setPlayEndMusic={(isChecked: boolean) => setPlayEndMusic(isChecked)}
         playMIMusic={playMIMusic}
         setPlayMIMusic={(isChecked: boolean) => setPlayMIMusic(isChecked)}
-        // gameTimeMinutes={gameTimeMinutes}
-        // setGameTimeMinutes={(gameLength: number) => setGameTimeMinutes(gameLength)}
+        gameTimeMinutes={gameTimeMinutes}
+        setGameTimeMinutes={(gameLength: number) => setGameTimeMinutes(gameLength)}
       />
     </SafeAreaView>
   );
