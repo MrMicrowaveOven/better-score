@@ -46,6 +46,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
   const [timerId, setTimerId] = useMMKVStorage<number>('timerId', storage, Math.random())
+  const [gameStartTime, setGameStartTime] = useMMKVStorage<number>('gameStartTime', storage, new Date().getTime())
 
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
@@ -99,6 +100,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setroundScore1edits([])
     setroundScore2edits([])
     resetTimer()
+    setGameStartTime(new Date().getTime())
   }
 
   const resetTimer = () => {
@@ -208,7 +210,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       <View style={styles.timer}>
         <CountDown
           id={timerId.toString()}
-          until={45 * 60}
+          until={((gameStartTime + (45 * 60 * 1000)) - (new Date().getTime()))/1000 + 1}
           timeToShow={['M', 'S']}
           timeLabels={{m: undefined, s: undefined}}
           separatorStyle={{color: 'yellow', fontSize: 30}}
