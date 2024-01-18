@@ -215,7 +215,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
           timeLabels={{m: undefined, s: undefined}}
           separatorStyle={{color: 'yellow', fontSize: 30}}
           showSeparator
-          onPress={confirmResetTimer}
+          onPress={() => !screenLocked && confirmResetTimer()}
           onFinish={() => playGameOverSound()}
         />
       </View>
