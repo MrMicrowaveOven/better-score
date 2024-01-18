@@ -23,7 +23,7 @@ import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import TopMenu from './TopMenu';
-import CountDown from 'react-native-countdown-component';
+import CountDown from 'react-native-countdown-fixed';
 import SoundPlayer from 'react-native-sound-player'
 import SettingsWindow from './SettingsWindow';
 
