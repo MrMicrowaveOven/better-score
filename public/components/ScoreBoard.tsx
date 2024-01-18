@@ -36,6 +36,8 @@ type ScoreBoardProps = PropsWithChildren<{
 
 const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
+  const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
+  const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
 
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
   const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
@@ -80,11 +82,12 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
 
   const setTeamName = (renamingTeam: number, newName: string) => {
     renamingTeam === 1
-              ? setTeam1Name(newName)
-              : setTeam2Name(newName)
+      ? setTeam1Name(newName)
+      : setTeam2Name(newName)
   }
 
   const shouldPlayMissionImpossibleTheme = () => {
+    if (!playMIMusic) return false
     if (team1Name === "Mission Imbocceball" && score1 > score2) {
       return true
     } else if (team2Name === "Mission Imbocceball" && score1 < score2) {
@@ -228,13 +231,20 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
           separatorStyle={{color: 'yellow', fontSize: 30}}
           showSeparator
           onPress={() => !screenLocked && confirmResetTimer()}
-          onFinish={() => playGameOverSound()}
+          onFinish={() => playEndMusic && playGameOverSound()}
         />
       </View>
       <SettingsButton />
       <SaveRoundButton />
       <LockButton />
-      <SettingsWindow isVisible={settingsWindowOpen} exit={() => setSettingsWindowOpen(false)} />
+      <SettingsWindow
+        isVisible={settingsWindowOpen}
+        exit={() => setSettingsWindowOpen(false)}
+        playEndMusic={playEndMusic}
+        setPlayEndMusic={(isChecked: boolean) => setPlayEndMusic(isChecked)}
+        playMIMusic={playMIMusic}
+        setPlayMIMusic={(isChecked: boolean) => setPlayMIMusic(isChecked)}
+      />
     </SafeAreaView>
   );
 }

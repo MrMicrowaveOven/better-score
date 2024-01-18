@@ -1,17 +1,22 @@
 import React, { PropsWithChildren } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Checkbox from "./Checkbox";
 
 type SettingsWindowProps = PropsWithChildren<{
     isVisible: boolean;
     exit: Function;
+    playEndMusic: boolean;
+    setPlayEndMusic: Function;
+    playMIMusic: boolean;
+    setPlayMIMusic: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit} : SettingsWindowProps) => {
-    const SettingsCheckbox = (label: string, onChange?: Function) => {
+const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic} : SettingsWindowProps) => {
+    const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
         return (
             <View style={styles.option}>
                 <View style={styles.optionCheckboxContainer}>
-                    <Text style={styles.optionCheckbox}>X</Text>
+                    <Checkbox onChange={(isChecked: boolean) => onChange(isChecked)} defaultChecked={defaultChecked}/>
                 </View>
                 <View style={styles.optionTextContainer}>
                     <Text style={styles.optionText}>{label}</Text>
@@ -32,8 +37,8 @@ const SettingsWindow = ({isVisible, exit} : SettingsWindowProps) => {
                     <ExitButton />
                     <Text style={styles.title}>Settings</Text>
                     <View style={styles.options}>
-                        {SettingsCheckbox("Play Sound on Game Over")}
-                        {SettingsCheckbox("Play Sound on Mission Imbocceball score")}
+                        {SettingsCheckbox("Play Sound on Game Over", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
+                        {SettingsCheckbox("Play Sound on Mission Imbocceball score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
                     </View>
                 </View>
             </View>
