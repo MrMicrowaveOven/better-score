@@ -50,7 +50,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
         }
     }
 
-    const cannotEditError = () => Alert.alert("Edit Score Error", "Cannot edit score from 0, as the other team has a score in that round.")
+    const cannotEditError = () => Alert.alert("Edit Score Error", "Cannot edit score from 0, as the other team has a non-zero score in that round.")
 
     const handleUpdate = (editedScore: string) => {
         const editedScoreInt = parseInt(editedScore)
