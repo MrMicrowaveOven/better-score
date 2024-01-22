@@ -35,11 +35,13 @@ type ScoreBoardProps = PropsWithChildren<{
 }>;
 
 const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
+  // Settings
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
   const [gameTimeMinutes, setGameTimeMinutes] = useMMKVStorage<0|30|45|60>('gameTimeMinutes', storage, 45)
 
+  // Teams and Scores
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
   const [team2Name, setTeam2Name] = useMMKVStorage<string>('team2Name', storage, "Team 2")
   const [score1, setScore1] = useMMKVStorage<number>('score1', storage, 0)
@@ -52,7 +54,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
   const [timerId, setTimerId] = useMMKVStorage<number>('timerId', storage, Math.random())
-  const [gameStartTime, setGameStartTime] = useMMKVStorage<number>('gameStartTime', storage, new Date().getTime())
 
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
@@ -110,16 +111,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const resetTimer = () => {
-    setGameStartTime(new Date().getTime())
-  }
-
-  useEffect(() => {
     setTimerId(Math.random())
-  }, [gameStartTime])
-
-  useEffect(() => {
-    if(gameTimeMinutes !== 0) resetTimer()
-  }, [gameTimeMinutes])
+  }
 
   const confirmReset = () => {
     Alert.alert("Confirmation",
@@ -196,8 +189,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       </View>
     </TouchableWithoutFeedback>
 
-  const countDownTime = ((gameStartTime + (gameTimeMinutes * 60 * 1000)) - (new Date().getTime()))/1000 + 1
-
   return (
     <SafeAreaView style={styles.background}>
       <TopMenu
@@ -235,7 +226,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         <View style={styles.timer}>
           <CountDown
             id={timerId.toString()}
-            until={countDownTime}
+            until={45*60}
             timeToShow={['M', 'S']}
             timeLabels={{m: undefined, s: undefined}}
             separatorStyle={{color: 'yellow', fontSize: 30}}
