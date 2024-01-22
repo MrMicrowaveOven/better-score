@@ -68,6 +68,20 @@ const LineUp = (props: any) => {
     )
   }
 
+  const swapPartners = () => {
+    const playerList = [...lineUp]
+    if (playerList.length % 2 === 0) {
+      for(let i = 0; i < playerList.length; i = i + 2) {
+        const holder = playerList[i]
+        playerList[i] = playerList[i + 1]
+        playerList[i + 1] = holder
+      }
+      setLineUp(playerList)
+    } else {
+      Alert.alert("Cannot Swap Partners if number of players is not even")
+    }
+  }
+
   async function onReordered(fromIndex: number, toIndex: number) {
     // // Since we remove the element first, account for its index shift
     const finalIndex = fromIndex < toIndex ? toIndex - 1 : toIndex;
