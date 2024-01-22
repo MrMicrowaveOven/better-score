@@ -1,17 +1,16 @@
 import React, { PropsWithChildren, useState } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { Alert, Dimensions, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import Prompt from './Prompt'
-import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
-const storage = new MMKVLoader().initialize();
 
 type ScoreTitlesProps = PropsWithChildren<{
     screenLocked: boolean;
     setTeamName: Function;
     team1Name: string;
     team2Name: string;
+    swapTeams: Function;
 }>
 
-const ScoreTitles = ({screenLocked, setTeamName, team1Name, team2Name}: ScoreTitlesProps) => {
+const ScoreTitles = ({screenLocked, setTeamName, team1Name, team2Name, swapTeams}: ScoreTitlesProps) => {
     const [renamingTeam, setRenamingTeam] = useState<null | 1 | 2>(null)
 
     const renameTeam = (newName : string) => {
@@ -28,12 +27,25 @@ const ScoreTitles = ({screenLocked, setTeamName, team1Name, team2Name}: ScoreTit
         return Math.min(fontSize, minimumFontSize)
     }
 
+    const confirmSwapTeams = () => {
+        Alert.alert("Swap Teams?",
+            "Are you sure you want to swap the red and green teams?", [
+                { text: "No", onPress: () => {} },
+                { text: "Yes", onPress: () => swapTeams() }
+            ]
+        )
+    }
+
+
     return (
         <View style={styles.scoreTitles}>
             <TouchableHighlight style={styles.scoreTitle} onLongPress={() => !screenLocked && setRenamingTeam(1)} onPress={() => {}}>
                 <Text style={[styles.scoreTitleText, {fontSize: scoreTitleFontSize(1)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
                     {team1Name}
                 </Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={() => confirmSwapTeams()} style={styles.swapIconContainer}>
+                <Image source={require('../images/swap.png')} style={styles.swapIcon}/>
             </TouchableHighlight>
             <TouchableHighlight style={styles.scoreTitle} onLongPress={() => !screenLocked && setRenamingTeam(2)} onPress={() => {}}>
                 <Text style={[styles.scoreTitleText, {fontSize: scoreTitleFontSize(2)}]} adjustsFontSizeToFit={true} numberOfLines={1}>
@@ -69,6 +81,13 @@ const styles = StyleSheet.create({
         color: "#fdda00",
         margin: 5,
     },
+    swapIconContainer: {
+        zIndex: 1,
+    },
+    swapIcon: {
+        height: 20,
+        width: 20
+    }
 })
 
 export default ScoreTitles;

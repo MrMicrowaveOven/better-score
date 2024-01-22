@@ -189,6 +189,24 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       </View>
     </TouchableWithoutFeedback>
 
+  const swapTeams = () => {
+    let holder: any = team1Name
+    setTeam1Name(team2Name)
+    setTeam2Name(holder)
+
+    holder = score1
+    setScore1(score2)
+    setScore2(score1)
+
+    holder = roundScore1
+    setRoundScore1(roundScore2)
+    setRoundScore2(holder)
+
+    holder = roundScore1edits
+    setroundScore1edits(roundScore2edits)
+    setroundScore2edits(holder)
+  }
+
   return (
     <SafeAreaView style={styles.background}>
       <TopMenu
@@ -204,6 +222,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         setTeamName={(renamingTeam: number, newName: string) => setTeamName(renamingTeam, newName)}
         team1Name={team1Name}
         team2Name={team2Name}
+        swapTeams={swapTeams}
       />
       <ScoreBoxes
         score1={score1}
