@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { StyleSheet, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 type CheckboxProps = PropsWithChildren<{
     onChange: Function;

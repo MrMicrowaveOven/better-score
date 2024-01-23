@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type PromptProps = {

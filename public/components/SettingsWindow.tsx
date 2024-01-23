@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Alert, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
 import { Dropdown } from 'react-native-element-dropdown';
 

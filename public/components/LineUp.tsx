@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Text, StyleSheet, View, Button, Image, TouchableWithoutFeedback, Alert, SafeAreaView} from "react-native";
+import {TouchableOpacity, Text, StyleSheet, View, Image, TouchableWithoutFeedback, Alert, SafeAreaView} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
