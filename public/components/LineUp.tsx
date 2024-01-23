@@ -190,11 +190,15 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     backgroundColor: "#000500",
+    // backgroundColor: "lime"
+    // "#000500",
   },
   body: {
     display: "flex",
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
+    height: "100%",
+    // backgroundColor: "skyblue"
   },
   moveToScoreBoard: {
     width: 120,
@@ -277,7 +281,12 @@ const styles = StyleSheet.create({
   },
   buttons: {
     position: "absolute",
-    bottom: 0,
+    bottom: 40,
+    // backgroundColor: "pink",
+    // height: 120,
+    // display: "flex",
+    // flexDirection: "column",
+    // alignItems: 'center'
   },
   buttonsRow: {
     width: "100%",
@@ -287,7 +296,7 @@ const styles = StyleSheet.create({
   },
   lockContainer: {
     position: "absolute",
-    bottom: 10,
+    bottom: 50,
     right: 20,
     display: "flex",
     justifyContent: "flex-end",
