@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TopMenu from "./TopMenu";
 
@@ -15,9 +15,11 @@ type ScoreBoardProps = PropsWithChildren<{
     history: Game[]
     goToScoreBoard: Function;
     deleteGame: Function;
+    trashBin: Game[]
 }>;
 
-const Stats = ({history, goToScoreBoard, deleteGame}: ScoreBoardProps) => {
+const Stats = ({history, goToScoreBoard, deleteGame, trashBin}: ScoreBoardProps) => {
+    const [showTrashBin, setShowTrashBin] = useState<boolean>(false)
     const deleteCard = (index: number) => deleteGame(index)
 
     return (
@@ -27,12 +29,12 @@ const Stats = ({history, goToScoreBoard, deleteGame}: ScoreBoardProps) => {
                 rightAction={() => goToScoreBoard()}
                 backgroundColor={"white"}
             />
-            <Text style={styles.title}>Stats</Text>
+            <Text style={styles.title}>{showTrashBin ? "Trash Bin" : "Stats"}</Text>
             <ScrollView style={styles.body}>
                 <View style={styles.scoreCards}>
-                    {history.length > 0
-                        ?   history.map((game, index) =>
-                                <Game key={index} game={game} index={index} deleteCard={() => deleteCard(index)}/>
+                    {(showTrashBin ? trashBin.length > 0 : history.length > 0)
+                        ?   (showTrashBin ? trashBin : history).map((game, index) =>
+                                <Game key={index} game={game} index={index} deleteCard={() => !showTrashBin && deleteCard(index)}/>
                             )
                         :   <View style={styles.noStatsMessage}>
                                 <Text style={styles.noStatsMessageText}>
@@ -42,6 +44,11 @@ const Stats = ({history, goToScoreBoard, deleteGame}: ScoreBoardProps) => {
                     }
                 </View>
             </ScrollView>
+            <View style={styles.trashBinButtonContainer}>
+                <TouchableOpacity style={styles.trashBinButton} onPress={() => setShowTrashBin(!showTrashBin)}>
+                    <Text style={styles.trashBinButtonText}>{showTrashBin ? "Back to Stats" : "Trash Bin"}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -94,6 +101,7 @@ const Game = ({game, index, deleteCard}: GameProps) => {
 
 const styles = StyleSheet.create({
     background: {
+        flex: 1,
         backgroundColor: "white"
     },
     title: {
@@ -121,6 +129,25 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: "center",
         width: "80%"
+    },
+    trashBinButtonContainer: {
+        position: "absolute",
+        bottom: 10,
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    trashBinButton: {
+        width: 150,
+        backgroundColor: "#fdda00",
+        borderRadius: 15,
+        borderColor: "#000500",
+        borderWidth: 2,
+    },
+    trashBinButtonText: {
+        textAlign: "center",
+        fontSize: 30,
     },
     scoreCards: {
         display: "flex",

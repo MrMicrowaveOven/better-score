@@ -78,6 +78,7 @@ const App = () => {
           goToScoreBoard={goToScoreBoard}
           history={history}
           deleteGame={(index: number) => deleteGame(index)}
+          trashBin={trashBin}
         />
       </View>
       <View key="1">
