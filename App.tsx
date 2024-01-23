@@ -26,6 +26,7 @@ type GameRound = {
 
 const App = () => {
   const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
+  const [trashBin, setTrashBin] = useMMKVStorage<Game[]>('trashBin', storage, [])
   const pagerViewRef: any = useRef(null);
   // if (history.length > 0) setHistory([])
 
@@ -61,7 +62,10 @@ const App = () => {
 
   const deleteGame = (index: number) => {
     const oldHistory = [...history]
-    oldHistory.splice(index, 1)
+    const deletedGame = oldHistory.splice(index, 1)
+    const oldTrashBin = [...trashBin]
+    oldTrashBin.unshift(deletedGame[0])
+    setTrashBin(oldTrashBin)
     setHistory(oldHistory)
   }
 
