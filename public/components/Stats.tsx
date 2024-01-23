@@ -11,14 +11,15 @@ type Game = {
     score2edits: number[];
     time: Date;
   }
-type ScoreBoardProps = PropsWithChildren<{
+type StatsProps = PropsWithChildren<{
     history: Game[]
     goToScoreBoard: Function;
     deleteGame: Function;
+    restoreGame: Function;
     trashBin: Game[]
 }>;
 
-const Stats = ({history, goToScoreBoard, deleteGame, trashBin}: ScoreBoardProps) => {
+const Stats = ({history, goToScoreBoard, deleteGame, restoreGame, trashBin}: StatsProps) => {
     const [showTrashBin, setShowTrashBin] = useState<boolean>(false)
     const deleteCard = (index: number) => deleteGame(index)
 
@@ -34,11 +35,13 @@ const Stats = ({history, goToScoreBoard, deleteGame, trashBin}: ScoreBoardProps)
                 <View style={styles.scoreCards}>
                     {(showTrashBin ? trashBin.length > 0 : history.length > 0)
                         ?   (showTrashBin ? trashBin : history).map((game, index) =>
-                                <Game key={index} game={game} index={index} deleteCard={() => !showTrashBin && deleteCard(index)}/>
+                                <Game key={index} game={game} index={index} moveCard={() => !showTrashBin ? deleteCard(index) : restoreGame(index)} deleted={showTrashBin}/>
                             )
                         :   <View style={styles.noStatsMessage}>
                                 <Text style={styles.noStatsMessageText}>
-                                    No Game Stats yet...{"\n\n"} Go play some games and build some stats!
+                                    {showTrashBin
+                                        ?   "Trash Bin is empty..."
+                                        :   "No Game Stats yet...\n\n Go play some games and build some stats!"}
                                 </Text>
                             </View>
                     }
@@ -56,10 +59,11 @@ const Stats = ({history, goToScoreBoard, deleteGame, trashBin}: ScoreBoardProps)
 type GameProps = {
     index: number;
     game: Game;
-    deleteCard: Function;
+    moveCard: Function;
+    deleted: boolean;
 }
 
-const Game = ({game, index, deleteCard}: GameProps) => {
+const Game = ({game, index, moveCard, deleted}: GameProps) => {
     const {team1, team2, score1, score2, score1edits, score2edits, time} = game
     return(
         <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
@@ -92,8 +96,11 @@ const Game = ({game, index, deleteCard}: GameProps) => {
                     }
                 </View>
             </View>
-            <TouchableOpacity style={styles.deleteButton} onPress={() => deleteCard()}>
-                <Image style={styles.deleteIcon} source={require("../images/delete.png")} />
+            <TouchableOpacity style={styles.deleteButton} onPress={() => moveCard()}>
+                {deleted
+                    ? <Image style={styles.deleteIcon} source={require("../images/reload.png")} />
+                    : <Image style={styles.deleteIcon} source={require("../images/delete.png")} />
+                }
             </TouchableOpacity>
         </View>
     )

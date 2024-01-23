@@ -29,6 +29,7 @@ const App = () => {
   const [trashBin, setTrashBin] = useMMKVStorage<Game[]>('trashBin', storage, [])
   const pagerViewRef: any = useRef(null);
   // if (history.length > 0) setHistory([])
+  // if (trashBin.length > 0) setTrashBin([])
 
   const goToStats = () => {
     pagerViewRef?.current?.setPage(0)
@@ -63,10 +64,25 @@ const App = () => {
   const deleteGame = (index: number) => {
     const oldHistory = [...history]
     const deletedGame = oldHistory.splice(index, 1)
-    const oldTrashBin = [...trashBin]
+    let oldTrashBin = [...trashBin]
     oldTrashBin.unshift(deletedGame[0])
+    if(oldTrashBin.length > 1) {
+      oldTrashBin = oldTrashBin.sort((a: Game, b: Game) => b.time.getTime() - a.time.getTime())
+    }
     setTrashBin(oldTrashBin)
     setHistory(oldHistory)
+  }
+
+  const restoreGame = (index: number) => {
+    const oldTrashBin = [...trashBin]
+    const restoredGame = oldTrashBin.splice(index, 1)
+    let oldHistory = [...history]
+    oldHistory.unshift(restoredGame[0])
+    if(oldHistory.length > 1) {
+      oldHistory = oldHistory.sort((a: Game, b: Game) => b.time.getTime() - a.time.getTime())
+    }
+    setHistory(oldHistory)
+    setTrashBin(oldTrashBin)
   }
 
   const statsPage = true
@@ -78,6 +94,7 @@ const App = () => {
           goToScoreBoard={goToScoreBoard}
           history={history}
           deleteGame={(index: number) => deleteGame(index)}
+          restoreGame={(index: number) => restoreGame(index)}
           trashBin={trashBin}
         />
       </View>
