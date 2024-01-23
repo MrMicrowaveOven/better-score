@@ -62,15 +62,28 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
 
   const nextRound = () => {
-    if (shouldPlayMissionImpossibleTheme()) playMissionImpossibleTheme()
+    if (gameOverCheck() && playEndMusic) {
+      playGameOverSound()
+    } else if(shouldPlayMissionImpossibleTheme()) {
+      playMissionImpossibleTheme()
+    }
     const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
     setRoundScore1(previousScore1)
-    setScore1(0)
     const previousScore2 : number[]= [...roundScore2]
     previousScore2.push(score2)
     setRoundScore2(previousScore2)
+    setScore1(0)
     setScore2(0)
+  }
+  const gameOverCheck = () => {
+    if(roundScore1.reduce((a: number, b: number) => a + b, 0) + score1 >= 15) {
+      return true
+    } else if (roundScore2.reduce((a: number, b: number) => a + b, 0) + score2 >= 15) {
+      return true
+    } else {
+      return false
+    }
   }
 
   const confirmNextRound = () => {
