@@ -12,21 +12,22 @@ type TopMenuProps = PropsWithChildren<{
 }>;
 
 const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, backgroundColor}: TopMenuProps) => {
+    const topMenuActive = process.env.NODE_ENV !== "development"
     return (
         !center && !centerAction
             ?   right && rightAction && !left && !leftAction
-                ? <RightMenu right={right} rightAction={rightAction} alone={true}/>
-                : <LeftMenu left={left} leftAction={leftAction} alone={true}/>
+                ? <RightMenu right={right} rightAction={() => topMenuActive && rightAction()} alone={true}/>
+                : <LeftMenu left={left} leftAction={() => topMenuActive && leftAction?.()} alone={true}/>
             :   leftAction && centerAction && rightAction && 
                     <View style={[styles.body, !left && {justifyContent: "flex-end"}]}>
-                        <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
+                        <TouchableOpacity style={styles.left} onPress={() => topMenuActive && leftAction()}>
                             <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
                             <Text style={styles.leftText}>{left}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.center} onPress={() => centerAction()}>
                             <Text style={styles.centerText}>{center}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
+                        <TouchableOpacity style={styles.right} onPress={() => topMenuActive && rightAction()}>
                             <Text style={styles.rightText}>{right}</Text>
                             <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
                         </TouchableOpacity>
