@@ -15,8 +15,8 @@ const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, ba
     return (
         !center && !centerAction
             ?   right && rightAction && !left && !leftAction
-                ? <RightMenu right={right} rightAction={rightAction}/>
-                : <LeftMenu left={left} leftAction={leftAction}/>
+                ? <RightMenu right={right} rightAction={rightAction} alone={true}/>
+                : <LeftMenu left={left} leftAction={leftAction} alone={true}/>
             :   leftAction && centerAction && rightAction && 
                     <View style={[styles.body, !left && {justifyContent: "flex-end"}]}>
                         <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
@@ -34,19 +34,19 @@ const TopMenu = ({left, leftAction, center, centerAction, right, rightAction, ba
     )
 }
 
-const LeftMenu = ({left, leftAction}: any) => {
+const LeftMenu = ({left, leftAction, alone}: any) => {
     return(
-        <TouchableOpacity style={styles.left} onPress={() => leftAction()}>
+        <TouchableOpacity style={[styles.left, alone && styles.alone]} onPress={() => leftAction()}>
             <Image source={require("../images/arrowLeft.png")} style={styles.leftArrow}/>
             <Text style={styles.leftText}>{left}</Text>
         </TouchableOpacity>
     )
 }
 
-const RightMenu = ({right, rightAction}: any) => {
+const RightMenu = ({right, rightAction, alone}: any) => {
     return(
         <View style={styles.rightContainer}>
-            <TouchableOpacity style={styles.right} onPress={() => rightAction()}>
+            <TouchableOpacity style={[styles.right, alone && styles.alone]} onPress={() => rightAction()}>
                 <Text style={styles.rightText}>{right}</Text>
                 <Image source={require("../images/arrowRight.png")} style={styles.rightArrow}/>
             </TouchableOpacity>
@@ -121,6 +121,9 @@ const styles = StyleSheet.create({
     rightArrow: {
         width: 20,
         height: 20,
+    },
+    alone: {
+        width: "35%"
     }
 })
 
