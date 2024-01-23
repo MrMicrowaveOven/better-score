@@ -25,9 +25,16 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
             <Text style={styles.title}>Stats</Text>
             <ScrollView style={styles.body}>
                 <View style={styles.scoreCards}>
-                    {history.reverse().map((game, index) =>
-                        <Game key={index} game={game} index={index}/>
-                    )}
+                    {history.length > 0
+                        ?   history.reverse().map((game, index) =>
+                                <Game key={index} game={game} index={index}/>
+                            )
+                        :   <View style={styles.noStatsMessage}>
+                                <Text style={styles.noStatsMessageText}>
+                                    No Game Stats yet...{"\n\n"} Go play some games and build some stats!
+                                </Text>
+                            </View>
+                    }
                 </View>
             </ScrollView>
         </View>
@@ -97,6 +104,17 @@ const styles = StyleSheet.create({
         borderTopColor: "black",
         borderTopWidth: 1,
         borderTopStyle: "solid"
+    },
+    noStatsMessage: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        marginTop: 20,
+    },
+    noStatsMessageText: {
+        fontSize: 30,
+        textAlign: "center",
+        width: "80%"
     },
     scoreCards: {
         display: "flex",
