@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TopMenu from "./TopMenu";
 
 type Game = {
@@ -14,9 +14,12 @@ type Game = {
 type ScoreBoardProps = PropsWithChildren<{
     history: Game[]
     goToScoreBoard: Function;
+    deleteGame: Function;
 }>;
 
-const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
+const Stats = ({history, goToScoreBoard, deleteGame}: ScoreBoardProps) => {
+    const deleteCard = (index: number) => deleteGame(index)
+
     return (
         <View style={styles.background}>
             <TopMenu
@@ -28,8 +31,8 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
             <ScrollView style={styles.body}>
                 <View style={styles.scoreCards}>
                     {history.length > 0
-                        ?   history.reverse().map((game, index) =>
-                                <Game key={index} game={game} index={index}/>
+                        ?   history.map((game, index) =>
+                                <Game key={index} game={game} index={index} deleteCard={() => deleteCard(index)}/>
                             )
                         :   <View style={styles.noStatsMessage}>
                                 <Text style={styles.noStatsMessageText}>
@@ -46,9 +49,10 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
 type GameProps = {
     index: number;
     game: Game;
+    deleteCard: Function;
 }
 
-const Game = ({game, index}: GameProps) => {
+const Game = ({game, index, deleteCard}: GameProps) => {
     const {team1, team2, score1, score2, score1edits, score2edits, time} = game
     return(
         <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
@@ -81,9 +85,9 @@ const Game = ({game, index}: GameProps) => {
                     }
                 </View>
             </View>
-            <View style={styles.deleteButton}>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => deleteCard()}>
                 <Image style={styles.deleteIcon} source={require("../images/delete.png")} />
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

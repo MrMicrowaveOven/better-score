@@ -55,8 +55,14 @@ const App = () => {
       time: new Date(),
     }
     const previousHistory = history
-    previousHistory.push(game)
+    previousHistory.unshift(game)
     setHistory(previousHistory)
+  }
+
+  const deleteGame = (index: number) => {
+    const oldHistory = [...history]
+    oldHistory.splice(index, 1)
+    setHistory(oldHistory)
   }
 
   const statsPage = true
@@ -67,6 +73,7 @@ const App = () => {
         <Stats
           goToScoreBoard={goToScoreBoard}
           history={history}
+          deleteGame={(index: number) => deleteGame(index)}
         />
       </View>
       <View key="1">
