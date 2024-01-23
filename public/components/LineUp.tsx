@@ -132,20 +132,20 @@ const LineUp = (props: any) => {
   }
 
   const Buttons = () =>
-    <View style={styles.addAndNextPlayerButton}>
+    <View style={styles.buttons}>
       { locked
         ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
         : draggable
           ? <View>
-              <View style={styles.editLineupButtons}>
+              <View style={styles.buttonsRow}>
                 <LineUpButton text={"SWAP PARTNERS"} onPress={swapPartners}/>
                 <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
               </View>
-              <View style={styles.editLineupButtons}>
+              <View style={styles.buttonsRow}>
                 <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
               </View>
             </View>
-          : <View style={styles.editLineupButtons}>
+          : <View style={styles.buttonsRow}>
               <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
               <LineUpButton text={"REORDER"} onPress={() => setDraggable(true)}/>
             </View>
@@ -275,11 +275,11 @@ const styles = StyleSheet.create({
     height: 20,
     margin: 5,
   },
-  addAndNextPlayerButton: {
+  buttons: {
     position: "absolute",
     bottom: 0,
   },
-  editLineupButtons: {
+  buttonsRow: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
