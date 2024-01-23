@@ -124,7 +124,7 @@ const LineUp = (props: any) => {
         </TouchableOpacity>
         {!locked &&
           <TouchableOpacity onPress={() => deletePlayer(index)}>
-            <Image source={require("../images/delete.png")} style={styles.deletePlayerButton}/>
+            <Image source={require("../images/deleteYellow.png")} style={styles.deletePlayerButton}/>
           </TouchableOpacity>
         }
       </View>

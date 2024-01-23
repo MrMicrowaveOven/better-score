@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import TopMenu from "./TopMenu";
 
 type Game = {
@@ -81,6 +81,9 @@ const Game = ({game, index}: GameProps) => {
                     }
                 </View>
             </View>
+            <View style={styles.deleteButton}>
+                <Image style={styles.deleteIcon} source={require("../images/delete.png")} />
+            </View>
         </View>
     )
 }
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     scores: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-evenly",
+        justifyContent: "space-around",
         padding: 5,
     },
     score: {
@@ -154,6 +157,15 @@ const styles = StyleSheet.create({
     },
     teamName: {
         textAlign: "center"
+    },
+    deleteButton: {
+        position: "absolute",
+        bottom: 10,
+        right: 10
+    },
+    deleteIcon: {
+        height: 20,
+        width: 20
     }
 })
 
