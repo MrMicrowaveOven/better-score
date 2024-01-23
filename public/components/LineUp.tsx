@@ -134,20 +134,26 @@ const LineUp = (props: any) => {
   const Buttons = () =>
     <View style={styles.buttons}>
       { locked
-        ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
+        ? <View style={{flex: 1}}>
+            <View style={styles.buttonsRow}>
+              <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
+            </View>
+          </View>
         : draggable
-          ? <View>
+          ? <View style={{flex: 1}}>
               <View style={styles.buttonsRow}>
-                <LineUpButton text={"SWAP PARTNERS"} onPress={swapPartners}/>
                 <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
+                <LineUpButton text={"SWAP PARTNERS"} onPress={swapPartners}/>
               </View>
               <View style={styles.buttonsRow}>
                 <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
               </View>
             </View>
-          : <View style={styles.buttonsRow}>
-              <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
-              <LineUpButton text={"REORDER"} onPress={() => setDraggable(true)}/>
+          : <View style={{flex: 1}}>
+              <View style={styles.buttonsRow}>
+                <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
+                <LineUpButton text={"REORDER"} onPress={() => setDraggable(true)}/>
+              </View>
             </View>
       }
     </View>
@@ -188,17 +194,15 @@ const LineUp = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
+    flex: 1,
     backgroundColor: "#000500",
-    // backgroundColor: "lime"
-    // "#000500",
   },
   body: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-around",
     alignItems: "center",
-    height: "100%",
-    // backgroundColor: "skyblue"
+    flex: 1,
+    flexGrow: 1,
   },
   moveToScoreBoard: {
     width: 120,
@@ -230,17 +234,21 @@ const styles = StyleSheet.create({
     fontSize: 40,
     margin: 10,
     marginTop: 0,
-    color: "#fdda00"
+    color: "#fdda00",
   },
   scrollableList: {
     flex: 1,
-    maxHeight: "80%"
   },
   list: {
     margin: 30,
     marginTop: 0,
+    marginBottom: 10,
     width: "100%",
-    height: "75%",
+    flex: 1,
+    paddingVertical: 10,
+    // borderColor: "#fdda00",
+    // borderWidth: 1,
+    // borderStyle: "solid",
   },
   listItem: {
     fontSize: 20,
@@ -280,23 +288,22 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   buttons: {
-    position: "absolute",
-    bottom: 40,
-    // backgroundColor: "pink",
-    // height: 120,
-    // display: "flex",
-    // flexDirection: "column",
-    // alignItems: 'center'
+    width: "100%",
+    height: 120,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: 'center',
   },
   buttonsRow: {
-    width: "100%",
     display: "flex",
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center",
   },
   lockContainer: {
     position: "absolute",
-    bottom: 50,
+    bottom: 20,
     right: 20,
     display: "flex",
     justifyContent: "flex-end",
