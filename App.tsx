@@ -12,17 +12,22 @@ type Game = {
   team2: string;
   score1: number[];
   score2: number[];
+  score1edits: number[];
+  score2edits: number[];
   time: Date;
 }
 
 type GameRound = {
   roundScore1: number[];
   roundScore2: number[];
+  roundScore1edits: number[];
+  roundScore2edits: number[];
 }
 
 const App = () => {
   const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
   const pagerViewRef: any = useRef(null);
+  // if (history.length > 0) setHistory([])
 
   const goToStats = () => {
     pagerViewRef?.current?.setPage(0)
@@ -45,6 +50,8 @@ const App = () => {
       team2: team2,
       score1: lastGame.roundScore1,
       score2: lastGame.roundScore2,
+      score1edits: lastGame.roundScore1edits,
+      score2edits: lastGame.roundScore2edits,
       time: new Date(),
     }
     const previousHistory = history

@@ -112,8 +112,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     }
   }
 
-  const reset = () => {
-    saveHistory({roundScore1: roundScore1, roundScore2: roundScore2})
+  const resetGame = () => {
+    saveHistory({roundScore1: roundScore1, roundScore2: roundScore2, roundScore1edits: roundScore1edits, roundScore2edits: roundScore2edits})
     setScore1(0)
     setScore2(0)
     setRoundScore1([])
@@ -131,7 +131,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     Alert.alert("Confirmation",
       "Are you sure you want to reset the game?  This will also save the game in your Stats.",[
         { text: "No", onPress: () => {} },
-        { text: "Yes", onPress: () => reset() }
+        { text: "Yes", onPress: () => resetGame() }
       ]
     )
   }

@@ -7,6 +7,8 @@ type Game = {
     team2: string;
     score1: number[];
     score2: number[];
+    score1edits: number[];
+    score2edits: number[];
     time: Date;
   }
 type ScoreBoardProps = PropsWithChildren<{
@@ -42,15 +44,12 @@ const Stats = ({history, goToScoreBoard}: ScoreBoardProps) => {
 }
 
 type GameProps = {
-    team1: string;
-    team2: string;
-    score1: number[];
-    score2: number[];
-    time: Date;
+    index: number;
+    game: Game;
 }
 
-const Game = ({game, index}: any) => {
-    const {team1, team2, score1, score2, time} = game
+const Game = ({game, index}: GameProps) => {
+    const {team1, team2, score1, score2, score1edits, score2edits, time} = game
     return(
         <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
             <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
@@ -61,7 +60,7 @@ const Game = ({game, index}: any) => {
                         ? <Text>{"(no score)"}</Text>
                         :   <View>
                                 {score1.map((score: number, index: number) =>
-                                    <Text style={styles.scoreNumber} key={index}>{score}</Text>
+                                    <Text style={[styles.scoreNumber, score1edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
                                 )}
                                 <View style={styles.horLine} />
                                 <Text style={styles.scoreNumber}>{score1.reduce((a: number, b: number) => a + b, 0)}</Text>
@@ -74,7 +73,7 @@ const Game = ({game, index}: any) => {
                         ?   <Text>{"(no score)"}</Text>
                         :   <View>
                                 {score2.map((score: number, index: number) =>
-                                    <Text style={styles.scoreNumber} key={index}>{score}</Text>
+                                    <Text style={[styles.scoreNumber, score2edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
                                 )}
                                 <View style={styles.horLine} />
                                 <Text style={styles.scoreNumber}>{score2.reduce((a: number, b: number) => a + b, 0)}</Text>
