@@ -15,7 +15,7 @@ const LineUpButton = ({text, onPress}: LineUpButtonProps) =>
 const styles = StyleSheet.create({
     button: {
         width: 125,
-        height: 40,
+        height: 50,
         borderRadius: 5,
         backgroundColor: "#fdda00",
         borderWidth: 1,
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 18,
+        textAlign: "center"
     }
 })
 

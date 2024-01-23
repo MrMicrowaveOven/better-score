@@ -136,9 +136,14 @@ const LineUp = (props: any) => {
       { locked
         ? <LineUpButton text={"NEXT TURN"} onPress={() => nextTurn()} />
         : draggable
-          ? <View style={styles.editLineupButtons}>
-              <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
-              <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
+          ? <View>
+              <View style={styles.editLineupButtons}>
+                <LineUpButton text={"SWAP PARTNERS"} onPress={swapPartners}/>
+                <LineUpButton text={"SCRAMBLE!"} onPress={scramblePlayers}/>
+              </View>
+              <View style={styles.editLineupButtons}>
+                <LineUpButton text={"DONE"} onPress={() => setDraggable(false)}/>
+              </View>
             </View>
           : <View style={styles.editLineupButtons}>
               <LineUpButton text={"ADD PLAYER"} onPress={addPlayer}/>
@@ -278,6 +283,7 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center"
   },
   lockContainer: {
     position: "absolute",
