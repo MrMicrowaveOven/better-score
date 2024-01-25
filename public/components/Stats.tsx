@@ -90,9 +90,11 @@ type TeamProps = {
 
 const Team = ({team, score, edits}: TeamProps) =>
     <View style={styles.score}>
-        <Text style={styles.teamName}>{team}</Text>
+        <View style={styles.teamName}>
+            <Text style={styles.teamNameText}>{team}</Text>
+        </View>
         {score.length === 0
-            ?   <Text>{"(no score)"}</Text>
+            ?   <Text>{"(none)"}</Text>
             :   <View>
                     {score.map((score: number, index: number) =>
                         <Text style={[styles.scoreNumber, edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
     score: {
         margin: 5,
         display: "flex",
+        flex: 1,
         flexDirection: "column",
         alignItems: "center"
     },
@@ -191,7 +194,13 @@ const styles = StyleSheet.create({
         borderBottomStyle: "solid",
     },
     teamName: {
-        textAlign: "center"
+        flex: 1,
+        flexDirection: "row",
+    },
+    teamNameText: {
+        textAlign: "center",
+        flex: 1,
+        flexWrap: 'wrap'
     },
     deleteButton: {
         position: "absolute",
