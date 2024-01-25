@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TopMenu from "./TopMenu";
 
 type Game = {
@@ -65,6 +65,15 @@ type GameProps = {
 
 const Game = ({game, index, moveCard, deleted}: GameProps) => {
     const {team1, team2, score1, score2, score1edits, score2edits, time} = game
+    const confirmMoveCard = () => {
+    Alert.alert("Confirmation",
+        `Are you sure you want to ${deleted ? "restore" : "delete"} this game?`, [
+            { text: "No", onPress: () => {} },
+            { text: "Yes", onPress: () => moveCard() }
+        ]
+    )
+}
+
     return(
         <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
             <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
@@ -72,7 +81,7 @@ const Game = ({game, index, moveCard, deleted}: GameProps) => {
                 <Team team={team1} score={score1} edits={score1edits} />
                 <Team team={team2} score={score2} edits={score2edits} />
             </View>
-            <TouchableOpacity style={styles.deleteButton} onPress={() => moveCard()}>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => confirmMoveCard()}>
                 {deleted
                     ? <Image style={styles.deleteIcon} source={require("../images/reload.png")} />
                     : <Image style={styles.deleteIcon} source={require("../images/delete.png")} />
