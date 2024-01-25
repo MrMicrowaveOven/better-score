@@ -69,32 +69,8 @@ const Game = ({game, index, moveCard, deleted}: GameProps) => {
         <View style={[styles.scoreCard, {backgroundColor: index % 4 === 1 || index % 4 === 2 ? "rgba(90, 202, 133, 256)" : "rgba(249, 63, 64, 256)"}]}>
             <Text style={styles.gameTime}>{new Date(time).toString().split("GMT")[0]}</Text>
             <View style={styles.scores}>
-                <View style={styles.score}>
-                    <Text style={styles.teamName}>{team1}</Text>
-                    {score1.length === 0
-                        ? <Text>{"(no score)"}</Text>
-                        :   <View>
-                                {score1.map((score: number, index: number) =>
-                                    <Text style={[styles.scoreNumber, score1edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
-                                )}
-                                <View style={styles.horLine} />
-                                <Text style={styles.scoreNumber}>{score1.reduce((a: number, b: number) => a + b, 0)}</Text>
-                            </View>
-                    }
-                </View>
-                <View style={styles.score}>
-                    <Text style={styles.teamName}>{team2}</Text>
-                    {score2.length === 0
-                        ?   <Text>{"(no score)"}</Text>
-                        :   <View>
-                                {score2.map((score: number, index: number) =>
-                                    <Text style={[styles.scoreNumber, score2edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
-                                )}
-                                <View style={styles.horLine} />
-                                <Text style={styles.scoreNumber}>{score2.reduce((a: number, b: number) => a + b, 0)}</Text>
-                            </View>
-                    }
-                </View>
+                <Team team={team1} score={score1} edits={score1edits} />
+                <Team team={team2} score={score2} edits={score2edits} />
             </View>
             <TouchableOpacity style={styles.deleteButton} onPress={() => moveCard()}>
                 {deleted
@@ -105,6 +81,27 @@ const Game = ({game, index, moveCard, deleted}: GameProps) => {
         </View>
     )
 }
+
+type TeamProps = {
+    team: string;
+    score: number[];
+    edits: number[];
+}
+
+const Team = ({team, score, edits}: TeamProps) =>
+    <View style={styles.score}>
+        <Text style={styles.teamName}>{team}</Text>
+        {score.length === 0
+            ?   <Text>{"(no score)"}</Text>
+            :   <View>
+                    {score.map((score: number, index: number) =>
+                        <Text style={[styles.scoreNumber, edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
+                    )}
+                    <View style={styles.horLine} />
+                    <Text style={styles.scoreNumber}>{score.reduce((a: number, b: number) => a + b, 0)}</Text>
+                </View>
+        }
+    </View>
 
 const styles = StyleSheet.create({
     background: {
