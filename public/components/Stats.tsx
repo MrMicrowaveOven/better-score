@@ -106,7 +106,7 @@ const Team = ({team, score, edits}: TeamProps) =>
             ?   <Text>{"(none)"}</Text>
             :   <View>
                     {score.map((score: number, index: number) =>
-                        <Text style={[styles.scoreNumber, edits.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
+                        <Text style={[styles.scoreNumber, edits?.includes(index) && {color: "#fdda00"}]} key={index}>{score}</Text>
                     )}
                     <View style={styles.horLine} />
                     <Text style={styles.scoreNumber}>{score.reduce((a: number, b: number) => a + b, 0)}</Text>
