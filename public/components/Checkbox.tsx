@@ -39,15 +39,15 @@ const styles = StyleSheet.create({
     checkedBox: {
     },
     diagonalLine: {
-        width: 23,
+        width: 24,
         height: 3,
         backgroundColor: "black",
     },
     diagonalLine1: {
-        transform: [{translateX: -4},{rotate: '45deg'}]
+        transform: [{translateX: -5},{rotate: '45deg'}]
     },
     diagonalLine2: {
-        transform: [{translateX: -4}, {rotate: '135deg'}]
+        transform: [{translateX: -5}, {rotate: '135deg'}]
     }
 })
 
