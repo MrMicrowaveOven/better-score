@@ -1,25 +1,29 @@
 import React, { PropsWithChildren, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const Adjuster = () => {
-    const [gameTime, setGameTime] = useState<number>(45)
+type AdjusterProps = PropsWithChildren<{
+    gameTimeMinutes: number;
+    setGameTimeMinutes: Function;
 
-    const decreaseTimeDisabled = gameTime <= 0
-    const increaseTimeDisabled = gameTime >= 60
+}>;
+
+const Adjuster = ({gameTimeMinutes, setGameTimeMinutes}: AdjusterProps) => {
+    const decreaseTimeDisabled = gameTimeMinutes <= 0
+    const increaseTimeDisabled = gameTimeMinutes >= 60
 
     return (
         <View style={styles.container}>
             <Text style={styles.adjusterLabel}>Timer:</Text>
             <View style={styles.adjuster}>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => !decreaseTimeDisabled && setGameTime(gameTime - 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !decreaseTimeDisabled && setGameTimeMinutes(gameTimeMinutes - 5)}>
                     <Text style={[styles.adjusterButtonText, decreaseTimeDisabled && styles.disabled]}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.numberDisplay}>
                     <Text style={styles.numberDisplayText}>
-                        {gameTime}
+                        {gameTimeMinutes}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => !increaseTimeDisabled && setGameTime(gameTime + 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !increaseTimeDisabled && setGameTimeMinutes(gameTimeMinutes + 5)}>
                     <Text style={[styles.adjusterButtonText, increaseTimeDisabled && styles.disabled]}>+</Text>
                 </TouchableOpacity>
             </View>

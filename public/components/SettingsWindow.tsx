@@ -10,7 +10,7 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playMIMusic: boolean;
     setPlayMIMusic: Function;
-    gameTimeMinutes: 0|30|45|60;
+    gameTimeMinutes: number;
     setGameTimeMinutes: Function;
 }>;
 
@@ -72,7 +72,10 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                             {SettingsCheckbox("Play Game Over Sound", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                             {SettingsCheckbox("Play Mission Imbocceball Theme", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
                         </View>
-                        <Adjuster />
+                        <Adjuster
+                            gameTimeMinutes={gameTimeMinutes}
+                            setGameTimeMinutes={setGameTimeMinutes}
+                        />
                         {/* <View style={styles.gameTimerSelector}>
                             <Text style={styles.gameTimerSelectorLabel}>Game Timer Length</Text>
                             <Dropdown
