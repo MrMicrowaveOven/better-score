@@ -62,8 +62,10 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                         </View>
                     </View>
                     <View style={styles.options}>
-                        {SettingsCheckbox("Play Sound on Game Over", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
-                        {SettingsCheckbox("Play Sound on Mission Imbocceball score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
+                        <View style={styles.checkboxes}>
+                            {SettingsCheckbox("Play Game Over Sound", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
+                            {SettingsCheckbox("Play Mission Imbocceball Theme", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
+                        </View>
                         {/* <View style={styles.gameTimerSelector}>
                             <Text style={styles.gameTimerSelectorLabel}>Game Timer Length</Text>
                             <Dropdown
@@ -122,12 +124,17 @@ const styles = StyleSheet.create({
         width: "100%",
         marginTop: 20
     },
+    checkboxes: {
+        width: "95%",
+        height: 100,
+
+    },
     option: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-start",
         width: "100%",
-        marginTop: 10
+        marginTop: 10,
     },
     optionCheckboxContainer: {
         width: "25%",
