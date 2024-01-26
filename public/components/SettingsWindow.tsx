@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Alert, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -36,7 +36,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
 
     const ExitButton = () =>
         <TouchableOpacity style={styles.exitButton} onPress={() => exit()}>
-            <Text style={styles.exitButtonText}>X</Text>
+            <Image source={require('../images/exit.png')} style={styles.exitButtonIcon}/>
         </TouchableOpacity>
 
     const dropdownData = [
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%"
+        height: "100%",
     },
     modal: {
         width: "90%",
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-start",
+        marginLeft: 10,
     },
     optionText: {
         fontSize: 18,
@@ -193,19 +194,16 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 1,
         top: 10,
-        right: 10,
-        width: 40,
-        height: 40,
-        borderStyle: "solid",
-        borderColor: "black",
-        borderWidth: 2,
+        right: 15,
+        width: 25,
+        height: 25,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
-    exitButtonText: {
-        fontSize: 25,
-        textAlign: "center",
+    exitButtonIcon: {
+        width: 15,
+        height: 15
     }
 })
 
