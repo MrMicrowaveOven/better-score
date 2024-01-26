@@ -56,7 +56,11 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <ExitButton />
-                    <Text style={styles.title}>Settings</Text>
+                    <View style={styles.titleContainer}>
+                        <View style={styles.title}>
+                            <Text style={styles.titleText}>Settings</Text>
+                        </View>
+                    </View>
                     <View style={styles.options}>
                         {SettingsCheckbox("Play Sound on Game Over", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                         {SettingsCheckbox("Play Sound on Mission Imbocceball score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
@@ -87,16 +91,30 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "90%",
-        height: "50%",
+        height: 250,
         backgroundColor: "white",
         borderColor: "black",
         borderWidth: 2,
         borderStyle: "solid"
     },
+    titleContainer: {
+        width: "100%",
+        height: 64,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
     title: {
-        fontSize: 50,
-        textAlign: "center",
+        width: "80%",
         marginTop: 20,
+        borderBottomColor: "#000500",
+        borderBottomWidth: 1,
+        borderBottomStyle: "solid"
+    },
+    titleText: {
+        fontFamily: "Rubik-Regular",
+        fontSize: 32,
+        textAlign: "center",
     },
     options: {
         display: "flex",
