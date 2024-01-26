@@ -66,7 +66,7 @@ const App = () => {
     const deletedGame = oldHistory.splice(index, 1)
     let oldTrashBin = [...trashBin]
     oldTrashBin.unshift(deletedGame[0])
-    if(oldTrashBin.length > 1) {
+    if(oldTrashBin.length > 1  && oldTrashBin.every(game => typeof game.time === 'object')) {
       oldTrashBin = oldTrashBin.sort((a: Game, b: Game) => b.time.getTime() - a.time.getTime())
     }
     setTrashBin(oldTrashBin)
@@ -78,7 +78,7 @@ const App = () => {
     const restoredGame = oldTrashBin.splice(index, 1)
     let oldHistory = [...history]
     oldHistory.unshift(restoredGame[0])
-    if(oldHistory.length > 1) {
+    if(oldHistory.length > 1  && oldHistory.every(game => typeof game.time === 'object')) {
       oldHistory = oldHistory.sort((a: Game, b: Game) => b.time.getTime() - a.time.getTime())
     }
     setHistory(oldHistory)
