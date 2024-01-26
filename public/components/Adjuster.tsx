@@ -3,20 +3,24 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Adjuster = () => {
     const [gameTime, setGameTime] = useState<number>(45)
+
+    const decreaseTimeDisabled = gameTime <= 0
+    const increaseTimeDisabled = gameTime >= 60
+
     return (
         <View style={styles.container}>
             <Text style={styles.adjusterLabel}>Timer:</Text>
             <View style={styles.adjuster}>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => gameTime > 0 && setGameTime(gameTime - 5)}>
-                    <Text style={styles.adjusterButtonText}>-</Text>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !decreaseTimeDisabled && setGameTime(gameTime - 5)}>
+                    <Text style={[styles.adjusterButtonText, decreaseTimeDisabled && styles.disabled]}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.numberDisplay}>
                     <Text style={styles.numberDisplayText}>
                         {gameTime}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => gameTime < 60 && setGameTime(gameTime + 5)}>
-                    <Text style={styles.adjusterButtonText}>+</Text>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !increaseTimeDisabled && setGameTime(gameTime + 5)}>
+                    <Text style={[styles.adjusterButtonText, increaseTimeDisabled && styles.disabled]}>+</Text>
                 </TouchableOpacity>
             </View>
             <Text style={styles.adjusterLabel}>minutes</Text>
@@ -59,6 +63,9 @@ const styles = StyleSheet.create({
     adjusterButtonText: {
         fontSize: 30,
         textAlign: "center",
+    },
+    disabled: {
+        color: "lightgray"
     },
     numberDisplay: {
         flex: 1,
