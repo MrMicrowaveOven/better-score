@@ -7,7 +7,7 @@ const Adjuster = () => {
         <View style={styles.container}>
             <Text style={styles.adjusterLabel}>Timer:</Text>
             <View style={styles.adjuster}>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => setGameTime(gameTime - 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => gameTime > 0 && setGameTime(gameTime - 5)}>
                     <Text style={styles.adjusterButtonText}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.numberDisplay}>
@@ -15,7 +15,7 @@ const Adjuster = () => {
                         {gameTime}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => setGameTime(gameTime + 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => gameTime < 60 && setGameTime(gameTime + 5)}>
                     <Text style={styles.adjusterButtonText}>+</Text>
                 </TouchableOpacity>
             </View>
