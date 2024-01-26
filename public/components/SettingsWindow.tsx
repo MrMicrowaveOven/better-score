@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { Alert, Image, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
-import Checkbox from "./Checkbox";
 import { Dropdown } from 'react-native-element-dropdown';
+import Adjuster from "./Adjuster";
 
 type SettingsWindowProps = PropsWithChildren<{
     isVisible: boolean;
@@ -72,6 +72,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                             {SettingsCheckbox("Play Game Over Sound", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                             {SettingsCheckbox("Play Mission Imbocceball Theme", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
                         </View>
+                        <Adjuster />
                         {/* <View style={styles.gameTimerSelector}>
                             <Text style={styles.gameTimerSelectorLabel}>Game Timer Length</Text>
                             <Dropdown
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "90%",
-        height: 250,
+        height: 285,
         backgroundColor: "white",
         borderColor: "black",
         borderWidth: 2,
