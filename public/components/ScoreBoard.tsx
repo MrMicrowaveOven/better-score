@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   Alert,
@@ -111,6 +111,10 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       return false
     }
   }
+
+  useEffect(() => {
+    if(!playMIMusic) SoundPlayer.stop()
+  }, [playMIMusic])
 
   const resetGame = () => {
     saveHistory({roundScore1: roundScore1, roundScore2: roundScore2, roundScore1edits: roundScore1edits, roundScore2edits: roundScore2edits})
