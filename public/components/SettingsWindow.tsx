@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import Checkbox from "./Checkbox";
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -19,7 +19,13 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
         return (
             <View style={styles.option}>
                 <View style={styles.optionCheckboxContainer}>
-                    <Checkbox onChange={(isChecked: boolean) => onChange(isChecked)} defaultChecked={defaultChecked}/>
+                    <Switch
+                        onValueChange={(isChecked: boolean) => onChange(isChecked)}
+                        value={defaultChecked}
+                        trackColor={{false: '#BDBDBD', true: '#BDBDBD'}}
+                        thumbColor={defaultChecked ? '#020202' : "#757575"}
+                        style={styles.switch}
+                    />
                 </View>
                 <View style={styles.optionTextContainer}>
                     <Text style={styles.optionText}>{label}</Text>
@@ -122,12 +128,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "flex-start",
         width: "100%",
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 20,
     },
     checkboxes: {
         width: "95%",
         height: 100,
-
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: "flex-start",
     },
     option: {
         display: "flex",
@@ -137,17 +146,20 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     optionCheckboxContainer: {
-        width: "25%",
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: "center",
         marginRight: 10,
+        marginLeft: 15,
     },
     optionCheckbox: {
         right: 10,
         top: 0,
         bottom: 0,
-        textAlign: "right"
+        textAlign: "right",
+    },
+    switch: {
+        transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]
     },
     optionTextContainer: {
         width: "70%",
@@ -156,7 +168,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
     },
     optionText: {
-        fontSize: 20,
+        fontSize: 18,
     },
     gameTimerSelector: {
         width: "100%",
