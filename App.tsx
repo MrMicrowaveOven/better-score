@@ -1,11 +1,17 @@
 import React, { useRef } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ScoreBoard from './public/components/ScoreBoard';
 import LineUp from './public/components/LineUp'
 import Stats from "./public/components/Stats"
 import PagerView from 'react-native-pager-view';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
+
+import setDefaultProps from 'react-native-simple-default-props'
+const defaultText = {
+  style: [{fontFamily: 'Rubik-Regular'}],
+};
+setDefaultProps(Text, defaultText);
 
 type Game = {
   team1: string;

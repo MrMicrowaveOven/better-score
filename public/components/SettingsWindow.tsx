@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         borderBottomStyle: "solid"
     },
     titleText: {
-        fontFamily: "Rubik-Regular",
         fontSize: 32,
         textAlign: "center",
     },

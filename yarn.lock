@@ -5667,6 +5667,11 @@
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.0.tgz"
   "version" "6.2.0"
 
+"react-native-simple-default-props@^1.0.0":
+  "integrity" "sha512-cvhs3S2Yu5JdGtOdFz4aLstuQZM7Gps4/ZYBSwQd3IYVyvLhiWnXVMsRkod7AdB/SR9gHa0W2jXTao2HPwnNbg=="
+  "resolved" "https://registry.npmjs.org/react-native-simple-default-props/-/react-native-simple-default-props-1.0.0.tgz"
+  "version" "1.0.0"
+
 "react-native-sound-player@^0.13.2":
   "integrity" "sha512-m457mjp496sARAED7epYzbhorfiLZ3j6HzJn7zEL9RU+ZJKcans/0gFNUEBvlh31fSDZRliQ2WwE4mJ6836bNg=="
   "resolved" "https://registry.npmjs.org/react-native-sound-player/-/react-native-sound-player-0.13.2.tgz"
