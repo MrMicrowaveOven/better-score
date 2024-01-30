@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { AppState, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, AppState, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 
@@ -67,13 +67,22 @@ const GameTimer = ({gameTimeInSeconds, onGameOver}: GameTimerProps) => {
         useGrouping: false
     })
 
+    const confirmResetTimer = () => {
+        Alert.alert("Confirmation",
+            "Are you sure you want to reset the timer?",[
+                { text: "No", onPress: () => {} },
+                { text: "Yes", onPress: () => reset() }
+            ]
+        )
+    }
+
     const reset = () => {
         setStartTime(new Date().getTime())
         setTimeInSeconds(gameTimeInSeconds)
     }
 
     return (
-        <TouchableOpacity onPress={() => reset()}>
+        <TouchableOpacity onPress={() => confirmResetTimer()}>
             <View style={styles.container}>
                 <View style={styles.timeContainer}>
                     <Text style={styles.text}>
