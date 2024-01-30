@@ -1,16 +1,15 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { AppState, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { AppState, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 
 type GameTimerProps = PropsWithChildren<{
-    timeLimit: number;
+    gameTimeInSeconds: number;
 }>;
 
-const GameTimer = ({timeLimit}: GameTimerProps) => {
+const GameTimer = ({gameTimeInSeconds}: GameTimerProps) => {
     const [startTime, setStartTime] = useMMKVStorage<number>('startTime', storage, new Date().getTime())
-    const [initialTimeInSeconds, setInitialTimeInSeconds] = useState<number>(45*60)
-    const [timeInSeconds, setTimeInSeconds] = useState<number>(initialTimeInSeconds)
+    const [timeInSeconds, setTimeInSeconds] = useState<number>(gameTimeInSeconds)
 
     // This whole section resets the timer when it moves back from being minimized
     const appState = useRef(AppState.currentState);
@@ -44,12 +43,12 @@ const GameTimer = ({timeLimit}: GameTimerProps) => {
     }, [timeInSeconds]);
 
     const setProperTime = () => {
-        setTimeInSeconds(Math.floor((initialTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
+        setTimeInSeconds(Math.floor((gameTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
     }
 
     useEffect(() => {
         setProperTime()
-    }, [])
+    }, [gameTimeInSeconds])
 
     const minutesOfTime = Math.floor(timeInSeconds / 60).toLocaleString('en-US', {
         minimumIntegerDigits: 2,

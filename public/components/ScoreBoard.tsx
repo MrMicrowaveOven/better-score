@@ -277,7 +277,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       />
       {gameTimeMinutes > 0 &&
         <View style={styles.timer}>
-          <GameTimer timeLimit={45}/>
+          <GameTimer gameTimeInSeconds={gameTimeMinutes*60}/>
           {/* <CountDown
             id={timerId.toString()}
             until={timerSetting}
