@@ -40,6 +40,9 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
   const [gameTimeMinutes, setGameTimeMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
+  const [prevGameTimeMinutes, setPrevGameTimeMinutes] = useMMKVStorage<number>('prevGameTimeMinutes', storage, 45)
+  const [timeLeft, setTimeLeft] = useState<number>(gameTimeMinutes*60)
+  const [timerSetting, setTimerSetting] = useState<number>(gameTimeMinutes*60)
 
   // Teams and Scores
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
@@ -60,6 +63,15 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
 
   const minusPointFor1 = () => score1 > 0 && setScore1(score1 - 1)
   const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
+
+  useEffect(() => {
+    setTimerSetting((gameTimeMinutes - prevGameTimeMinutes)*60 + timeLeft)
+  }, [gameTimeMinutes])
+
+  useEffect(() => {
+    setPrevGameTimeMinutes(gameTimeMinutes)
+    resetTimer()
+  }, [timerSetting])
 
   const nextRound = () => {
     if (gameOverCheck() && playEndMusic) {
@@ -124,7 +136,11 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setRoundScore2([])
     setroundScore1edits([])
     setroundScore2edits([])
-    resetTimer()
+    resetTimerToGameTime()
+  }
+
+  const resetTimerToGameTime = () => {
+    setTimerSetting(gameTimeMinutes*60)
   }
 
   const resetTimer = () => {
@@ -262,11 +278,12 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         <View style={styles.timer}>
           <CountDown
             id={timerId.toString()}
-            until={45*60}
+            until={timerSetting}
             timeToShow={['M', 'S']}
             timeLabels={{m: undefined, s: undefined}}
             separatorStyle={{color: 'yellow', fontSize: 30}}
             showSeparator
+            onChange={(timeLeftInSeconds: number) => setTimeLeft(timeLeftInSeconds)}
             onPress={() => !screenLocked && confirmResetTimer()}
             onFinish={() => playEndMusic && playGameOverSound()}
           />

@@ -69,8 +69,8 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                     </View>
                     <View style={styles.options}>
                         <View style={styles.checkboxes}>
-                            {SettingsCheckbox("Play Game Over Sound", (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
-                            {SettingsCheckbox("Play Mission Imbocceball Theme", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
+                            {SettingsCheckbox('Play "Game Over" sound', (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
+                            {SettingsCheckbox("Play Mission Imbocceball Theme when they score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
                         </View>
                         <Adjuster
                             gameTimeMinutes={gameTimeMinutes}
