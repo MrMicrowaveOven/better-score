@@ -39,6 +39,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   // Settings
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
+  const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
   const [gameTimeMinutes, setGameTimeMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
   const [prevGameTimeMinutes, setPrevGameTimeMinutes] = useMMKVStorage<number>('prevGameTimeMinutes', storage, 45)
@@ -137,6 +138,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setRoundScore2([])
     setroundScore1edits([])
     setroundScore2edits([])
+    setEndMusicHasPlayed(false)
     resetTimerToGameTime()
   }
 
@@ -167,10 +169,13 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const playGameOverSound = () => {
-    try {
-      SoundPlayer.playSoundFile('game_over_sound', 'mp3')
-    } catch (e) {
+    if (!endMusicHasPlayed) {
+      try {
+        SoundPlayer.playSoundFile('game_over_sound', 'mp3')
+        setEndMusicHasPlayed(true)
+      } catch (e) {
 
+      }
     }
   }
 
