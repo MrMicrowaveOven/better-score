@@ -1,25 +1,86 @@
-import React, { PropsWithChildren } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { AppState, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
+const storage = new MMKVLoader().initialize();
 
 type GameTimerProps = PropsWithChildren<{
     timeLimit: number;
-  }>;
+}>;
 
 const GameTimer = ({timeLimit}: GameTimerProps) => {
+    const [startTime, setStartTime] = useMMKVStorage<number>('startTime', storage, new Date().getTime())
+    const [initialTimeInSeconds, setInitialTimeInSeconds] = useState<number>(45*60)
+    const [timeInSeconds, setTimeInSeconds] = useState<number>(initialTimeInSeconds)
+
+    // This whole section resets the timer when it moves back from being minimized
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', nextAppState => {
+          if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
+            setProperTime()
+          }
+
+          appState.current = nextAppState;
+          setAppStateVisible(appState.current);
+        });
+
+        return () => {
+          subscription.remove();
+        };
+    }, []);
+    // ///////////////////////////////////////////////////////////////////////////////
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeInSeconds(timeInSeconds - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [timeInSeconds]);
+
+    const setProperTime = () => {
+        setTimeInSeconds(Math.floor((initialTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
+    }
+
+    useEffect(() => {
+        setProperTime()
+    }, [])
+
+    const minutesOfTime = Math.floor(timeInSeconds / 60).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+    })
+    const secondsOfTime = (timeInSeconds % 60).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+    })
+
+    const reset = () => {
+        setStartTime(new Date().getTime())
+        setTimeInSeconds(45*60)
+    }
+
     return (
-        <View style={styles.container}>
-            <View style={styles.timeContainer}>
-                <Text style={styles.text}>
-                    45
-                </Text>
+        <TouchableOpacity onPress={() => reset()}>
+            <View style={styles.container}>
+                <View style={styles.timeContainer}>
+                    <Text style={styles.text}>
+                        {minutesOfTime}
+                    </Text>
+                </View>
+                <Text style={styles.colon}>:</Text>
+                <View style={styles.timeContainer}>
+                    <Text style={styles.text}>
+                        {secondsOfTime}
+                    </Text>
+                </View>
             </View>
-            <Text style={styles.colon}>:</Text>
-            <View style={styles.timeContainer}>
-                <Text style={styles.text}>
-                    00
-                </Text>
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -34,7 +95,7 @@ const styles = StyleSheet.create({
     timeContainer: {
         width: 40,
         height: 40,
-        backgroundColor: "yellow",
+        backgroundColor: "#fdda00",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -42,7 +103,7 @@ const styles = StyleSheet.create({
     },
     colon: {
         fontSize: 25,
-        color: "yellow"
+        color: "#fdda00"
     },
     text: {
         color: "#000500",

@@ -26,6 +26,7 @@ import TopMenu from './TopMenu';
 import CountDown from 'react-native-countdown-fixed';
 import SoundPlayer from 'react-native-sound-player'
 import SettingsWindow from './SettingsWindow';
+import GameTimer from './GameTimer';
 
 type ScoreBoardProps = PropsWithChildren<{
   goToLineUp: Function;
@@ -276,7 +277,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       />
       {gameTimeMinutes > 0 &&
         <View style={styles.timer}>
-          <CountDown
+          <GameTimer timeLimit={45}/>
+          {/* <CountDown
             id={timerId.toString()}
             until={timerSetting}
             timeToShow={['M', 'S']}
@@ -286,7 +288,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
             onChange={(timeLeftInSeconds: number) => setTimeLeft(timeLeftInSeconds)}
             onPress={() => !screenLocked && confirmResetTimer()}
             onFinish={() => playEndMusic && playGameOverSound()}
-          />
+          /> */}
         </View>}
       <SettingsButton />
       <SaveRoundButton />
