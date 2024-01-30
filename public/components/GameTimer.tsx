@@ -5,9 +5,10 @@ const storage = new MMKVLoader().initialize();
 
 type GameTimerProps = PropsWithChildren<{
     gameTimeInSeconds: number;
+    onGameOver: Function;
 }>;
 
-const GameTimer = ({gameTimeInSeconds}: GameTimerProps) => {
+const GameTimer = ({gameTimeInSeconds, onGameOver}: GameTimerProps) => {
     const [startTime, setStartTime] = useMMKVStorage<number>('startTime', storage, new Date().getTime())
     const [timeInSeconds, setTimeInSeconds] = useState<number>(gameTimeInSeconds)
 
@@ -36,14 +37,21 @@ const GameTimer = ({gameTimeInSeconds}: GameTimerProps) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setTimeInSeconds(timeInSeconds - 1);
+            if(timeInSeconds > 0) {
+                setTimeInSeconds(timeInSeconds - 1);
+            }
         }, 1000);
-
+        if(timeInSeconds === 0) onGameOver()
         return () => clearInterval(interval);
     }, [timeInSeconds]);
 
     const setProperTime = () => {
-        setTimeInSeconds(Math.floor((gameTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
+        const properTime = (Math.floor((gameTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
+        if (properTime > 0) {
+            setTimeInSeconds(properTime)
+        } else {
+            setTimeInSeconds(0)
+        }
     }
 
     useEffect(() => {
@@ -61,7 +69,7 @@ const GameTimer = ({gameTimeInSeconds}: GameTimerProps) => {
 
     const reset = () => {
         setStartTime(new Date().getTime())
-        setTimeInSeconds(45*60)
+        setTimeInSeconds(gameTimeInSeconds)
     }
 
     return (

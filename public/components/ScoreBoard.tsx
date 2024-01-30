@@ -277,7 +277,10 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       />
       {gameTimeMinutes > 0 &&
         <View style={styles.timer}>
-          <GameTimer gameTimeInSeconds={gameTimeMinutes*60}/>
+          <GameTimer
+            gameTimeInSeconds={gameTimeMinutes*60}
+            onGameOver={() => playEndMusic && playGameOverSound()}
+          />
           {/* <CountDown
             id={timerId.toString()}
             until={timerSetting}
