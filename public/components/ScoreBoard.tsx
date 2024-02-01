@@ -136,7 +136,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const playGameOverSound = () => {
-    if (!endMusicHasPlayed) {
+    if (!endMusicHasPlayed && gameTimeInMinutes > 0) {
       try {
         SoundPlayer.playSoundFile('game_over_sound', 'mp3')
         setEndMusicHasPlayed(true)
