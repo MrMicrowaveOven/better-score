@@ -16,6 +16,11 @@ const GameTimer = ({gameTimeInSeconds, onGameOver}: GameTimerProps) => {
     const appState = useRef(AppState.currentState);
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
+    console.log("gameTimeInSeconds")
+    console.log(gameTimeInSeconds)
+    console.log("timeInSeconds")
+    console.log(timeInSeconds)
+
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
           if (
@@ -46,6 +51,10 @@ const GameTimer = ({gameTimeInSeconds, onGameOver}: GameTimerProps) => {
     }, [timeInSeconds]);
 
     const setProperTime = () => {
+        console.log("====================")
+        console.log(gameTimeInSeconds*1000)
+        console.log(new Date().getTime())
+        console.log(startTime)
         const properTime = (Math.floor((gameTimeInSeconds*1000 - (new Date().getTime() - startTime))/1000))
         if (properTime > 0) {
             setTimeInSeconds(properTime)

@@ -40,7 +40,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
-  const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeInMinutes', storage, 45)
+  const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
 
   // Teams and Scores
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
