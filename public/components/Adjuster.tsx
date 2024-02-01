@@ -2,28 +2,28 @@ import React, { PropsWithChildren, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type AdjusterProps = PropsWithChildren<{
-    gameTimeMinutes: number;
-    setGameTimeMinutes: Function;
+    gameTimeInMinutes: number;
+    setGameTimeInMinutes: Function;
 
 }>;
 
-const Adjuster = ({gameTimeMinutes, setGameTimeMinutes}: AdjusterProps) => {
-    const decreaseTimeDisabled = gameTimeMinutes <= 0
-    const increaseTimeDisabled = gameTimeMinutes >= 60
+const Adjuster = ({gameTimeInMinutes, setGameTimeInMinutes}: AdjusterProps) => {
+    const decreaseTimeDisabled = gameTimeInMinutes <= 0
+    const increaseTimeDisabled = gameTimeInMinutes >= 60
 
     return (
         <View style={styles.container}>
             <Text style={styles.adjusterLabel}>Timer:</Text>
             <View style={styles.adjuster}>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => !decreaseTimeDisabled && setGameTimeMinutes(gameTimeMinutes - 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !decreaseTimeDisabled && setGameTimeInMinutes(gameTimeInMinutes - 5)}>
                     <Text style={[styles.adjusterButtonText, decreaseTimeDisabled && styles.disabled]}>-</Text>
                 </TouchableOpacity>
                 <View style={styles.numberDisplay}>
                     <Text style={styles.numberDisplayText}>
-                        {gameTimeMinutes}
+                        {gameTimeInMinutes}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.adjusterButton} onPress={() => !increaseTimeDisabled && setGameTimeMinutes(gameTimeMinutes + 5)}>
+                <TouchableOpacity style={styles.adjusterButton} onPress={() => !increaseTimeDisabled && setGameTimeInMinutes(gameTimeInMinutes + 5)}>
                     <Text style={[styles.adjusterButtonText, increaseTimeDisabled && styles.disabled]}>+</Text>
                 </TouchableOpacity>
             </View>

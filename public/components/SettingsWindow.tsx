@@ -10,11 +10,11 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playMIMusic: boolean;
     setPlayMIMusic: Function;
-    gameTimeMinutes: number;
-    setGameTimeMinutes: Function;
+    gameTimeInMinutes: number;
+    setGameTimeInMinutes: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic, gameTimeMinutes, setGameTimeMinutes} : SettingsWindowProps) => {
+const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic, gameTimeInMinutes, setGameTimeInMinutes} : SettingsWindowProps) => {
     const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
         return (
             <View style={styles.option}>
@@ -46,17 +46,6 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
         { label: '60 minutes', value: 60}
     ]
 
-    const getDataByValue = (value: 0|30|45|60) => dropdownData.find((item) => item.value === value)
-
-    const onGameTimeChange = (value: number) => {
-        Alert.alert("Confirm Game Timer Change",
-            "Changing the Game Length will reset the Game Timer.  Do you want to proceed?", [
-            { text: "No", onPress: () => {} },
-            { text: "Yes", onPress: () => { setGameTimeMinutes(value) } }
-            ]
-        )
-    }
-
     return (
         <Modal visible={isVisible} transparent={true} animationType="fade">
             <View style={styles.container}>
@@ -73,8 +62,8 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                             {SettingsCheckbox("Play Mission Imbocceball Theme when they score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
                         </View>
                         <Adjuster
-                            gameTimeMinutes={gameTimeMinutes}
-                            setGameTimeMinutes={setGameTimeMinutes}
+                            gameTimeInMinutes={gameTimeInMinutes}
+                            setGameTimeInMinutes={setGameTimeInMinutes}
                         />
                         {/* <View style={styles.gameTimerSelector}>
                             <Text style={styles.gameTimerSelectorLabel}>Game Timer Length</Text>
@@ -83,7 +72,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                                 labelField="label"
                                 valueField="value"
                                 onChange={(item) => onGameTimeChange(item.value)}
-                                value={getDataByValue(gameTimeMinutes)}
+                                value={getDataByValue(gameTimeInMinutes)}
                                 style={styles.gameTimeDropdown}
                             />
                         </View> */}

@@ -23,7 +23,6 @@ import ScoreBoxes from './ScoreBoxes';
 import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 const storage = new MMKVLoader().initialize();
 import TopMenu from './TopMenu';
-import CountDown from 'react-native-countdown-fixed';
 import SoundPlayer from 'react-native-sound-player'
 import SettingsWindow from './SettingsWindow';
 import GameTimer from './GameTimer';
@@ -41,10 +40,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
-  const [gameTimeMinutes, setGameTimeMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
-  const [prevGameTimeMinutes, setPrevGameTimeMinutes] = useMMKVStorage<number>('prevGameTimeMinutes', storage, 45)
-  const [timeLeft, setTimeLeft] = useState<number>(gameTimeMinutes*60)
-  const [timerSetting, setTimerSetting] = useState<number>(gameTimeMinutes*60)
+  const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeInMinutes', storage, 45)
 
   // Teams and Scores
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
@@ -58,22 +54,11 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
 
   const [screenLocked, setScreenLocked] = useState<boolean>(false)
 
-  const [timerId, setTimerId] = useMMKVStorage<number>('timerId', storage, Math.random())
-
   const pointFor1 = () => score2 == 0 && score1 < 4 && setScore1(score1 + 1)
   const pointFor2 = () => score1 == 0 && score2 < 4 && setScore2(score2 + 1)
 
   const minusPointFor1 = () => score1 > 0 && setScore1(score1 - 1)
   const minusPointFor2 = () => score2 > 0 && setScore2(score2 - 1)
-
-  useEffect(() => {
-    setTimerSetting((gameTimeMinutes - prevGameTimeMinutes)*60 + timeLeft)
-  }, [gameTimeMinutes])
-
-  useEffect(() => {
-    setPrevGameTimeMinutes(gameTimeMinutes)
-    resetTimer()
-  }, [timerSetting])
 
   const nextRound = () => {
     if (gameOverCheck() && playEndMusic) {
@@ -139,15 +124,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     setroundScore1edits([])
     setroundScore2edits([])
     setEndMusicHasPlayed(false)
-    resetTimerToGameTime()
-  }
-
-  const resetTimerToGameTime = () => {
-    setTimerSetting(gameTimeMinutes*60)
-  }
-
-  const resetTimer = () => {
-    setTimerId(Math.random())
   }
 
   const confirmReset = () => {
@@ -155,15 +131,6 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       "Are you sure you want to reset the game?  This will also save the game in your Stats.",[
         { text: "No", onPress: () => {} },
         { text: "Yes", onPress: () => resetGame() }
-      ]
-    )
-  }
-
-  const confirmResetTimer = () => {
-    Alert.alert("Confirmation",
-      "Are you sure you want to reset the timer?",[
-        { text: "No", onPress: () => {} },
-        { text: "Yes", onPress: () => resetTimer() }
       ]
     )
   }
@@ -280,23 +247,12 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         roundScore2edits={roundScore2edits}
         screenLocked={screenLocked}
       />
-      {gameTimeMinutes > 0 &&
+      {gameTimeInMinutes > 0 &&
         <View style={styles.timer}>
           <GameTimer
-            gameTimeInSeconds={gameTimeMinutes*60}
+            gameTimeInSeconds={gameTimeInMinutes*60}
             onGameOver={() => playEndMusic && playGameOverSound()}
           />
-          {/* <CountDown
-            id={timerId.toString()}
-            until={timerSetting}
-            timeToShow={['M', 'S']}
-            timeLabels={{m: undefined, s: undefined}}
-            separatorStyle={{color: 'yellow', fontSize: 30}}
-            showSeparator
-            onChange={(timeLeftInSeconds: number) => setTimeLeft(timeLeftInSeconds)}
-            onPress={() => !screenLocked && confirmResetTimer()}
-            onFinish={() => playEndMusic && playGameOverSound()}
-          /> */}
         </View>}
       <SettingsButton />
       <SaveRoundButton />
@@ -308,8 +264,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         setPlayEndMusic={(isChecked: boolean) => setPlayEndMusic(isChecked)}
         playMIMusic={playMIMusic}
         setPlayMIMusic={(isChecked: boolean) => setPlayMIMusic(isChecked)}
-        gameTimeMinutes={gameTimeMinutes}
-        setGameTimeMinutes={(gameLength: 0|30|45|60) => setGameTimeMinutes(gameLength)}
+        gameTimeInMinutes={gameTimeInMinutes}
+        setGameTimeInMinutes={(gameLength: 0|30|45|60) => setGameTimeInMinutes(gameLength)}
       />
     </SafeAreaView>
   );
