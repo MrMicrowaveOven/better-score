@@ -65,6 +65,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       playGameOverSound()
     } else if(shouldPlayMissionImpossibleTheme()) {
       playMissionImpossibleTheme()
+    } else if(shouldPlayBritneyBitch()) {
+      playBritneyBitch()
     }
     const previousScore1 : number[] = [...roundScore1]
     previousScore1.push(score1)
@@ -111,6 +113,17 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     }
   }
 
+  const shouldPlayBritneyBitch = () => {
+    if (!playMIMusic) return false
+    if (team1Name === "Bocce Please" && score1 > score2) {
+      return true
+    } else if (team2Name === "Bocce Please" && score1 < score2) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   useEffect(() => {
     if(!playMIMusic) SoundPlayer.stop()
   }, [playMIMusic])
@@ -149,6 +162,14 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const playMissionImpossibleTheme = () => {
     try {
       SoundPlayer.playSoundFile('mission_impossible_theme', 'mp3')
+    } catch (e) {
+
+    }
+  }
+
+  const playBritneyBitch = () => {
+    try {
+      SoundPlayer.playSoundFile('britney_bitch', 'mp3')
     } catch (e) {
 
     }
