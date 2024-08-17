@@ -8,13 +8,13 @@ type SettingsWindowProps = PropsWithChildren<{
     exit: Function;
     playEndMusic: boolean;
     setPlayEndMusic: Function;
-    playMIMusic: boolean;
-    setPlayMIMusic: Function;
+    playTeamThemeMusic: boolean;
+    setPlayTeamThemeMusic: Function;
     gameTimeInMinutes: number;
     setGameTimeInMinutes: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIMusic, setPlayMIMusic, gameTimeInMinutes, setGameTimeInMinutes} : SettingsWindowProps) => {
+const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playTeamThemeMusic, setPlayTeamThemeMusic, gameTimeInMinutes, setGameTimeInMinutes} : SettingsWindowProps) => {
     const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
         return (
             <View style={styles.option}>
@@ -59,7 +59,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playMIM
                     <View style={styles.options}>
                         <View style={styles.checkboxes}>
                             {SettingsCheckbox('Play "Game Over" sound', (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
-                            {SettingsCheckbox("Play Mission Imbocceball Theme when they score", (isChecked: boolean) => setPlayMIMusic(isChecked), playMIMusic)}
+                            {SettingsCheckbox("Play Team Themes when they score", (isChecked: boolean) => setPlayTeamThemeMusic(isChecked), playTeamThemeMusic)}
                         </View>
                         <Adjuster
                             gameTimeInMinutes={gameTimeInMinutes}

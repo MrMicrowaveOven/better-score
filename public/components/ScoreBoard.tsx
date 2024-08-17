@@ -39,7 +39,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
-  const [playMIMusic, setPlayMIMusic] = useMMKVStorage<boolean>('playMIMusic', storage, true)
+  const [playTeamThemeMusic, setPlayTeamThemeMusic] = useMMKVStorage<boolean>('playTeamThemeMusic', storage, true)
   const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
 
   // Teams and Scores
@@ -103,7 +103,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const shouldPlayMissionImpossibleTheme = () => {
-    if (!playMIMusic) return false
+    if (!playTeamThemeMusic) return false
     if (team1Name === "Mission Imbocceball" && score1 > score2) {
       return true
     } else if (team2Name === "Mission Imbocceball" && score1 < score2) {
@@ -114,7 +114,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const shouldPlayBritneyBitch = () => {
-    if (!playMIMusic) return false
+    if (!playTeamThemeMusic) return false
     if (team1Name === "Bocce Please" && score1 > score2) {
       return true
     } else if (team2Name === "Bocce Please" && score1 < score2) {
@@ -125,8 +125,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   useEffect(() => {
-    if(!playMIMusic) SoundPlayer.stop()
-  }, [playMIMusic])
+    if(!playTeamThemeMusic) SoundPlayer.stop()
+  }, [playTeamThemeMusic])
 
   const resetGame = () => {
     saveHistory({roundScore1: roundScore1, roundScore2: roundScore2, roundScore1edits: roundScore1edits, roundScore2edits: roundScore2edits})
@@ -283,8 +283,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         exit={() => setSettingsWindowOpen(false)}
         playEndMusic={playEndMusic}
         setPlayEndMusic={(isChecked: boolean) => setPlayEndMusic(isChecked)}
-        playMIMusic={playMIMusic}
-        setPlayMIMusic={(isChecked: boolean) => setPlayMIMusic(isChecked)}
+        playTeamThemeMusic={playTeamThemeMusic}
+        setPlayTeamThemeMusic={(isChecked: boolean) => setPlayTeamThemeMusic(isChecked)}
         gameTimeInMinutes={gameTimeInMinutes}
         setGameTimeInMinutes={(gameLength: 0|30|45|60) => setGameTimeInMinutes(gameLength)}
       />
