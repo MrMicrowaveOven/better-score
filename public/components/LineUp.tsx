@@ -10,6 +10,7 @@ const storage = new MMKVLoader().initialize();
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = (props: any) => {
+  const {playInPairs} = props
   const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
   const [draggable, setDraggable] = useState<boolean>(false)
   const [locked, setLocked] = useState<boolean>(false)

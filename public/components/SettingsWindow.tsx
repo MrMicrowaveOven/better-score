@@ -14,6 +14,8 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayBocceMusic: Function;
     gameTimeInMinutes: number;
     setGameTimeInMinutes: Function;
+    playInPairs: boolean;
+    setPlayInPairs: Function;
 }>;
 
 const SettingsWindow = (
@@ -22,6 +24,7 @@ const SettingsWindow = (
         playEndMusic, setPlayEndMusic,
         playTeamThemeMusic, setPlayTeamThemeMusic,
         playBocceMusic, setPlayBocceMusic,
+        playInPairs, setPlayInPairs,
         gameTimeInMinutes, setGameTimeInMinutes
     } : SettingsWindowProps) => {
     const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
@@ -70,6 +73,7 @@ const SettingsWindow = (
                             {SettingsCheckbox('Play "Game Over" sound', (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                             {SettingsCheckbox("Play Team Themes when they score", (isChecked: boolean) => setPlayTeamThemeMusic(isChecked), playTeamThemeMusic)}
                             {SettingsCheckbox("Play Celebratory Song on Bocce", (isChecked: boolean) => setPlayBocceMusic(isChecked), playBocceMusic)}
+                            {SettingsCheckbox("Players roll in pairs", (isChecked: boolean) => setPlayInPairs(isChecked), playInPairs)}
                         </View>
                         <Adjuster
                             gameTimeInMinutes={gameTimeInMinutes}

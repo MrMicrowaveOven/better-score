@@ -33,6 +33,7 @@ type GameRound = {
 const App = () => {
   const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
   const [trashBin, setTrashBin] = useMMKVStorage<Game[]>('trashBin', storage, [])
+  const [playInPairs, setPlayInPairs] = useMMKVStorage<boolean>('playInPairs', storage, false)
   const pagerViewRef: any = useRef(null);
   // if (history.length > 0) setHistory([])
   // if (trashBin.length > 0) setTrashBin([])
@@ -110,11 +111,14 @@ const App = () => {
           goToStats={goToStats}
           statsPage={statsPage}
           saveHistory={(game: GameRound) => saveHistory(game)}
+          playInPairs={playInPairs}
+          setPlayInPairs={() => setPlayInPairs(!playInPairs)}
         />
       </View>
       <View key="2">
         <LineUp
           goToScoreBoard={goToScoreBoard}
+          playInPairs={playInPairs}
         />
       </View>
     </PagerView>

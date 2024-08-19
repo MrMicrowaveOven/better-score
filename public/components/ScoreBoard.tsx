@@ -32,9 +32,11 @@ type ScoreBoardProps = PropsWithChildren<{
   goToStats: Function;
   statsPage: boolean;
   saveHistory: Function;
+  playInPairs: boolean;
+  setPlayInPairs: Function;
 }>;
 
-const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardProps) => {
+const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs, setPlayInPairs}: ScoreBoardProps) => {
   // Settings
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
@@ -293,6 +295,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         setPlayTeamThemeMusic={(isChecked: boolean) => setPlayTeamThemeMusic(isChecked)}
         playBocceMusic={playBocceMusic}
         setPlayBocceMusic={(isChecked: boolean) => setPlayBocceMusic(isChecked)}
+        playInPairs={playInPairs}
+        setPlayInPairs={() => setPlayInPairs()}
         gameTimeInMinutes={gameTimeInMinutes}
         setGameTimeInMinutes={(gameLength: 0|30|45|60) => setGameTimeInMinutes(gameLength)}
       />
