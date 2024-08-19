@@ -10,11 +10,20 @@ type SettingsWindowProps = PropsWithChildren<{
     setPlayEndMusic: Function;
     playTeamThemeMusic: boolean;
     setPlayTeamThemeMusic: Function;
+    playBocceMusic: boolean;
+    setPlayBocceMusic: Function;
     gameTimeInMinutes: number;
     setGameTimeInMinutes: Function;
 }>;
 
-const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playTeamThemeMusic, setPlayTeamThemeMusic, gameTimeInMinutes, setGameTimeInMinutes} : SettingsWindowProps) => {
+const SettingsWindow = (
+    {
+        isVisible, exit,
+        playEndMusic, setPlayEndMusic,
+        playTeamThemeMusic, setPlayTeamThemeMusic,
+        playBocceMusic, setPlayBocceMusic,
+        gameTimeInMinutes, setGameTimeInMinutes
+    } : SettingsWindowProps) => {
     const SettingsCheckbox = (label: string, onChange: Function, defaultChecked: boolean) => {
         return (
             <View style={styles.option}>
@@ -60,6 +69,7 @@ const SettingsWindow = ({isVisible, exit, playEndMusic, setPlayEndMusic, playTea
                         <View style={styles.checkboxes}>
                             {SettingsCheckbox('Play "Game Over" sound', (isChecked: boolean) => setPlayEndMusic(isChecked), playEndMusic)}
                             {SettingsCheckbox("Play Team Themes when they score", (isChecked: boolean) => setPlayTeamThemeMusic(isChecked), playTeamThemeMusic)}
+                            {SettingsCheckbox("Play Celebratory Song on Bocce", (isChecked: boolean) => setPlayBocceMusic(isChecked), playBocceMusic)}
                         </View>
                         <Adjuster
                             gameTimeInMinutes={gameTimeInMinutes}
@@ -92,7 +102,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "90%",
-        height: 285,
+        height: 385,
         backgroundColor: "white",
         borderColor: "black",
         borderWidth: 2,

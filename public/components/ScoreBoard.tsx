@@ -40,6 +40,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playTeamThemeMusic, setPlayTeamThemeMusic] = useMMKVStorage<boolean>('playTeamThemeMusic', storage, true)
+  const [playBocceMusic, setPlayBocceMusic] = useMMKVStorage<boolean>('playBocceMusic', storage, true)
   const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
   const [bocceSoundIndex, setBocceSoundIndex] = useMMKVStorage<number>('bocceSoundIndex', storage, 0)
 
@@ -106,7 +107,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   }
 
   const shouldPlayBocceSound = () => {
-    return (score1 == 4 || score2 == 4)
+    return (score1 == 4 || score2 == 4) && playBocceMusic
   }
 
   const shouldPlayMissionImpossibleTheme = () => {
@@ -290,6 +291,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
         setPlayEndMusic={(isChecked: boolean) => setPlayEndMusic(isChecked)}
         playTeamThemeMusic={playTeamThemeMusic}
         setPlayTeamThemeMusic={(isChecked: boolean) => setPlayTeamThemeMusic(isChecked)}
+        playBocceMusic={playBocceMusic}
+        setPlayBocceMusic={(isChecked: boolean) => setPlayBocceMusic(isChecked)}
         gameTimeInMinutes={gameTimeInMinutes}
         setGameTimeInMinutes={(gameLength: 0|30|45|60) => setGameTimeInMinutes(gameLength)}
       />
