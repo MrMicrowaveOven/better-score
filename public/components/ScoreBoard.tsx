@@ -158,9 +158,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const playSound = (name: string) => {
     try {
       SoundPlayer.playSoundFile(name, 'mp3')
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   const playGameOverSound = () => {
