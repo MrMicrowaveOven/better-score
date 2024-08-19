@@ -41,6 +41,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playTeamThemeMusic, setPlayTeamThemeMusic] = useMMKVStorage<boolean>('playTeamThemeMusic', storage, true)
   const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
+  const [bocceSoundIndex, setBocceSoundIndex] = useMMKVStorage<number>('bocceSoundIndex', storage, 0)
 
   // Teams and Scores
   const [team1Name, setTeam1Name] = useMMKVStorage<string>('team1Name', storage, "Team 1")
@@ -63,6 +64,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
   const nextRound = () => {
     if (gameOverCheck() && playEndMusic) {
       playGameOverSound()
+    } else if(shouldPlayBocceSound()) {
+      playBocceSound()
     } else if(shouldPlayMissionImpossibleTheme()) {
       playMissionImpossibleTheme()
     } else if(shouldPlayBritneyBitch()) {
@@ -100,6 +103,10 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     renamingTeam === 1
       ? setTeam1Name(newName)
       : setTeam2Name(newName)
+  }
+
+  const shouldPlayBocceSound = () => {
+    return (score1 == 4 || score2 == 4)
   }
 
   const shouldPlayMissionImpossibleTheme = () => {
@@ -156,6 +163,19 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
       } catch (e) {
 
       }
+    }
+  }
+
+  const playBocceSound = () => {
+    try {
+      SoundPlayer.playSoundFile(['celebration', "good_times"][bocceSoundIndex], 'mp3')
+      if (bocceSoundIndex === 0) {
+        setBocceSoundIndex(1)
+      } else {
+        setBocceSoundIndex(0)
+      }
+    } catch (e) {
+
     }
   }
 
