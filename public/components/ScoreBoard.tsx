@@ -155,45 +155,32 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory}: ScoreBoardP
     )
   }
 
+  const playSound = (name: string) => {
+    try {
+      SoundPlayer.playSoundFile(name, 'mp3')
+    } catch (e) {
+
+    }
+  }
+
   const playGameOverSound = () => {
     if (!endMusicHasPlayed && gameTimeInMinutes > 0) {
-      try {
-        SoundPlayer.playSoundFile('game_over_sound', 'mp3')
+      playSound('game_over_sound')
         setEndMusicHasPlayed(true)
-      } catch (e) {
-
-      }
     }
   }
 
   const playBocceSound = () => {
-    try {
-      SoundPlayer.playSoundFile(['celebration', "good_times"][bocceSoundIndex], 'mp3')
-      if (bocceSoundIndex === 0) {
-        setBocceSoundIndex(1)
-      } else {
-        setBocceSoundIndex(0)
-      }
-    } catch (e) {
-
+    playSound(['celebration', "good_times"][bocceSoundIndex])
+    if (bocceSoundIndex === 0) {
+      setBocceSoundIndex(1)
+    } else {
+      setBocceSoundIndex(0)
     }
   }
 
-  const playMissionImpossibleTheme = () => {
-    try {
-      SoundPlayer.playSoundFile('mission_impossible_theme', 'mp3')
-    } catch (e) {
-
-    }
-  }
-
-  const playBritneyBitch = () => {
-    try {
-      SoundPlayer.playSoundFile('britney_bitch', 'mp3')
-    } catch (e) {
-
-    }
-  }
+  const playMissionImpossibleTheme = () => playSound('mission_impossible_theme')
+  const playBritneyBitch = () => playSound('britney_bitch')
 
   const editScore = (editedScore: number, editingScoreTeam: number|null, editingScoreIndex: number|null) => {
     const oldRoundScore = editingScoreTeam == 1 ? roundScore1 : roundScore2
