@@ -34,9 +34,10 @@ type ScoreBoardProps = PropsWithChildren<{
   saveHistory: Function;
   playInPairs: boolean;
   setPlayInPairs: Function;
+  onRoundEnd: Function;
 }>;
 
-const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs, setPlayInPairs}: ScoreBoardProps) => {
+const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs, setPlayInPairs, onRoundEnd}: ScoreBoardProps) => {
   // Settings
   const [settingsWindowOpen, setSettingsWindowOpen] = useState<boolean>(false)
   const [playEndMusic, setPlayEndMusic] = useMMKVStorage<boolean>('playEndMusic', storage, true)
@@ -82,6 +83,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs,
     setRoundScore2(previousScore2)
     setScore1(0)
     setScore2(0)
+    onRoundEnd()
   }
   const gameOverCheck = () => {
     if(roundScore1.reduce((a: number, b: number) => a + b, 0) + score1 >= 15) {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ScoreBoard from './public/components/ScoreBoard';
 import LineUp from './public/components/LineUp'
@@ -34,6 +34,7 @@ const App = () => {
   const [history, setHistory] = useMMKVStorage<Game[]>('history', storage, [])
   const [trashBin, setTrashBin] = useMMKVStorage<Game[]>('trashBin', storage, [])
   const [playInPairs, setPlayInPairs] = useMMKVStorage<boolean>('playInPairs', storage, false)
+  const [roundEnd, setRoundEnd] = useState(false)
   const pagerViewRef: any = useRef(null);
   // if (history.length > 0) setHistory([])
   // if (trashBin.length > 0) setTrashBin([])
@@ -113,12 +114,14 @@ const App = () => {
           saveHistory={(game: GameRound) => saveHistory(game)}
           playInPairs={playInPairs}
           setPlayInPairs={() => setPlayInPairs(!playInPairs)}
+          onRoundEnd={() => setRoundEnd(!roundEnd)}
         />
       </View>
       <View key="2">
         <LineUp
           goToScoreBoard={goToScoreBoard}
           playInPairs={playInPairs}
+          roundEnd={roundEnd}
         />
       </View>
     </PagerView>

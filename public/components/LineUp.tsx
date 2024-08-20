@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TouchableOpacity, Text, StyleSheet, View, Image, TouchableWithoutFeedback, Alert, SafeAreaView} from "react-native";
 import DragList from "react-native-draglist";
 import Prompt from "./Prompt"
@@ -10,11 +10,17 @@ const storage = new MMKVLoader().initialize();
 const DEFAULT_LIST = ["Player 1", "Player 2", "Player 3", "Player 4"];
 
 const LineUp = (props: any) => {
-  const {playInPairs} = props
+  const {playInPairs, roundEnd} = props
   const [lineUp, setLineUp] = useMMKVStorage<string[]>('lineUp', storage, DEFAULT_LIST);
   const [draggable, setDraggable] = useState<boolean>(false)
   const [locked, setLocked] = useState<boolean>(false)
   const [turn, setTurn] = useMMKVStorage<number>('turn', storage, 0)
+
+  useEffect(() => {
+    playInPairs
+      ? nextTurn(2)
+      : nextTurn(1)
+  }, [roundEnd])
 
   const [editingPlayerNumber, setEditingPlayerNumber] = useState<number | null>(null)
 
@@ -31,10 +37,10 @@ const LineUp = (props: any) => {
     setEditingPlayerNumber(null)
   }
 
-  const nextTurn = () => {
+  const nextTurn = (numTurns: number = 1) => {
     const numPlayers = lineUp.length
-    const nextTurnIndex = turn + 1
-    setTurn(nextTurnIndex >= numPlayers ? 0 : nextTurnIndex)
+    const nextTurnIndex = turn + numTurns
+    setTurn(nextTurnIndex >= numPlayers ? nextTurnIndex - numPlayers : nextTurnIndex)
   }
 
   const deletePlayer = (index: number) => {
