@@ -102,6 +102,10 @@ const LineUp = (props: any) => {
         renderItem={renderItem}
       />
     </View>
+
+  const shouldBeHighlighted = (index: number) => {
+    return locked && (index === turn || (index == turn + 1 && playInPairs) || ( index == 0 && turn == lineUp.length - 1 && playInPairs))
+  }
   
   const renderItem = (info: any) => {
     const {item, onDragStart, onDragEnd, isActive} = info;
@@ -120,7 +124,7 @@ const LineUp = (props: any) => {
           style={[styles.player, {backgroundColor: "white"}]}
           activeOpacity={1}
         >
-          <Text style={[styles.listItem, index === turn && locked && styles.listItemTurn]}>{item}</Text>
+          <Text style={[styles.listItem, shouldBeHighlighted(index) && styles.listItemTurn]}>{item}</Text>
           {!locked && draggable && <Image source={require("../images/draggable.png")} style={styles.draggable}/>}
         </TouchableOpacity>
         {!locked &&
