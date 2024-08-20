@@ -34,7 +34,7 @@ const Adjuster = ({gameTimeInMinutes, setGameTimeInMinutes}: AdjusterProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 100,
+        marginTop: 180,
         height: 50,
         width: "90%",
         display: "flex",

@@ -44,6 +44,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs,
   const [endMusicHasPlayed, setEndMusicHasPlayed] = useMMKVStorage<boolean>('endMusicHasPlayed', storage, false)
   const [playTeamThemeMusic, setPlayTeamThemeMusic] = useMMKVStorage<boolean>('playTeamThemeMusic', storage, true)
   const [playBocceMusic, setPlayBocceMusic] = useMMKVStorage<boolean>('playBocceMusic', storage, true)
+  const [autoPlayerShift, setAutoPlayerShift] = useMMKVStorage<boolean>('autoPlayerShift', storage, false)
   const [gameTimeInMinutes, setGameTimeInMinutes] = useMMKVStorage<number>('gameTimeMinutes', storage, 45)
   const [bocceSoundIndex, setBocceSoundIndex] = useMMKVStorage<number>('bocceSoundIndex', storage, 0)
 
@@ -83,7 +84,7 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs,
     setRoundScore2(previousScore2)
     setScore1(0)
     setScore2(0)
-    onRoundEnd()
+    if(autoPlayerShift) onRoundEnd()
   }
   const gameOverCheck = () => {
     if(roundScore1.reduce((a: number, b: number) => a + b, 0) + score1 >= 15) {
@@ -299,6 +300,8 @@ const ScoreBoard = ({goToLineUp, goToStats, statsPage, saveHistory, playInPairs,
         setPlayBocceMusic={(isChecked: boolean) => setPlayBocceMusic(isChecked)}
         playInPairs={playInPairs}
         setPlayInPairs={() => setPlayInPairs()}
+        autoPlayerShift={autoPlayerShift}
+        setAutoPlayerShift={(isChecked: boolean) => setAutoPlayerShift(isChecked)}
         gameTimeInMinutes={gameTimeInMinutes}
         setGameTimeInMinutes={(gameLength: 0|30|45|60) => setGameTimeInMinutes(gameLength)}
       />
