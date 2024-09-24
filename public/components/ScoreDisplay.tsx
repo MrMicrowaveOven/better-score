@@ -73,19 +73,23 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
     return (
         <View style={styles.main}>
             <View style={styles.scoreLists}>
-                <View style={[styles.scoreList, styles.scoreList1, styles.scoreListWrap]}>
-                    {roundScore1.map((score: number, index: number) => {
-                        return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(1, index)}>
-                                    <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                                </TouchableOpacity>
-                    })}
+                <View style={[styles.scoreList, styles.scoreList1]}>
+                    <View style={styles.scoreListWrap}>
+                        {roundScore1.map((score: number, index: number) => {
+                            return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(1, index)}>
+                                        <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
+                                    </TouchableOpacity>
+                        })}
+                    </View>
                 </View>
-                <View style={[styles.scoreList, styles.scoreList2, styles.scoreListWrap]}>
-                    {roundScore2.map((score: number, index: number) => {
-                        return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(2, index)}>
-                                    <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                                </TouchableOpacity>
-                    })}
+                <View style={[styles.scoreList, styles.scoreList2]}>
+                    <View style={styles.scoreListWrap}>
+                        {roundScore2.map((score: number, index: number) => {
+                            return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(2, index)}>
+                                        <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
+                                    </TouchableOpacity>
+                        })}
+                    </View>
                 </View>
             </View>
             <View style={[styles.scoreTotals]}>
