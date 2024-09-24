@@ -1,6 +1,9 @@
 # Bocce Score
 This is a Bocceball Scoring App
 
+# Run on Emulator
+npx react-native start
+
 # Building for a Release
 ## Build for Android on a Local Phone
 Build for .apk
