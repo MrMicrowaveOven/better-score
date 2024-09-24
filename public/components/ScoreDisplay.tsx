@@ -72,19 +72,21 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
 
     return (
         <View style={styles.main}>
-            <View style={[styles.scoreList, styles.scoreList1, roundScore1.length > 10 && styles.scoreListWrap]}>
-                {roundScore1.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(1, index)}>
-                                <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                            </TouchableOpacity>
-                })}
-            </View>
-            <View style={[styles.scoreList, styles.scoreList2, roundScore2.length > 10 && styles.scoreListWrap]}>
-                {roundScore2.map((score: number, index: number) => {
-                    return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(2, index)}>
-                                <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
-                            </TouchableOpacity>
-                })}
+            <View style={styles.scoreLists}>
+                <View style={[styles.scoreList, styles.scoreList1, styles.scoreListWrap]}>
+                    {roundScore1.map((score: number, index: number) => {
+                        return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(1, index)}>
+                                    <Text style={[styles.score, {color: roundScore1edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
+                                </TouchableOpacity>
+                    })}
+                </View>
+                <View style={[styles.scoreList, styles.scoreList2, styles.scoreListWrap]}>
+                    {roundScore2.map((score: number, index: number) => {
+                        return  <TouchableOpacity key={index} onLongPress={() => !screenLocked && handleEdit(2, index)}>
+                                    <Text key={index} style={[styles.score, {color: roundScore2edits.includes(index) ? "#fdda00" : "#000500"}]}>{score}</Text>
+                                </TouchableOpacity>
+                    })}
+                </View>
             </View>
             <View style={[styles.scoreTotals]}>
                 <Text style={[styles.scoreTotal]}>{roundScore1.reduce((a: number, b: number) => a + b, 0)}</Text>
@@ -107,12 +109,19 @@ const styles = StyleSheet.create({
     main: {
         flex: 1
     },
+    scoreLists: {
+        display: 'flex',
+        flexDirection: 'row',
+        flex: 1,
+        marginBottom: 100,
+    },
     scoreList: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
-        height: 380,
+        height: '100%',
+        marginBottom: 100,
     },
     scoreListWrap: {
         flexWrap: "wrap",
@@ -122,10 +131,7 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(90, 202, 133, 1)"
     },
     scoreList2: {
-        position: "absolute",
         width: "50%",
-        top: 0,
-        right: 0,
         backgroundColor: "rgba(255,0,0, 0.9)"
     },
     score: {
@@ -134,10 +140,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     scoreTotals: {
-        position: "relative",
+        position: "absolute",
         bottom: 0,
         width: "100%",
-        height: 70,
+        height: 100,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
