@@ -105,9 +105,7 @@ const RoundScoreDisplay = ({roundScore1, roundScore2, editScore, roundScore1edit
 
 const styles = StyleSheet.create({
     main: {
-        width: "100%",
-        position: "absolute",
-        top: 272,
+        flex: 1
     },
     scoreList: {
         display: "flex",
